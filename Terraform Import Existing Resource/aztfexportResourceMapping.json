@@ -1,0 +1,17 @@
+{
+	"/subscriptions/0cfe2870-d256-4119-b0a3-16293ac11bdc/resourceGroups/946-110c537c-discover-and-import-existing-resource/providers/Microsoft.Network/virtualNetworks/taco-wagon-import": {
+		"resource_id": "/subscriptions/0cfe2870-d256-4119-b0a3-16293ac11bdc/resourceGroups/946-110c537c-discover-and-import-existing-resource/providers/Microsoft.Network/virtualNetworks/taco-wagon-import",
+		"resource_type": "azurerm_virtual_network",
+		"resource_name": "res-1"
+	},
+	"/subscriptions/0cfe2870-d256-4119-b0a3-16293ac11bdc/resourceGroups/946-110c537c-discover-and-import-existing-resource/providers/Microsoft.Network/virtualNetworks/taco-wagon-import/subnets/app": {
+		"resource_id": "/subscriptions/0cfe2870-d256-4119-b0a3-16293ac11bdc/resourceGroups/946-110c537c-discover-and-import-existing-resource/providers/Microsoft.Network/virtualNetworks/taco-wagon-import/subnets/app",
+		"resource_type": "azurerm_subnet",
+		"resource_name": "res-2"
+	},
+	"/subscriptions/0cfe2870-d256-4119-b0a3-16293ac11bdc/resourceGroups/946-110c537c-discover-and-import-existing-resource/providers/Microsoft.Network/virtualNetworks/taco-wagon-import/subnets/web": {
+		"resource_id": "/subscriptions/0cfe2870-d256-4119-b0a3-16293ac11bdc/resourceGroups/946-110c537c-discover-and-import-existing-resource/providers/Microsoft.Network/virtualNetworks/taco-wagon-import/subnets/web",
+		"resource_type": "azurerm_subnet",
+		"resource_name": "res-3"
+	}
+}
