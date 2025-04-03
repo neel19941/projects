@@ -5,7 +5,7 @@ metadata:
 spec:
   type: {{.Values.service.type}}
   selector:
-    app: blog
+    app: {{.Values.service.name}}
   ports:
   - protocol: {{.Values.service.protocol}}
     port: {{.Values.service.port}}
