@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.Deployment.name }}
+  labels:
+    app: {{ .Values.Deployment.name }}
+spec:
+  replicas: {{ .Values.Deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.Deployment.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.Deployment.name }}
+    spec:
+      containers:
+      - name: {{ .Values.Deployment.name }}
+        image: {{ .Values.Deployment. Image }}
+        imagePullPolicy: {{ .Values.Deployment.imagePullPolicy }}
+        ports:
+        - containerPort: {{ .Values.Deployment.containerPort }}
+        env:
+        - name: url
+          value: http://exampleblog.com
