@@ -1,0 +1,38 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import '~bootstrap-icons/font/bootstrap-icons.css';
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+}
+.capitalize-all {
+    text-transform: capitalize;
+  }
+
+// /* styles.scss */
+// .ng-toast {
+//     background-color: #f8f9fa !important; /* Light background */
+//     color: #343a40 !important; /* Dark text color */
+//     border-radius: 8px !important; /* Rounded corners */
+//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important; /* Subtle shadow */
+//   }
+  
+//   .ng-toast-success {
+//     background-color: #28a745 !important; /* Custom success color */
+//   }
+  
+//   .ng-toast-error {
+//     background-color: #dc3545 !important; /* Custom error color */
+//   }
+  
+//   .ng-toast-close {
+//     color: #fff !important; /* Close button color */
+//   }
+  
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';

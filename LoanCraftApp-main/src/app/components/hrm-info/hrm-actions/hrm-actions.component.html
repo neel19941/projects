@@ -1,0 +1,23 @@
+<!-- Main Popup -->
+<div class="modal-overlay" *ngIf="showMainPopup">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h5 class="modal-title">HRM Actions</h5>
+        <button type="button" class="btn-close" (click)="close()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="record-card" (click)="openUpdateComponent('update')" *ngIf="privilegeServ.hasPrivilege('EDIT_HRM')">
+          <h6>Edit</h6>
+          <i class="fas fa-edit edit-icon"></i>
+        </div>
+        <div class="record-card" (click)="openDeleteConfirmation()" *ngIf="privilegeServ.hasPrivilege('DELETE_HRM')">
+          <h6>Delete</h6>
+          <i class="fas fa-trash delete-icon"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Update Component -->
+   <app-add-user *ngIf="showUpdateComponent"   [userId]="userId" [mode]="mode" (closeModal)="closeUpdateComponent()"></app-add-user>
+   <app-confirm-modal *ngIf="showConfirmDialog" [message]="confirmMessage" (confirm)="handleDeleteConfirmation($event)"></app-confirm-modal>
+  

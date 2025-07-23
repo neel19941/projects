@@ -1,0 +1,143 @@
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="javascript:void(0);">LoanCraft</a>
+
+    <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button> -->
+    <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item" *ngFor="let menu of menuList">
+          <a class="nav-link" [routerLink]="menu.routerLink" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <i class="bi bi-{{menu.icon}}"></i> {{menu.text}}
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="d-flex align-items-center ms-auto user-section">
+      <span class="register" (click)="showModal = true">
+        <i class="bi bi-person-fill-add ms-1" style="cursor: pointer;"></i>
+      </span>
+
+      <span class="username me-2">
+        {{ firstname }} {{ lastname }}
+      </span>
+      <a class="nav-link dropdown-toggle p-0" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        <i class="fas fa-user user-icon"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+        <li *ngIf="!menus"><a class="dropdown-item" href="javascript:void(0)" (click)="navigateToProfile()">
+            Update Profile</a>
+        </li>
+        <!-- <li><a class="dropdown-item" href="#">Page 2</a></li> -->
+        <li *ngIf="!menus">
+          <hr class="dropdown-divider" />
+        </li>
+        <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+<!-- Bootstrap Modal -->
+<!-- <app-top-navbar></app-top-navbar> -->
+<div class="modal-overlay" *ngIf="showModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Refer a Customer</h5>
+      <button type="button" class="btn-close" (click)="close()"></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="userform">
+        <div class="col-md-12 form-group">
+          <label> Name <span class="text-danger">*</span></label>
+          <input type="text" formControlName="name" class="form-control" [placeholder]="'Enter Name' | titlecase"
+            appTitleCase />
+          <div class="error-message">
+            <span *ngIf="userform.get('name')?.invalid && userform.get('name')?.touched" class="text-danger">
+              Name is required</span>
+          </div>
+        </div>
+
+        <div class="col-md-12 form-group">
+          <label>Email <span class="text-danger">*</span></label>
+          <input type="text" formControlName="email" class="form-control" [placeholder]="'Enter Email' | titlecase " />
+          <div class="error-message">
+            <span *ngIf="userform.get('email')?.invalid && userform.get('email')?.touched" class="text-danger">
+              Email is required.</span>
+          </div>
+        </div>
+        <!-- <div class="col-md-12 form-group">
+          <label>Phone Number <span class="text-danger">*</span></label>
+          <input type="text" formControlName="phNo" class="form-control" [placeholder]="'Enter Phone Number' | titlecase" />
+
+          <div class="error-message text-danger" *ngIf="userform.get('phNo')?.touched && userform.get('phNo')?.invalid">
+
+            <span *ngIf="userform.get('phNo')?.errors?.['required']">
+              Phone Number is required.
+            </span>
+
+            <span *ngIf="userform.get('phNo')?.errors?.['pattern']">
+              Phone number must be exactly 10 digits.
+            </span>
+
+          </div>
+        </div> -->
+        <div class="col-md-12 form-group mobile-wrapper">
+          <label for="mobile">Mobile Number <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text country-code">+91</span>
+            <input type="text" id="mobile" formControlName="phNo" class="form-control mobile-input"
+              [placeholder]="'Enter your mobile number' | titlecase" />
+          </div>
+          <div class="error-message text-danger" *ngIf="userform.get('phNo')?.touched && userform.get('phNo')?.invalid">
+            <span
+              *ngIf="userform.get('phNo')?.invalid && (userform.get('phNo')?.touched || userform.get('phNo')?.dirty)">
+              <span *ngIf="userform.get('phNo')?.errors?.['required']">Mobile Number is required.</span>
+              <span *ngIf="userform.get('phNo')?.errors?.['pattern']">Mobile number must be a valid 10-digit Indian
+                number.</span>
+            </span>
+          </div>
+        </div>
+
+<!-- Row for Invite and Copy Link -->
+<div class="d-flex justify-content-between align-items-center mt-3">
+  <!-- Copy Link on the Left -->
+  <div class="copy-link-container d-flex align-items-center mt-3">
+    <!-- Display the full link -->
+    <input type="text"
+           class="form-control me-2 copyinput"
+           [value]="copiedLink"
+           readonly />
+  
+    <!-- Copy button -->
+    <button type="button" class="btn btn-outline-primary copybutton" (click)="copyLink()">{{copied ? 'Copied':'Copy'}}</button>
+  </div>
+  
+
+  <!-- Invite Button on the Right -->
+  <button type="button" class="btn btn-secondary custom-btn" (click)="submitdetails()">Refer</button>
+</div>
+
+      </form>
+
+    </div>
+
+
+
+
+
+  </div>
+</div>
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>

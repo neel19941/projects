@@ -1,0 +1,45 @@
+<!-- physical-verifcation.component.html -->
+<div class="modal-overlay" (click)="close()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">Physical Documents Verification</h5>
+      <button type="button" class="btn-close" (click)="close()"></button>
+    </div>
+
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+          <label for="documentUpload" class="form-label fw-medium">Upload Documents</label>
+          <input
+          type="file"
+          class="form-control"
+          id="documentUpload"
+          (change)="onFilesSelected($event)"
+          accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+          multiple
+        />
+        
+        </div>
+
+        <div *ngIf="selectedFileNames.length > 0" class="alert alert-info mt-3 p-2">
+          <strong>Selected Files:</strong>
+          <ul class="mb-0">
+            <li *ngFor="let name of selectedFileNames">{{ name }}</li>
+          </ul>
+        </div>
+        
+
+        <button
+        type="button"
+        class="btn btn-custom-upload mt-3"
+        (click)="uploadFiles()"
+        [disabled]="selectedFiles.length === 0"
+        >
+          Upload
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+  

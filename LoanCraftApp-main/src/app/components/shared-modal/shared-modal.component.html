@@ -1,0 +1,6 @@
+<div *ngIf="isPersonalInfo" class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <app-personal-info></app-personal-info>
+    </div>
+  </div>
+  

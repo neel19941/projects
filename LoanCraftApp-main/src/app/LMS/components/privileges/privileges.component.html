@@ -1,0 +1,41 @@
+<div id="customSnackbar" class="custom-snackbar" role="alert">
+    <i id="notificationIcon" class=""></i>
+    <span id="notificationMessage"></span>
+</div>
+
+<div class="container-fluid">
+    <div class="card-header">
+        <div class="bg-blue d-flex justify-content-between align-items-center p-2">
+            <div class="container-fluid">
+                <span class="text-white"><div style="color: black;font-size: large;">{{rolename}}</div></span>
+            </div>
+            <div class="d-flex me-3">
+                <div class="btn-color">
+                    <button class="btn btn-success" (click)="addnewrole()">Privilege+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Cards Section -->
+    <div class="cards-container">
+        <div class="card" *ngFor="let card of privilegResp; let cardId = index">  
+          <div class="card-header"></div>
+          <div class="card-content" *ngIf="card.privileges?.length">
+            <div class="checkbox-container">
+              <label *ngFor="let priv of card.privileges; let privId = index">
+                <input type="checkbox" [checked]="priv.selected" [class]="privId === 0 ? 'access-check-box' : 'access-check-boxs'"
+                 (change)="selectInidividualAccess($event, card.privileges, privId, cardId, card, priv, privilegResp)">
+                 <div style="padding: 4px;" [class]="privId === 0 ? 'fontstyle' : 'general'"> {{priv.name}} </div>
+              
+              </label>
+            </div>
+          </div>    
+        </div>
+      </div>
+
+      <div class="main-card-actions">
+        <button (click)="onCancel()">Go Back</button>
+        <button (click)="savePrivileges()">Save</button>  
+      </div>

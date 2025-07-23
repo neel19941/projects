@@ -1,0 +1,231 @@
+
+.container-box {
+  display: flex;
+  height: calc(100vh - 60px); // Subtracting navbar height (adjust as needed)
+  gap: 20px;
+  padding: 20px;
+  text-transform:capitalize;
+  
+  .nav-box {
+    width: 250px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100%; // Ensure it takes full available height
+
+    .nav-sub-link {
+      color: #0611aa;
+      font-weight: 500;
+      padding: 10px;
+      display: block;
+      border-radius: 5px;
+      transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+      text-decoration: none;
+      &:hover {
+        background: #dde7ff;
+        color: #0611aa;
+      }
+      &.active {
+        background: #dde7ff;
+        color: #0611aa;
+      }
+    }
+    
+    .dropdown-arrow::after {
+      content: '';
+      display: inline-block;
+      border: solid #0611aa;
+      border-width: 0 2px 2px 0;
+      padding: 4px 4px 4px 4px;
+      transform: rotate(45deg);
+      transition: transform 0.3s ease-in-out;
+      margin-left: 5px;
+      margin-bottom: 1px;
+    }
+    
+    .dropdown-arrow.open::after {
+      transform: rotate(-135deg); // Points up
+      margin-bottom: -1px;
+    }
+    
+    // .dropdown-arrow::after {
+    //   content: '∨';
+    //   font-size: 15px;
+    //   font-weight: 800;
+    //   display: inline-block;
+    //   transition: transform 0.3s ease-in-out;
+    // }
+    
+    // .dropdown-arrow.open::after {
+    //   transform: rotate(180deg);
+    // }
+    
+
+    // .dropdown-arrow {
+    //   width: 9px;
+    //   height: 9px;
+    //   border-left: 2px solid black;
+    //   border-bottom: 2px solid black;
+    //   transform: rotate(-45deg);
+    //   transition: transform 0.3s ease;
+    //   margin-left: 8px;
+    //   cursor: pointer;
+    // }
+    
+    // .dropdown-arrow.open {
+    //   transform: rotate(135deg);
+    // }
+
+    
+    .nav-link {
+      color: #0611aa;
+      font-weight: 500;
+      padding: 10px;
+      display: block;
+      border-radius: 5px;
+      transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+
+      &:hover {
+        background: #dde7ff;
+        color: #0611aa;
+      }
+
+      &.active {
+        background: #0611aa;
+        color: white;
+        font-weight: bold;
+      }
+    }
+
+  }
+
+  .content-scroll {
+    flex-grow: 1;
+    overflow-y: auto; /* Keep scrolling enabled */
+    padding-right: 10px;
+    position: relative; /* Ensure it does not affect sticky positioning */
+  
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      background: #d1d1d1;
+      border-radius: 4px;
+    }
+  
+    &::-webkit-scrollbar-thumb:hover {
+      background: #b0b0b0;
+    }
+  
+    &::-webkit-scrollbar-track {
+      background: #f5f5f5;
+    }
+  }
+  
+  .content-box {
+    flex-grow: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: visible; /* ✅ Allow sticky elements to work */
+  }
+  /* Add to your existing SCSS */
+
+/* Style the arrow (v) next to the "Verification" text */
+.dropdown-arrow {
+  margin-left: 5px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg); /* Rotate the arrow when the dropdown is open */
+}
+
+/* Sub-menu styling */
+.sub-menu {
+  padding-left: 20px;
+  display: none; /* Initially hidden */
+}
+
+.sub-menu li {
+  padding: 5px 0;
+}
+
+.nav-item .active + .sub-menu {
+  display: block; /* Make the sub-menu visible when active */
+}
+
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .container-box {
+    flex-direction: column;
+    height: auto;
+
+    .nav-box {
+      width: 100%;
+      text-align: center;
+      height: auto;
+    }
+
+    .content-box {
+      width: 100%;
+      height: calc(100vh - 100px);
+    }
+  }
+}
+
+  // .content-box {
+  //   flex-grow: 1;
+  //   background: white;
+  //   padding: 20px;
+  //   border-radius: 8px;
+  //   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  //   display: flex;
+  //   flex-direction: column;
+  //   height: 100%;
+  //   overflow: hidden;
+
+  //   .content-scroll {
+  //     flex-grow: 1;
+  //     overflow-y: auto;
+  //     padding-right: 10px;
+
+  //     &::-webkit-scrollbar {
+  //       width: 6px;
+  //     }
+
+  //     &::-webkit-scrollbar-thumb {
+  //       background: #d1d1d1;
+  //       border-radius: 4px;
+  //     }
+
+  //     &::-webkit-scrollbar-thumb:hover {
+  //       background: #b0b0b0;
+  //     }
+
+  //     &::-webkit-scrollbar-track {
+  //       background: #f5f5f5;
+  //     }
+  //   }
+  //   // .content-scroll {
+  //   //   flex-grow: 1;
+  //   //   overflow-y: hidden; // Prevents vertical scrolling
+  //   //   padding-right: 10px;
+    
+  //   //   &::-webkit-scrollbar {
+  //   //     display: none; // Hides scrollbar in WebKit browsers (Chrome, Safari)
+  //   //   }
+  //   // }
+    
+  // }
+

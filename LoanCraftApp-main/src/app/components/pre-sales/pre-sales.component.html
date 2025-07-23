@@ -1,0 +1,72 @@
+<!-- <div class="container-fluid" *ngIf="privilegeServ.hasPrivilege('PRESALES')"> -->
+<div class="container-fluid">
+
+  <!-- Header Bar -->
+
+  
+  <div class="row header-bar">
+    <div class="col-12 col-md-6">
+      <h4 class="header-title">Pre-Sales</h4>
+    </div>
+
+    <div class="col-12 col-md-6 text-md-end">
+      <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search" (keyup)="onSearch($event)" />
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Table -->
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-sm">
+          <thead class="table-custom-header">
+
+            <tr>
+              <th scope="col">S.No</th>
+              <th scope="col" (click)="onSort('date')">Date <span class="sort-icon" [ngClass]="getSortIcon('date')"></span></th>
+              <th scope="col" (click)="onSort('name')">Name <span class="sort-icon" [ngClass]="getSortIcon('name')"></span></th>
+              <th scope="col" (click)="onSort('email')">Email <span class="sort-icon" [ngClass]="getSortIcon('email')"></span></th>
+              <th scope="col" (click)="onSort('contactNumber')">Contact Number <span class="sort-icon" [ngClass]="getSortIcon('contactNumber')"></span></th>
+              <th scope="col" (click)="onSort('loanType')">Loan Type <span class="sort-icon" [ngClass]="getSortIcon('loanType')"></span></th>
+              <th scope="col" (click)="onSort('location')">Current Location <span class="sort-icon" [ngClass]="getSortIcon('location')"></span></th>
+              <th scope="col" (click)="onSort('company')">Company <span class="sort-icon" [ngClass]="getSortIcon('company')"></span></th>
+              <th scope="col" (click)="onSort('position')">Position <span class="sort-icon" [ngClass]="getSortIcon('position')"></span></th>
+              <th scope="col" (click)="onSort('experience')">Experience <span class="sort-icon" [ngClass]="getSortIcon('experience')"></span></th>
+            </tr>
+
+          </thead>
+          <tbody>
+            <tr *ngFor="let lead of leadsInfo; let i = index">
+              <td>{{ generateSerialNumber(i) }}</td>
+              <td>{{ lead.date | date: 'yyyy-MM-dd' }}</td>
+              <td>{{ lead.name }}</td>
+              <td class="lowerCase">{{ lead.email }}</td>
+              <td>{{ lead.contactNumber ? '+91 ' + lead.contactNumber : 'N/A' }}</td>
+              <td>{{ lead.loanType }}</td>
+              <td>{{ lead.location }}</td>
+              <td>{{ lead.company }}</td>
+              <td>{{ lead.position }}</td>
+              <td>{{ lead.experience }} years</td>
+            </tr>
+            <tr *ngIf="leadsInfo.length === 0">
+              <td colspan="10" class="text-center">No Leads found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination-controls">
+    <button (click)="goToFirstPage()" [disabled]="currentPageIndex === 0">|<</button>
+    <button (click)="goToPreviousPage()" [disabled]="currentPageIndex === 0"><</button>
+    <span>Page {{ totalPages > 0 ? currentPageIndex + 1 : 0 }} of {{ totalPages }}</span>
+    <button (click)="goToNextPage()" [disabled]="currentPageIndex >= totalPages - 1">></button>
+    <button (click)="goToLastPage()" [disabled]="currentPageIndex >= totalPages - 1">>|</button>
+  </div>
+</div>
+

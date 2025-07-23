@@ -1,0 +1,165 @@
+<!-- <app-plain-navigation></app-plain-navigation> -->
+<div class="container-fluid">
+  <!-- Header Bar -->
+  <div class="row header-bar">
+    <div class="col-12 col-md-6">
+      <h4 class="header-title">My Applications</h4>
+    </div>
+    <div class="col-12 col-md-6 text-md-end">
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-sm">
+          <thead class="table-custom-header">
+            <tr>
+              <th scope="col">S.No</th>
+              <th scope="col">Reference ID</th>
+              <!-- <th scope="col" class="hidden-fields">First Name</th>
+              <th scope="col" class="hidden-fields">Last Name</th>
+              <th scope="col" class="hidden-fields">Email</th>
+              <th scope="col" class="hidden-fields">Mobile Number</th> -->
+              <th scope="col">Loan Amount</th>
+              <th scope="col">Repayment Mode</th>
+              <th scope="col">Status</th>
+              <th scope="col">Action</th> <!-- New Column Header -->
+              <th scope="col">Upload Docs</th> <!-- New Column Header -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let customer of customers; let i = index">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ customer.referenceId }}</td>
+              <!-- <td class="hidden-fields">{{ customer.firstName | capitalize }}</td>
+              <td class="hidden-fields">{{ customer.lastName | capitalize }}</td>
+              <td class="lowerCase hidden-fields">{{ customer.email }}</td>
+              <td class="hidden-fields">{{ customer.mobileNumber ? '+91 ' + customer.mobileNumber : 'N/A' }}</td> -->
+
+              <!-- <td>{{ customer.mobileNumber || 'N/A' }}</td> -->
+              <td>{{ customer.loanAmount }}</td>
+              <td>{{ customer.repaymentMode }}</td>
+              <td [ngClass]="getStatusClass(customer.status)">
+                {{ customer.status }}
+              </td>
+              <td>
+                <button class="btn-track" (click)="openCustomerTrackingPopup(customer)">
+                  Track
+                </button>
+              </td>
+              <td>
+                <!-- Show "Request" button -->
+                <button class="btn btn-track"
+                  *ngIf="customer.isRequestedFileUpload === false && customer.isFileUpload === false"
+                  (click)="requestFileUpload(customer)">
+                  Request
+                </button>
+
+                <!-- Show "Requested" button -->
+                <button class="btn btn-secondary"
+                  *ngIf="customer.isRequestedFileUpload === true && customer.isFileUpload === false" disabled>
+                  Requested
+                </button>
+
+                <!-- Show "Upload" button -->
+                <button class="btn-track"
+                  *ngIf="customer.isRequestedFileUpload === true && customer.isFileUpload === true"
+                  (click)="openmissedDocsPopup(customer)">
+                  Upload
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="customers.length === 0">
+              <td colspan="7" class="text-center">No customers found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-missing-documents-upload *ngIf="showMissingDocsPopup" [LoanId]="missedDocsloanId"
+  (closeModal)="closeMissedDocksPopup()"></app-missing-documents-upload>
+<app-customer-application-tracking *ngIf="showCustomerApplicationTracking" [LoanId]="loanId"
+  (closeModal)="closeCustomerTracking()"></app-customer-application-tracking>
+  
+<!-- <button class="btn-track" (click)="openmissedDocsPopup(customer)">
+                    Upload
+                  </button> -->
+
+<!-- <div class="search-container">
+          <input 
+            type="text" 
+            class="search-input" 
+            placeholder="Search"
+          />
+        </div> -->
+<!-- Table -->
+<!-- <div class="row" >
+      <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-sm">
+            <thead class="table-custom-header">
+              <tr>
+                <th scope="col" (click)="onSort('index')">S.No</th>
+                <th scope="col" (mouseover)="hoverField = 'Accountant ID'" (mouseleave)="hoverField = null" (click)="onSort('Accountant ID')">
+                  Accountant ID
+                  <span class="sort-icon" [ngClass]="getSortIcon('Accountant ID')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'firstName'" (mouseleave)="hoverField = null" (click)="onSort('firstName')">
+                  First Name
+                  <span class="sort-icon" [ngClass]="getSortIcon('firstName')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'lastName'" (mouseleave)="hoverField = null" (click)="onSort('lastName')">
+                  Last Name
+                  <span class="sort-icon" [ngClass]="getSortIcon('lastName')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'email'" (mouseleave)="hoverField = null" (click)="onSort('email')">
+                  Email
+                  <span class="sort-icon" [ngClass]="getSortIcon('email')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'mobileNumber'" (mouseleave)="hoverField = null" (click)="onSort('mobileNumber')">
+                  Mobile Number
+                  <span class="sort-icon" [ngClass]="getSortIcon('mobileNumber')"></span>
+                </th>
+                <th scope="col" *ngIf="privilegeServ.hasPrivilege('EDIT_CUSTOMER_INFO') || privilegeServ.hasPrivilege('DELETE_CUSTOMER_INFO')">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let customer of customers; let i = index">
+                 <th scope="row">{{ customer.serialNum }}</th>
+                <td>{{ customer.accountNumber }}</td>
+                <td>{{ customer.firstName | capitalize}}</td>
+                <td> {{ customer.lastName | capitalize}}</td>
+                <td class="lowerCase">{{ customer.email }}</td>
+                <td>{{ customer.mobileNumber || 'N/A' }}</td>
+                <td class="action-buttons" *ngIf="privilegeServ.hasPrivilege('EDIT_CUSTOMER_INFO') || privilegeServ.hasPrivilege('DELETE_CUSTOMER_INFO')">
+                  <span class="edit-icon" (click)="openCustomerPopup(customer.customerId)" *ngIf="privilegeServ.hasPrivilege('EDIT_CUSTOMER_INFO')">
+                    <i class="fas fa-edit"></i>
+                  </span>
+                  <button class="btn btn-danger btn-sm" (click)="openDeleteConfirmation(customer.customerId)" *ngIf="privilegeServ.hasPrivilege('DELETE_CUSTOMER_INFO')">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="customers.length === 0">
+                <td colspan="7" class="text-center">No customers found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div> -->
+
+
+
+<!-- <div class="pagination-controls">
+      <button (click)="goToFirstPage()" [disabled]="currentPageIndex === 0">|<</button>
+      <button (click)="goToPreviousPage()" [disabled]="currentPageIndex === 0"><</button>
+      <span>Page {{ totalPages > 0 ? currentPageIndex + 1 : 0 }} of {{ totalPages }}</span>
+      <button (click)="goToNextPage()" [disabled]="currentPageIndex >= totalPages - 1">></button>
+      <button (click)="goToLastPage()" [disabled]="currentPageIndex >= totalPages - 1">>|</button>
+    </div> -->

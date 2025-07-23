@@ -1,0 +1,585 @@
+<div class="modal-overlay">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">Loan Sanction Details</h5>
+      <button type="button" class="btn-close" (click)="close()"></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="loanSanctionForm" (ngSubmit)="sendData()" class="container">
+        <div class="row">
+          <!-- <div class="col-md-12 form-group">
+            <label>Loan Account Number <span class="text-danger">*</span></label>
+            <input type="text" formControlName="loanAccountNumber" class="form-control"
+              [placeholder]="'Enter loan account number' | titlecase" />
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('loanAccountNumber')?.invalid && (loanSanctionForm.get('loanAccountNumber')?.touched || loanSanctionForm.get('loanAccountNumber')?.dirty)">
+                <span *ngIf="loanSanctionForm.get('loanAccountNumber')?.errors?.['required']"> Loan account number is
+                  required. </span>
+              </span>
+            </div>
+          </div> -->
+          <div class="col-md-12 form-group">
+            <label>Loan Account Number <span class="text-danger">*</span></label>
+            <input type="text" formControlName="loanAccountNumber" class="form-control"
+              [placeholder]="'Enter loan account number' | titlecase" />
+            <div class="error-message">
+              <span *ngIf="loanSanctionForm.get('loanAccountNumber')?.invalid && 
+             (loanSanctionForm.get('loanAccountNumber')?.touched || loanSanctionForm.get('loanAccountNumber')?.dirty)">
+                <span *ngIf="loanSanctionForm.get('loanAccountNumber')?.errors?.['required']">
+                  Loan account number is required.
+                </span>
+                <span *ngIf="loanSanctionForm.get('loanAccountNumber')?.errors?.['pattern']">
+                  Only letters and numbers are allowed.
+                </span>
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label>Loan Requested <span class="text-danger">*</span></label>
+            <input type="text" formControlName="loanRequested" class="form-control readable-content"
+              [placeholder]="'Enter loan requested amount'| titlecase" [readonly]="!requestedAmount" />
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('loanRequested')?.invalid && (loanSanctionForm.get('loanRequested')?.touched || loanSanctionForm.get('loanRequested')?.dirty)">
+                <span *ngIf="loanSanctionForm.get('loanRequested')?.errors?.['required']">Loan Requested is
+                  required.</span>
+                <span *ngIf="loanSanctionForm.get('loanRequested')?.errors?.['pattern']">Only numeric values are
+                  allowed.</span>
+                <span *ngIf="loanSanctionForm.get('loanRequested')?.errors?.['min']">Loan Requested must be at least
+                  1.</span>
+              </span>
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <label>Amount Sanctioned <span class="text-danger">*</span></label>
+            <input type="text" formControlName="amountSanctioned" class="form-control"
+              [placeholder]="'Enter sanctioned amount'| titlecase" (change)="getdynamicdata()"
+              (input)="onAmountSanctionedChange()" />
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('amountSanctioned')?.invalid && (loanSanctionForm.get('amountSanctioned')?.touched || loanSanctionForm.get('amountSanctioned')?.dirty)">
+                <span *ngIf="loanSanctionForm.get('amountSanctioned')?.errors?.['required']">Amount Sanctioned is
+                  required.</span>
+                <span *ngIf="loanSanctionForm.get('amountSanctioned')?.errors?.['pattern']"> Only numbers are allowed.
+                </span>
+                <span *ngIf="loanSanctionForm.get('amountSanctioned')?.errors?.['min']"> Amount Sanctioned must be at
+                  least 1. </span>
+              </span>
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <label>Origination Fee (1 %)<span class="text-danger">*</span></label>
+            <input type="text" formControlName="originationFee" class="form-control readable-content"
+              [placeholder]="'Enter origination fee'| titlecase" [readonly]="!requestedAmount" />
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('originationFee')?.invalid && (loanSanctionForm.get('originationFee')?.touched || loanSanctionForm.get('originationFee')?.dirty)">
+                <span *ngIf="loanSanctionForm.get('originationFee')?.errors?.['required']">Origination Fee is
+                  required.</span>
+                <span *ngIf="loanSanctionForm.get('originationFee')?.errors?.['pattern']">Only numeric values are
+                  allowed.</span>
+                <span *ngIf="loanSanctionForm.get('originationFee')?.errors?.['min']">Origination Fee must be at least
+                  1.</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label>Return Origination Fee<span class="text-danger">*</span></label>
+            <input type="text" formControlName="returnOriginationFee" class="form-control readable-content"
+              [placeholder]="'Enter return origination fee'| titlecase" [readonly]="!requestedAmount" />
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('returnOriginationFee')?.invalid && (loanSanctionForm.get('returnOriginationFee')?.touched || loanSanctionForm.get('returnOriginationFee')?.dirty)">
+                <span *ngIf="loanSanctionForm.get('returnOriginationFee')?.errors?.['required']">Return Origination Fee
+                  is
+                  required.</span>
+                <span *ngIf="loanSanctionForm.get('returnOriginationFee')?.errors?.['pattern']">Only numeric values are
+                  allowed.</span>
+                <span *ngIf="loanSanctionForm.get('returnOriginationFee')?.errors?.['min']">Return Origination Fee must
+                  be at least
+                  1.</span>
+              </span>
+            </div>
+          </div>
+
+        </div>
+        <!-- <div class="row">
+            <div class="col-md-12">
+              <div class="calculation-section">
+                <div class="row">
+                  <div class="col-md-6 col-12">
+                    <p><strong>Processing Charge (2%):</strong> ₹{{ processingCharge || 0 }}</p>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <p><strong>Document Charge:</strong> ₹500</p>
+                  </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                  <label>Total Disbursed Amount <span class="text-danger">*</span></label>
+                  <input 
+                    type="text" 
+                    formControlName="amountDisbursed" 
+                    class="form-control disbursed-input" 
+                    [value]="'₹' + (loanSanctionForm.value.amountDisbursed || 0)" 
+                    readonly 
+                  />
+                </div>
+              </div>
+            </div>
+          </div> -->
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label>Document Charge (₹) <span class="text-danger">*</span></label>
+            <input type="text" formControlName="documentCharge" class="form-control"
+              [placeholder]="'Enter document charge'| titlecase" />
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('documentCharge')?.invalid && (loanSanctionForm.get('documentCharge')?.touched || loanSanctionForm.get('documentCharge')?.dirty)">
+                <span *ngIf="loanSanctionForm.get('documentCharge')?.errors?.['required']">Document Charge is
+                  required.</span>
+                <span *ngIf="loanSanctionForm.get('documentCharge')?.errors?.['pattern']">Only numbers are
+                  allowed.</span>
+                <span *ngIf="loanSanctionForm.get('documentCharge')?.errors?.['min']">Document Charge (₹) must be at
+                  least 1. </span>
+              </span>
+            </div>
+          </div>
+          <div class="col-md-6 form-group position-relative">
+            <label>Interest Type <span class="text-danger">*</span></label>
+            <div class="select-wrapper">
+              <select formControlName="interestType" (change)="getdynamicdata()" class="form-control">
+                <option value="" disabled selected>Select Interest Type</option>
+                <option *ngFor="let type of interestTypeOptions" [value]="type">{{ type }}</option>
+              </select>
+              <i class="fa fa-chevron-down select-icon"></i>
+            </div>
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('interestType')?.invalid && (loanSanctionForm.get('interestType')?.touched || loanSanctionForm.get('interestType')?.dirty)">
+                <span *ngIf="loanSanctionForm.get('interestType')?.errors?.['required']">Interest Type is
+                  required.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label>Rate of Interest (%) <span class="text-danger">*</span></label>
+            <input type="text" formControlName="rateOfInterest" (change)="getdynamicdata()" class="form-control"
+              [placeholder]="'Enter interest rate (%) '| titlecase" />
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('rateOfInterest')?.invalid && (loanSanctionForm.get('rateOfInterest')?.touched || loanSanctionForm.get('rateOfInterest')?.dirty)">
+                <span *ngIf="loanSanctionForm.get('rateOfInterest')?.errors?.['required']">Rate of Interest is
+                  required.</span>
+                <span *ngIf="loanSanctionForm.get('rateOfInterest')?.errors?.['pattern']"> Only numbers are allowed.
+                </span>
+                <span *ngIf="loanSanctionForm.get('rateOfInterest')?.errors?.['min']"> Rate of Interest must be at least
+                  1. </span>
+              </span>
+            </div>
+          </div>
+          <div class="col-md-6 form-group position-relative">
+            <label>Number of EMIs <span class="text-danger">*</span></label>
+            <div class="select-wrapper">
+              <select formControlName="numberOfEmis" class="form-control" (change)="getdynamicdata()">
+                <option value="" disabled selected>Select EMI Duration</option>
+                <option *ngFor="let month of emiOptions" [value]="month">{{ month }} Months</option>
+              </select>
+              <i class="fa fa-chevron-down select-icon"></i>
+            </div>
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('numberOfEmis')?.invalid && (loanSanctionForm.get('numberOfEmis')?.touched || loanSanctionForm.get('numberOfEmis')?.dirty)">
+                <span *ngIf="loanSanctionForm.get('numberOfEmis')?.errors?.['required']">Number of EMIs is
+                  required.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <!-- New EMI Date Fields -->
+        <div class="row">
+          <div class="col-md-4 form-group">
+            <label>EMI Start Date <span class="text-danger">*</span></label>
+            <input type="date" formControlName="emiStartDate" (input)="getdynamicdata()" class="form-control" />
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('emiStartDate')?.invalid && loanSanctionForm.get('emiStartDate')?.touched">
+                <span *ngIf="loanSanctionForm.get('emiStartDate')?.errors?.['required']">EMI Start Date is
+                  required.</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-4 form-group">
+            <label>EMI End Date <span class="text-danger">*</span></label>
+            <input type="date" formControlName="emiEndDate" class="form-control" />
+            <div class="error-message">
+              <span *ngIf="loanSanctionForm.get('emiEndDate')?.invalid && loanSanctionForm.get('emiEndDate')?.touched">
+                <span *ngIf="loanSanctionForm.get('emiEndDate')?.errors?.['required']">EMI End Date is required.</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-4 form-group">
+            <label>Every month Due Date <span class="text-danger">*</span></label>
+            <input type="text" formControlName="dueDate" class="form-control"
+              [placeholder]="'Enter due date'| titlecase" />
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('dueDate')?.invalid && loanSanctionForm.get('dueDate')?.touched || loanSanctionForm.get('dueDate')?.dirty">
+                <span *ngIf="loanSanctionForm.get('dueDate')?.errors?.['required']">Due Date is required.</span>
+                <span *ngIf="loanSanctionForm.get('dueDate')?.errors?.['pattern']">Enter a valid date (1-31).</span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="col-md-6 form-group">
+            <label>Processing Charge (%) <span class="text-danger">*</span></label>
+            <input type="text" formControlName="processingCharge" class="form-control"
+              [placeholder]="'Enter processing charge (%)'| titlecase" />
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('processingCharge')?.invalid && (loanSanctionForm.get('processingCharge')?.touched || loanSanctionForm.get('processingCharge')?.dirty)">
+                <span *ngIf="loanSanctionForm.get('processingCharge')?.errors?.['required']">Processing Charge is
+                  required.</span>
+                <span *ngIf="loanSanctionForm.get('processingCharge')?.errors?.['pattern']">Only numbers are
+                  allowed.</span>
+                <span *ngIf="loanSanctionForm.get('processingCharge')?.errors?.['min']"> Processing Charge (%) must be
+                  at least 1. </span>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label>EMI Amount <span class="text-danger">*</span></label>
+            <input type="text" formControlName="emiAmount" class="form-control"
+              [placeholder]="'Enter EMI amount'| titlecase" />
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('emiAmount')?.invalid && (loanSanctionForm.get('emiAmount')?.touched || loanSanctionForm.get('emiAmount')?.dirty)">
+                <span *ngIf="loanSanctionForm.get('emiAmount')?.errors?.['required']">EMI Amount is required.</span>
+                <span *ngIf="loanSanctionForm.get('emiAmount')?.errors?.['pattern']"> Only numbers are allowed. </span>
+                <span *ngIf="loanSanctionForm.get('emiAmount')?.errors?.['min']">EMI Amount must be at least 1. </span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 form-group position-relative">
+            <label>Repayment Mode <span class="text-danger">*</span></label>
+            <div class="select-wrapper">
+              <select formControlName="repaymentMode" class="form-control">
+                <option value="" disabled selected>Select Repayment Mode</option>
+                <option *ngFor="let mode of repaymentModes" [value]="mode">{{ mode }}</option>
+              </select>
+              <i class="fa fa-chevron-down select-icon"></i>
+            </div>
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('repaymentMode')?.invalid && (loanSanctionForm.get('repaymentMode')?.touched || loanSanctionForm.get('repaymentMode')?.dirty)">
+                <span *ngIf="loanSanctionForm.get('repaymentMode')?.errors?.['required']">Repayment Mode is
+                  required.</span>
+              </span>
+            </div>
+          </div>
+          <!-- <div class="col-md-6 form-group position-relative">
+            <label>Status <span class="text-danger">*</span></label>
+            <div class="select-wrapper">
+              <select formControlName="status" class="form-control" (change)="onStatusChange($event)">
+                <option value="" disabled selected>Select Status</option>
+                <option *ngFor="let option of statusOptions" [value]="option">{{ option }}</option>
+              </select>
+              <i class="fa fa-chevron-down select-icon"></i>
+            </div>
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('status')?.invalid && (loanSanctionForm.get('status')?.touched || loanSanctionForm.get('status')?.dirty)">
+                <span *ngIf="loanSanctionForm.get('status')?.errors?.['required']"> Status is required. </span>
+              </span>
+            </div>
+          </div> -->
+          <!-- <div class="col-md-6 form-group position-relative">
+            <label>Status <span class="text-danger">*</span></label>
+            <div class="select-wrapper">
+              <select formControlName="status" class="form-control" (change)="onStatusChange($event)">
+                <option value="" disabled selected>Select Status</option>
+                <option value="Hold">Hold</option>
+                <option value="sanctioned">Sanctioned</option>
+              </select>
+              <i class="fa fa-chevron-down select-icon"></i>
+            </div>
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('status')?.invalid && (loanSanctionForm.get('status')?.touched || loanSanctionForm.get('status')?.dirty)">
+                <span *ngIf="loanSanctionForm.get('status')?.errors?.['required']"> Status is required. </span>
+              </span>
+            </div>
+          </div>
+
+          <div *ngIf="loanSanctionForm.get('status')?.value === 'Hold'" class="review-box">
+            <h5>Reason for Holding Application</h5>
+            <div class="row">
+              <div class="col-md-12">
+                <textarea id="hold" formControlName="hold" class="form-control review-textarea" rows="3"
+                  [placeholder]="'Provide a reason for holding the application...'| titlecase"></textarea>
+                <div *ngIf="loanSanctionForm.get('hold')?.touched && loanSanctionForm.get('hold')?.invalid">
+                  <small class="error-message">Hold reason is required</small>
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+        <div class="form-group mt-3 d-flex justify-content-end">
+          <button type="button" class="btn btn-secondary custom-btn me-2" (click)="close()">Cancel</button>
+          <button type="submit" class="btn btn-primary custom-btn">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- <div class="col-md-6 form-group position-relative">
+              <label>Loan Requested <span class="text-danger">*</span></label>
+              <div class="select-wrapper">
+                <select formControlName="loanRequested" class="form-control">
+                  <option value="">Select Loan Amount</option>
+                  <option *ngFor="let amount of loanAmounts" [value]="amount">{{ amount }}</option>
+                </select>
+                <i class="fa fa-chevron-down select-icon"></i>
+              </div>
+              <div class="error-message">
+                <span *ngIf="loanSanctionForm.get('loanRequested')?.invalid && (loanSanctionForm.get('loanRequested')?.touched || loanSanctionForm.get('loanRequested')?.dirty)">
+                  <span *ngIf="loanSanctionForm.get('loanRequested')?.errors?.['required']">Loan Requested is required.</span>
+                </span>
+              </div>
+            </div> -->
+
+<!-- <div class="col-md-6 form-group">
+              <label>Interest Type <span class="text-danger">*</span></label>
+              <input type="text" formControlName="interestType" class="form-control" placeholder="Enter interest type" />
+              <div class="error-message">
+               <span *ngIf="loanSanctionForm.get('interestType')?.invalid &&(loanSanctionForm.get('interestType')?.touched || loanSanctionForm.get('interestType')?.dirty)">
+                  <span *ngIf="loanSanctionForm.get('interestType')?.errors?.['required']"> Interest Type is required. </span>
+                  <span *ngIf="loanSanctionForm.get('interestType')?.errors?.['pattern']">  Only alphabets and spaces are allowed.</span>
+                </span>
+              </div>
+            </div> -->
+<!-- <div class="row">
+
+            <div class="col-md-6 form-group">
+              <label>Amount Disbursed <span class="text-danger">*</span></label>
+              <input type="text" formControlName="amountDisbursed" class="form-control" placeholder="Enter disbursed amount" />
+              <div class="error-message">
+                <span *ngIf="loanSanctionForm.get('amountDisbursed')?.invalid && (loanSanctionForm.get('amountDisbursed')?.touched || loanSanctionForm.get('amountDisbursed')?.dirty)">
+                  <span *ngIf="loanSanctionForm.get('amountDisbursed')?.errors?.['required']">Amount Disbursed is required.</span>
+                  <span *ngIf="loanSanctionForm.get('amountDisbursed')?.errors?.['pattern']"> Only numbers are allowed.  </span>
+                  <span *ngIf="loanSanctionForm.get('amountDisbursed')?.errors?.['min']"> Amount Disbursed must be at least 1. </span>
+                </span>
+              </div>
+            </div>
+          </div> -->
+
+<!-- <div class="col-md-6 form-group">
+              <label>Loan Sanction ID <span class="text-danger">*</span></label>
+              <input type="text" formControlName="loanSanctionId" class="form-control" placeholder="Enter Loan Sanction ID" />
+              <div class="error-message">
+                <span *ngIf="loanSanctionForm.get('loanSanctionId')?.invalid && (loanSanctionForm.get('loanSanctionId')?.touched || loanSanctionForm.get('loanSanctionId')?.dirty)">
+                  <span *ngIf="loanSanctionForm.get('loanSanctionId')?.errors?.['required']"> Loan Sanction ID is required.</span>
+                  <span *ngIf="loanSanctionForm.get('loanSanctionId')?.errors?.['pattern']"> Only numbers are allowed. </span>
+                  <span *ngIf="loanSanctionForm.get('loanSanctionId')?.errors?.['min']"> Loan Sanction ID must be at least 1. </span>
+                </span>
+              </div>
+            </div> -->
+
+<!-- EMI Start Date -->
+<!-- <div class="col-md-6 form-group">
+              <label>Repayment Mode <span class="text-danger">*</span></label>
+              <input type="text" formControlName="repaymentMode" class="form-control" placeholder="Enter repayment mode" />
+              <div class="error-message">
+                <span *ngIf="loanSanctionForm.get('repaymentMode')?.invalid && (loanSanctionForm.get('repaymentMode')?.touched || loanSanctionForm.get('repaymentMode')?.dirty)">
+                  <span *ngIf="loanSanctionForm.get('repaymentMode')?.errors?.['required']"> Repayment Mode is required. </span>
+                  <span *ngIf="loanSanctionForm.get('repaymentMode')?.errors?.['pattern']"> Only alphabets and spaces are allowed.</span>
+                </span>
+              </div>
+            </div> -->
+<!-- <div class="col-md-6 form-group">
+              <label>EMI Start Date <span class="text-danger">*</span></label>
+              <input type="date" formControlName="emiStartDate" class="form-control" />
+              <div class="error-message">
+                <span *ngIf=" loanSanctionForm.get('emiStartDate')?.invalid && (loanSanctionForm.get('emiStartDate')?.touched || loanSanctionForm.get('emiStartDate')?.dirty)" >
+                  <span *ngIf="loanSanctionForm.get('emiStartDate')?.errors?.['required']"> EMI Start Date is required. </span>
+                 </span>
+              </div>
+            </div> -->
+<!-- EMI End Date -->
+<!-- <div class="col-md-6 form-group">
+              <label>EMI End Date <span class="text-danger">*</span></label>
+              <input type="date" formControlName="emiEndDate" class="form-control" />
+              <div class="error-message">
+                <span *ngIf="loanSanctionForm.get('emiEndDate')?.invalid && (loanSanctionForm.get('emiEndDate')?.touched || loanSanctionForm.get('emiEndDate')?.dirty)">
+                  <span *ngIf="loanSanctionForm.get('emiEndDate')?.errors?.['required']"> EMI End Date is required.</span>
+                </span>
+              </div>
+            </div> -->
+
+
+<!-- <div class="row">
+            <div class="col-md-6 form-group">
+              <label>EMI Due Date <span class="text-danger">*</span></label>
+              <input type="date" formControlName="emiDueDate" class="form-control" />
+              <div class="error-message">
+                <span *ngIf=" loanSanctionForm.get('emiDueDate')?.invalid && (loanSanctionForm.get('emiDueDate')?.touched || loanSanctionForm.get('emiDueDate')?.dirty)">
+                  <span *ngIf="loanSanctionForm.get('emiDueDate')?.errors?.['required']"> EMI Due Date is required.</span>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <label>Currency <span class="text-danger">*</span></label>
+              <input type="text" formControlName="currency" class="form-control" placeholder="Enter currency" />
+              <div class="error-message">
+                <span *ngIf="loanSanctionForm.get('currency')?.invalid && (loanSanctionForm.get('currency')?.touched || loanSanctionForm.get('currency')?.dirty)">
+                  <span *ngIf="loanSanctionForm.get('currency')?.errors?.['required']">Currency is required.</span>
+                  <span *ngIf="loanSanctionForm.get('currency')?.errors?.['pattern']"> Only letters are allowed. </span>
+                </span>
+              </div>
+            </div>
+          </div> -->
+<!-- <div class="row">
+              <div class="col-md-6 form-group">
+              <label>Payment Frequency <span class="text-danger">*</span></label>
+                <input type="text" formControlName="paymentFrequency" class="form-control" placeholder="Enter payment frequency" />
+                 <div class="error-message">
+                   <span  *ngIf="loanSanctionForm.get('paymentFrequency')?.invalid &&(loanSanctionForm.get('paymentFrequency')?.touched || loanSanctionForm.get('paymentFrequency')?.dirty) " >
+                   <span *ngIf="loanSanctionForm.get('paymentFrequency')?.errors?.['required']">Payment Frequency is required. </span>
+                   <span *ngIf="loanSanctionForm.get('paymentFrequency')?.errors?.['pattern']">  Only letters are allowed. </span>
+                  </span>
+               </div>
+              </div>
+              <div class="col-md-6 form-group">
+                <label>Credit Limit <span class="text-danger">*</span></label>
+                <input type="text" formControlName="creditLimit" class="form-control" placeholder="Enter credit limit" />
+                <div class="error-message">
+                  <span *ngIf=" loanSanctionForm.get('creditLimit')?.invalid &&(loanSanctionForm.get('creditLimit')?.touched || loanSanctionForm.get('creditLimit')?.dirty)" >
+                    <span *ngIf="loanSanctionForm.get('creditLimit')?.errors?.['required']">Credit Limit is required.</span>
+                    <span *ngIf="loanSanctionForm.get('creditLimit')?.errors?.['pattern']">Only numbers are allowed </span>
+                    <span *ngIf="loanSanctionForm.get('creditLimit')?.errors?.['min']"> Credit Limit must be at least 1. </span>
+                  </span>
+                </div>
+              </div>
+           </div> -->
+<!-- <div class="row">      
+            <div class="col-md-6 form-group">
+              <label>Cash Limit <span class="text-danger">*</span></label>
+              <input type="text" formControlName="cashLimit" class="form-control" placeholder="Enter cash limit" />
+              <div class="error-message">
+                <span *ngIf="loanSanctionForm.get('cashLimit')?.invalid &&(loanSanctionForm.get('cashLimit')?.touched || loanSanctionForm.get('cashLimit')?.dirty)">
+                  <span *ngIf="loanSanctionForm.get('cashLimit')?.errors?.['required']"> Cash Limit is required. </span>
+                  <span *ngIf="loanSanctionForm.get('cashLimit')?.errors?.['pattern']"> Only numbers are allowed.</span>
+                  <span *ngIf="loanSanctionForm.get('cashLimit')?.errors?.['min']"> Cash Limit must be at least 1.</span>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <label>Loan Processing Charges <span class="text-danger">*</span></label>
+              <input type="text" formControlName="loanProcessingCharges" class="form-control" placeholder="Enter loan processing charges" />
+              <div class="error-message">
+                <span *ngIf="loanSanctionForm.get('loanProcessingCharges')?.invalid && (loanSanctionForm.get('loanProcessingCharges')?.touched || loanSanctionForm.get('loanProcessingCharges')?.dirty) " >
+                  <span *ngIf="loanSanctionForm.get('loanProcessingCharges')?.errors?.['required']">Loan Processing Charges are required.</span>
+                  <span *ngIf="loanSanctionForm.get('loanProcessingCharges')?.errors?.['pattern']">Only numbers are allowed.</span>
+                  <span *ngIf="loanSanctionForm.get('loanProcessingCharges')?.errors?.['min']"> Loan Processing Charges must be at least 1. </span>
+                </span>
+              </div>
+            </div>
+          </div> -->
+<!-- <div class="row">
+            <div class="col-md-6 form-group">
+              <label>Documentation Charges <span class="text-danger">*</span></label>
+              <input type="text" formControlName="documentationCharges" class="form-control" placeholder="Enter documentation charges" />
+              <div class="error-message">
+                <span *ngIf=" loanSanctionForm.get('documentationCharges')?.invalid && (loanSanctionForm.get('documentationCharges')?.touched || loanSanctionForm.get('documentationCharges')?.dirty) " >
+                  <span *ngIf="loanSanctionForm.get('documentationCharges')?.errors?.['required']">Documentation Charges are required. </span>
+                  <span *ngIf="loanSanctionForm.get('documentationCharges')?.errors?.['pattern']"> Only numbers are allowed. </span>
+                  <span *ngIf="loanSanctionForm.get('documentationCharges')?.errors?.['min']"> Documentation Charges must be at least 1.</span>
+                </span>
+              </div>
+            </div>
+      
+             <div class="col-md-6 form-group">
+                <label>Penalty for Late Payment <span class="text-danger">*</span></label>
+                <input type="text" formControlName="penaltyForLatePayment" class="form-control" placeholder="Enter penalty amount" />
+                          <div class="error-message">
+                            <span *ngIf="loanSanctionForm.get('penaltyForLatePayment')?.invalid &&(loanSanctionForm.get('penaltyForLatePayment')?.touched || loanSanctionForm.get('penaltyForLatePayment')?.dirty)">
+                              <span *ngIf="loanSanctionForm.get('penaltyForLatePayment')?.errors?.['required']"> Penalty for Late Payment is required.</span>
+                              <span *ngIf="loanSanctionForm.get('penaltyForLatePayment')?.errors?.['pattern']">  Only numbers are allowed.</span>
+                              <span *ngIf="loanSanctionForm.get('penaltyForLatePayment')?.errors?.['min']"> Penalty must be at least 1.</span>
+                            </span>
+                          </div>
+                        </div>
+                     </div> -->
+<!-- <div class="row">
+          </div> -->
+<!-- <div class="row">
+            <div class="col-md-6 form-group">
+              <label>Added By<span class="text-danger">*</span></label>
+              <input type="text" formControlName="addedBy" class="form-control" placeholder="Enter Added By" />
+              <div class="error-message">
+                <span *ngIf="loanSanctionForm.get('addedBy')?.invalid && (loanSanctionForm.get('addedBy')?.touched || loanSanctionForm.get('addedBy')?.dirty)">
+                  <span *ngIf="loanSanctionForm.get('addedBy')?.errors?.['required']"> Added By is required.</span>
+                  <span *ngIf="loanSanctionForm.get('addedBy')?.errors?.['pattern']"> Only numbers are allowed. </span>
+                  <span *ngIf="loanSanctionForm.get('addedBy')?.errors?.['min']"> Added By must be at least 1. </span>
+                </span>
+              </div>
+            </div>
+            
+            <div class="col-md-6 form-group">
+              <label>Updated By <span class="text-danger">*</span></label>
+              <input type="text" formControlName="updatedBy" class="form-control" placeholder="Enter Updated By" />
+              <div class="error-message">
+                <span *ngIf="loanSanctionForm.get('updatedBy')?.invalid && (loanSanctionForm.get('updatedBy')?.touched || loanSanctionForm.get('updatedBy')?.dirty)">
+                  <span *ngIf="loanSanctionForm.get('updatedBy')?.errors?.['required']"> Updated By is required.</span>
+                  <span *ngIf="loanSanctionForm.get('updatedBy')?.errors?.['pattern']"> Only numbers are allowed. </span>
+                  <span *ngIf="loanSanctionForm.get('updatedBy')?.errors?.['min']"> Updated By must be at least 1. </span>
+                </span>
+              </div>
+            </div>
+                        
+          </div> -->
+<!-- <div class="row">
+            <div class="col-md-6 form-group">
+              <label>Loan ID <span class="text-danger">*</span></label>
+              <input type="text" formControlName="loanId" class="form-control" placeholder="Enter Loan ID" />
+              <div class="error-message">
+                <span *ngIf="loanSanctionForm.get('loanId')?.invalid && (loanSanctionForm.get('loanId')?.touched || loanSanctionForm.get('loanId')?.dirty)">
+                  <span *ngIf="loanSanctionForm.get('loanId')?.errors?.['required']"> Loan ID is required.</span>
+                  <span *ngIf="loanSanctionForm.get('loanId')?.errors?.['pattern']"> Only numbers are allowed. </span>
+                  <span *ngIf="loanSanctionForm.get('loanId')?.errors?.['min']"> Loan ID must be at least 1. </span>
+                </span>
+              </div>
+            </div>
+            
+            <div class="col-md-6 form-group">
+              <label>Payment ID <span class="text-danger">*</span></label>
+              <input type="text" formControlName="paymentId" class="form-control" placeholder="Enter Payment ID" />
+              <div class="error-message">
+                <span *ngIf="loanSanctionForm.get('paymentId')?.invalid && (loanSanctionForm.get('paymentId')?.touched || loanSanctionForm.get('paymentId')?.dirty)">
+                  <span *ngIf="loanSanctionForm.get('paymentId')?.errors?.['required']"> Payment ID is required.</span>
+                  <span *ngIf="loanSanctionForm.get('paymentId')?.errors?.['pattern']"> Only numbers are allowed. </span>
+                  <span *ngIf="loanSanctionForm.get('paymentId')?.errors?.['min']"> Payment ID must be at least 1. </span>
+                </span>
+              </div>
+            </div>
+          </div> -->

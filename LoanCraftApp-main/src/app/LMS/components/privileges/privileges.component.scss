@@ -1,0 +1,170 @@
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px; /* Space between navbar and cards */
+    margin-left: 0px;
+    padding-left: 10px;
+}
+
+.card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 250px;
+    height: 200px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    // background-color: #4c7c80;
+    background-color:rgb(157, 152, 170);
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    text-align: left;
+    width: 100%;
+}
+
+.card-content {
+    padding: 10px;
+    height: 150px;
+    overflow-y: auto;
+}
+
+.card-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.card-content ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.card-content ul li input {
+    margin-right: 10px;
+}
+
+.checkbox-container label{
+    display: flex;
+}
+
+// .main-card-actions {
+//     display: flex;
+//     justify-content: space-between;
+//     margin-top: 15px;
+
+//     button {
+//       padding: 5px 10px;
+//       cursor: pointer;
+//     }
+
+//   }
+
+.main-card-actions {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: 10px; /* Space between buttons */
+    margin-top: 15px;
+    margin-right: 92px;
+}
+
+button {
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 23px;
+}
+
+  .access-check-box{
+    margin-left: 0px;
+    font-weight: bold;
+    // font-size: 15px;
+  }
+  
+  .access-check-boxs{
+    margin-left: 35px;
+  }
+  
+  .fontstyle{
+    font-weight: bold;
+    font-size: 15px;
+  }
+  
+  .access-check-boxs[_ngcontent-ng-c3594766312] {
+    margin-left: 96px;
+  }
+
+  input[type="checkbox"] {
+    width: 11px; 
+    height: 12px; 
+    transform: scale(1.5); /* Scale the checkbox */
+    margin-right: 10px; 
+  }
+
+  /* Optional: Adjust label alignment for larger checkboxes */
+  label {
+    display: flex;
+    align-items: center;
+  }
+
+  .fontstyle {
+    font-size: 16px; /* Adjust font size for first checkbox */
+    font-weight: bold;
+  }
+
+  .general {
+    font-size: 14px; 
+  }
+
+  .custom-snackbar {
+    position: fixed;
+    top: 20px; /* Distance from the top */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f8d7da; /* Default background for errors */
+    color: #721c24; /* Default text color for errors */
+    padding: 15px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center; /* Aligns icon and text vertically */
+    gap: 10px; /* Space between icon and text */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0s linear 0.3s;
+    z-index: 9999; /* Ensures visibility above other elements */
+  }
+  
+  .custom-snackbar.show {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s;
+  }
+  
+  .custom-snackbar.success {
+    background-color: #d4edda; /* Bootstrap's alert-success color */
+    color: #155724;
+  }
+  
+  .custom-snackbar.error {
+    background-color: #f8d7da; /* Bootstrap's alert-danger color */
+    color: #721c24;
+  }
+  
+  .custom-snackbar i {
+    font-size: 1.2rem;
+  }
+  
+  /* Icons for success and error */
+  .custom-snackbar.success i {
+    color: #155724; /* Icon color for success */
+  }
+  
+  .custom-snackbar.error i {
+    color: #721c24; /* Icon color for error */
+  }
+  

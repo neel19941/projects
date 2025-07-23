@@ -1,0 +1,158 @@
+/* ================= Modal Styles ================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4); /* Softer backdrop */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    z-index: 1050;
+  }
+  
+  .modal-content {
+    background-color: #fdfdfd;
+    padding: 20px 35px;
+    border-radius: 10px;
+    max-width: 85pc;
+    width: 100%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-height: 90vh;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: flex-start; /* Aligns the content to the left */
+    align-items: center;
+    width: 100%;
+    border-bottom: 2px solid #dee2e6; /* Horizontal line under the header */
+    padding-bottom: 25px; /* Optional, for spacing between the line and content */
+  }
+  
+  .modal-title {
+    flex: 1;
+    text-align: center; /* Center the title */
+    font-size: 1.6rem; /* Increase font size */
+    font-weight: 600; /* Optional: make the font weight bolder */
+  }
+  .btn-close {
+    margin-left: auto; /* Pushes the close button to the right */
+  }
+  
+  
+  .modal-title {
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: #333;
+  }
+  
+  .modal-body {
+    margin-top: 20px;
+  }
+  
+/* Stepper container styling */
+.stepper-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  /* Step wrapper inside the stepper */
+  .step-wrapper {
+    display: flex;
+    align-items: center;
+  }
+  
+  .step-number {
+    margin-top: 4px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #6c757d; /* muted gray */
+  }
+  
+  
+  
+  .step {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+    padding: 10px;
+  }
+  .clickable {
+    cursor: pointer;
+  }
+  
+  .circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #adb5bd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .circle.completed {
+    background-color: #198754;
+  }
+  
+  .circle.in-progress {
+    background-color: #0d6efd;
+  }
+  
+  .circle.pending {
+    background-color: #dee2e6;
+  }
+  
+  .message-space {
+    min-height: 40px; /* Reserve space for message */
+  }
+  
+  .line {
+    height: 4px;
+    width: 70px;
+    margin: 0 8px;
+    border-radius: 2px;
+    margin-bottom: 50px;
+  }
+  
+  .line-success {
+    background-color: #198754;
+  }
+  
+  .line-primary {
+    background-color: #0d6efd;
+  }
+  
+  .line-pending {
+    background-color: #dee2e6;
+  }
+  .line-in-progress {
+    background-color: #0d6efd;
+  
+  }
+  /* Media query for smaller screens */
+  @media (max-width: 767.98px) {
+    .stepper-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .line {
+      display: none;
+    }
+  
+    .step {
+      margin-bottom: 1rem;
+    }
+  }
+  

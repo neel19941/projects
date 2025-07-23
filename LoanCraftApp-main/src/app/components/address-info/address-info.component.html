@@ -1,0 +1,312 @@
+<div class="modal-overlay">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">Update Address Information</h5>
+      <button type="button" class="btn-close" (click)="close()"></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="addressForm" (ngSubmit)="sendData()" class="container">
+        <!-- Current Address -->
+        <h6>Current Address</h6>
+
+        <div class="row">
+
+          <!-- Address -->
+          <!-- <div class="col-md-6 form-group">
+            <label>Address <span class="text-danger">*</span></label>
+            <input type="text" formControlName="tempaddress" class="form-control" [placeholder]="'Enter Address'| titlecase"  appTitleCase/>
+            <div class="error-message"
+              *ngIf="addressForm.get('tempaddress')?.invalid && (addressForm.get('tempaddress')?.touched || addressForm.get('tempaddress')?.dirty)">
+              Address is required.
+            </div>
+          </div> -->
+
+          <!-- Address -->
+          <div class="col-md-6 form-group">
+            <label>Address <span class="text-danger">*</span></label>
+            <input type="text" formControlName="tempaddress" class="form-control"
+              [placeholder]="'Enter Address' | titlecase" appTitleCase />
+            <div class="error-message"
+              *ngIf="addressForm.get('tempaddress')?.invalid && (addressForm.get('tempaddress')?.touched || addressForm.get('tempaddress')?.dirty)">
+              <span *ngIf="addressForm.get('tempaddress')?.errors?.['required']">Address is required.</span>
+              <span *ngIf="addressForm.get('tempaddress')?.errors?.['pattern']">Address cannot be only spaces.</span>
+            </div>
+          </div>
+
+          <!-- City -->
+          <!-- <div class="col-md-6 form-group">
+            <label>City <span class="text-danger">*</span></label>
+            <input type="text" formControlName="tempcity" class="form-control" [placeholder]="'Enter City'| titlecase"
+              appTitleCase />
+            <div class="error-message"
+              *ngIf="addressForm.get('tempcity')?.invalid && (addressForm.get('tempcity')?.touched || addressForm.get('tempcity')?.dirty)">
+              Valid city name is required.
+            </div>
+          </div> -->
+          <!-- City -->
+          <div class="col-md-6 form-group">
+            <label>City <span class="text-danger">*</span></label>
+            <input type="text" formControlName="tempcity" class="form-control" [placeholder]="'Enter City' | titlecase"
+              appTitleCase />
+            <div class="error-message"
+              *ngIf="addressForm.get('tempcity')?.invalid && (addressForm.get('tempcity')?.touched || addressForm.get('tempcity')?.dirty)">
+              <span *ngIf="addressForm.get('tempcity')?.errors?.['required']">City is required.</span>
+              <span *ngIf="addressForm.get('tempcity')?.errors?.['pattern']">Enter at least 4 letters (letters and
+                spaces only).</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <!-- State -->
+          <!-- <div class="col-md-6 form-group">
+            <label>State <span class="text-danger">*</span></label>
+            <input type="text" formControlName="tempstate" class="form-control" placeholder="Enter State" />
+            <div class="error-message"
+              *ngIf="addressForm.get('tempstate')?.invalid && (addressForm.get('tempstate')?.touched || addressForm.get('tempstate')?.dirty)">
+              Valid state name is required.
+            </div>
+          </div> -->
+
+          <!-- Temporary State Select -->
+          <div class="col-md-6 form-group">
+            <label for="tempstate">State <span class="text-danger">*</span></label>
+            <div class="select-wrapper">
+              <select id="tempstate" class="form-control" formControlName="tempstate"
+                (change)="currentOnStateChange($event)">
+                <option value="">-- Select State --</option>
+                <option *ngFor="let state of states" [value]="state.state">{{ state.state | capitalize}}</option>
+              </select>
+              <i class="fa fa-chevron-down select-icon"></i>
+            </div>
+            <div class="error-message"
+              *ngIf="addressForm.get('tempstate')?.invalid && (addressForm.get('tempstate')?.touched || addressForm.get('tempstate')?.dirty)">
+              Please select a valid state.
+            </div>
+          </div>
+
+
+          <!-- Location -->
+          <!-- <div class="col-md-6 form-group">
+            <label>Location <span class="text-danger">*</span></label>
+            <input type="text" formControlName="templocation" class="form-control"
+              [placeholder]="'Enter Location'| titlecase" appTitleCase />
+            <div class="error-message"
+              *ngIf="addressForm.get('templocation')?.invalid && (addressForm.get('templocation')?.touched || addressForm.get('templocation')?.dirty)">
+              Valid location is required.
+            </div>
+          </div> -->
+
+          <div class="col-md-6 form-group">
+            <label>Location <span class="text-danger">*</span></label>
+            <input type="text" formControlName="templocation" class="form-control"
+              [placeholder]="'Enter Location' | titlecase" appTitleCase />
+            <div class="error-message"
+              *ngIf="addressForm.get('templocation')?.invalid && (addressForm.get('templocation')?.touched || addressForm.get('templocation')?.dirty)">
+              <span *ngIf="addressForm.get('templocation')?.errors?.['required']">Location is required.</span>
+              <span *ngIf="addressForm.get('templocation')?.errors?.['pattern']">Enter at least 4 letters (letters and
+                spaces only).</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <!-- Landmark -->
+          <!-- <div class="col-md-6 form-group">
+            <label>Landmark <span class="text-danger">*</span></label>
+            <input type="text" formControlName="templandmark" class="form-control"
+              [placeholder]="'Enter Landmark' | titlecase" appTitleCase />
+            <div class="error-message"
+              *ngIf="addressForm.get('templandmark')?.invalid && (addressForm.get('templandmark')?.touched || addressForm.get('templandmark')?.dirty)">
+              Valid landmark is required.
+            </div>
+          </div> -->
+
+          <div class="col-md-6 form-group">
+            <label>Landmark <span class="text-danger">*</span></label>
+            <input type="text" formControlName="templandmark" class="form-control"
+              [placeholder]="'Enter Landmark' | titlecase" appTitleCase />
+            <div class="error-message"
+              *ngIf="addressForm.get('templandmark')?.invalid && (addressForm.get('templandmark')?.touched || addressForm.get('templandmark')?.dirty)">
+              <span *ngIf="addressForm.get('templandmark')?.errors?.['required']">Landmark is required.</span>
+              <span *ngIf="addressForm.get('templandmark')?.errors?.['pattern']">Landmark cannot be only spaces.</span>
+            </div>
+          </div>
+
+          <!-- Stayed Years -->
+          <div class="col-md-6 form-group">
+            <label>Stayed Years <span class="text-danger">*</span></label>
+            <input type="number" formControlName="tempstayedOfYears" class="form-control"
+              [placeholder]="'Years' | titlecase" />
+            <div class="error-message"
+              *ngIf="addressForm.get('tempstayedOfYears')?.invalid && (addressForm.get('tempstayedOfYears')?.touched || addressForm.get('tempstayedOfYears')?.dirty)">
+              Minimum value is 1.
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Pincode -->
+          <div class="col-md-6 form-group">
+            <label>Pincode <span class="text-danger">*</span></label>
+            <input type="text" formControlName="temppincode" class="form-control"
+              [placeholder]="'6-digit Pincode' | titlecase" />
+            <div class="error-message"
+              *ngIf="addressForm.get('temppincode')?.invalid && (addressForm.get('temppincode')?.touched || addressForm.get('temppincode')?.dirty)">
+              Valid 6-digit pincode is required.
+            </div>
+          </div>
+        </div>
+
+        <!-- Same as Current Address Checkbox -->
+        <div class="form-check mt-3">
+          <input type="checkbox" class="form-check-input" formControlName="sameAsCurrent"
+            (change)="copyCurrentAddress()" />
+          <label class="form-check-label">Same as Current Address</label>
+        </div>
+
+        <!-- Permanent Address -->
+        <h6 class="mt-4">Permanent Address</h6>
+        <div class="row">
+          <!-- Address -->
+          <!-- <div class="col-md-6 form-group">
+            <label>Address <span class="text-danger">*</span></label>
+            <input type="text" formControlName="permanentAddress" class="form-control"
+              [placeholder]="'Enter Address' | titlecase" [readonly]="isPermanentAddressSame" appTitleCase />
+            <div class="error-message"
+              *ngIf="addressForm.get('permanentAddress')?.invalid && (addressForm.get('permanentAddress')?.touched || addressForm.get('permanentAddress')?.dirty)">
+              Address is required.
+            </div>
+          </div> -->
+          <div class="col-md-6 form-group">
+            <label>Address <span class="text-danger">*</span></label>
+            <input type="text" formControlName="permanentAddress" class="form-control"
+              [placeholder]="'Enter Address' | titlecase" [readonly]="isPermanentAddressSame" appTitleCase />
+            <div class="error-message"
+              *ngIf="addressForm.get('permanentAddress')?.invalid && (addressForm.get('permanentAddress')?.touched || addressForm.get('permanentAddress')?.dirty)">
+              <span *ngIf="addressForm.get('permanentAddress')?.errors?.['required']">Address is required.</span>
+              <span *ngIf="addressForm.get('permanentAddress')?.errors?.['pattern']">Address cannot be only
+                spaces.</span>
+            </div>
+          </div>
+
+          <!-- City -->
+          <!-- <div class="col-md-6 form-group">
+            <label>City <span class="text-danger">*</span></label>
+            <input type="text" formControlName="permanentCity" class="form-control"
+              [placeholder]="'Enter City' | titlecase" [readonly]="isPermanentAddressSame" appTitleCase />
+            <div class="error-message"
+              *ngIf="addressForm.get('permanentCity')?.invalid && (addressForm.get('permanentCity')?.touched || addressForm.get('permanentCity')?.dirty)">
+              Valid city name is required.
+            </div>
+          </div> -->
+
+          <div class="col-md-6 form-group">
+            <label>City <span class="text-danger">*</span></label>
+            <input type="text" formControlName="permanentCity" class="form-control"
+              [placeholder]="'Enter City' | titlecase" [readonly]="isPermanentAddressSame" appTitleCase />
+            <div class="error-message"
+              *ngIf="addressForm.get('permanentCity')?.invalid && (addressForm.get('permanentCity')?.touched || addressForm.get('permanentCity')?.dirty)">
+              <span *ngIf="addressForm.get('permanentCity')?.errors?.['required']">City is required.</span>
+              <span *ngIf="addressForm.get('permanentCity')?.errors?.['pattern']">Enter at least 4 letters (letters and
+                spaces only).</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- State -->
+          <!-- Permanent State Select -->
+          <div class="col-md-6 form-group">
+            <label for="permanentState">Permanent State <span class="text-danger">*</span></label>
+            <div class="select-wrapper">
+              <select id="permanentState" class="form-control" formControlName="permanentState"
+                (change)="permanentOnStateChange($event)" [disabled]="isPermanentAddressSame">
+                <option value="">-- Select State --</option>
+                <option *ngFor="let state of states" [value]="state.state">{{ state.state | capitalize}}</option>
+              </select>
+              <i class="fa fa-chevron-down select-icon"></i>
+            </div>
+            <div class="error-message"
+              *ngIf="addressForm.get('permanentState')?.invalid && (addressForm.get('permanentState')?.touched || addressForm.get('permanentState')?.dirty)">
+              Please select a valid state.
+            </div>
+          </div>
+
+          <!-- Location -->
+          <!-- <div class="col-md-6 form-group">
+            <label>Location <span class="text-danger">*</span></label>
+            <input type="text" formControlName="permanentLocation" class="form-control"
+              [placeholder]="'Enter Location' | titlecase" [readonly]="isPermanentAddressSame" appTitleCase />
+            <div class="error-message"
+              *ngIf="addressForm.get('permanentLocation')?.invalid && (addressForm.get('permanentLocation')?.touched || addressForm.get('permanentLocation')?.dirty)">
+              Valid location is required.
+            </div>
+          </div> -->
+          <div class="col-md-6 form-group">
+            <label>Location <span class="text-danger">*</span></label>
+            <input type="text" formControlName="permanentLocation" class="form-control"
+              [placeholder]="'Enter Location' | titlecase" [readonly]="isPermanentAddressSame" appTitleCase />
+            <div class="error-message"
+              *ngIf="addressForm.get('permanentLocation')?.invalid && (addressForm.get('permanentLocation')?.touched || addressForm.get('permanentLocation')?.dirty)">
+              <span *ngIf="addressForm.get('permanentLocation')?.errors?.['required']">Location is required.</span>
+              <span *ngIf="addressForm.get('permanentLocation')?.errors?.['pattern']">Enter at least 4 letters (letters
+                and spaces only).</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <!-- Landmark -->
+          <!-- <div class="col-md-6 form-group">
+            <label>Landmark <span class="text-danger">*</span></label>
+            <input type="text" formControlName="permanentLandmark" class="form-control"
+              [placeholder]="'Enter Landmark' | titlecase" [readonly]="isPermanentAddressSame" appTitleCase />
+            <div class="error-message"
+              *ngIf="addressForm.get('permanentLandmark')?.invalid && (addressForm.get('permanentLandmark')?.touched || addressForm.get('permanentLandmark')?.dirty)">
+              Valid landmark is required.
+            </div>
+          </div> -->
+          <div class="col-md-6 form-group">
+            <label>Landmark <span class="text-danger">*</span></label>
+            <input type="text" formControlName="permanentLandmark" class="form-control"
+              [placeholder]="'Enter Landmark' | titlecase" [readonly]="isPermanentAddressSame" appTitleCase />
+            <div class="error-message"
+              *ngIf="addressForm.get('permanentLandmark')?.invalid && (addressForm.get('permanentLandmark')?.touched || addressForm.get('permanentLandmark')?.dirty)">
+              <span *ngIf="addressForm.get('permanentLandmark')?.errors?.['required']">Landmark is required.</span>
+              <span *ngIf="addressForm.get('permanentLandmark')?.errors?.['pattern']">Landmark cannot be only
+                spaces.</span>
+            </div>
+          </div>
+
+          <!-- Stayed Years -->
+          <div class="col-md-6 form-group">
+            <label>Stayed Years <span class="text-danger">*</span></label>
+            <input type="number" formControlName="permanentStayedOfYears" class="form-control"
+              [placeholder]="'Years' | titlecase" [readonly]="isPermanentAddressSame" />
+            <div class="error-message"
+              *ngIf="addressForm.get('permanentStayedOfYears')?.invalid && (addressForm.get('permanentStayedOfYears')?.touched || addressForm.get('permanentStayedOfYears')?.dirty)">
+              Minimum value is 1.
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Pincode -->
+          <div class="col-md-6 form-group">
+            <label>Pincode <span class="text-danger">*</span></label>
+            <input type="text" formControlName="permanentPincode" class="form-control"
+              [placeholder]="'6-digit Pincode' | titlecase " [readonly]="isPermanentAddressSame" />
+            <div class="error-message"
+              *ngIf="addressForm.get('permanentPincode')?.invalid && (addressForm.get('permanentPincode')?.touched || addressForm.get('permanentPincode')?.dirty)">
+              Valid 6-digit pincode is required.
+            </div>
+          </div>
+        </div>
+        <!-- Submit Buttons -->
+        <div class="form-group mt-3 d-flex justify-content-end">
+          <button type="button" class="btn btn-secondary me-2 custom-btn" (click)="close()">Cancel</button>
+          <button type="submit" class="btn btn-primary custom-btn">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

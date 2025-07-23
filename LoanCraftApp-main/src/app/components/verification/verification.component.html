@@ -1,0 +1,146 @@
+<div class="container my-4" *ngIf="privilegeServ.hasPrivilege('APPLICATION_TRACKING')">
+  <h3 class="text-center mb-4">Application Tracking</h3>
+    <div class="search-container">
+      <div class="dropdown-wrapper">
+        <input 
+          type="text"
+          [(ngModel)]="searchTerm" 
+          (input)="onSearchChange()" 
+          (focus)="isDropdownOpen = true"
+          [placeholder]="'Search by name, loan number, or mobile...' | titlecase"
+          class="search-input"
+        />
+        <span class="dropdown-arrow" [class.open]="isDropdownOpen" (click)="toggleDropdown()"></span>
+      </div>
+
+      <div *ngIf="isDropdownOpen" class="dropdown">
+        <div *ngFor="let item of filteredList" 
+             (click)="selectItem(item)" 
+             class="dropdown-item">&nbsp;&nbsp;{{ item.fullName| capitalize}}&nbsp;&nbsp;&nbsp;&nbsp;{{ item.applicationReferenceId}} {{ item.loanAccountNumber ? ' - ' + item.loanAccountNumber : '' }}
+        </div>
+        <div *ngIf="filteredList.length === 0" class="no-results">
+          No matching records found
+        </div>
+      </div>
+    </div>
+
+  <div class="d-flex flex-wrap justify-content-center stepper-container">
+    <div class="d-flex align-items-center step-wrapper" *ngFor="let step of steps; let i = index">
+      <div class="step text-center position-relative" 
+           [ngClass]="{ 'clickable': step.label === 'Physical Verification' && privilegeServ.hasPrivilege('APP_DOCS_UPLOAD') && !step.verified}"
+             (click)="step.label === 'Physical Verification' && privilegeServ.hasPrivilege('APP_DOCS_UPLOAD') && !step.verified  ? openPhysicalPopup() : null">
+          
+        <!-- Circle -->
+        <div class="circle" [ngClass]="step.verified ? 'completed' : 'in-progress'">
+          <i *ngIf="step.verified" class="bi bi-check-lg text-white"></i>
+          <i *ngIf="!step.verified" class="bi bi-dot text-white fs-3"></i>
+        </div>
+  
+        <div class="step-number">{{ i + 1 }}</div>
+        <div class="fw-semibold small mt-2">{{ step.label }}</div>
+  
+        <!-- Message -->
+        <div class="message-space">
+          <div class="small" [ngClass]="step.verified ? 'text-success' : 'text-danger'">
+            {{ step.verified ? 'Verified' : 'Not Verified' }}
+          </div>
+        </div>
+      </div>
+  
+      <!-- Connector line -->
+      <div class="line" *ngIf="i < steps.length - 1" 
+           [ngClass]="steps[i + 1].verified ? 'line-success' : 'line-in-progress'"></div>
+    </div>
+  </div>
+</div>
+
+<app-physical-verifcation *ngIf="showPhysicalVerifyComponent"  [LoanId]="loanId" (closeModal)="closePhysicalVerification()"></app-physical-verifcation>
+
+
+
+    
+ 
+  <!-- <div class="d-flex flex-wrap justify-content-center stepper-container">
+
+
+    <div class="d-flex align-items-center step-wrapper">
+      <div class="step text-center position-relative">
+        <div class="circle completed">
+          <i class="bi bi-check-lg text-white"></i>
+        </div>
+        <div class="step-number">1</div> 
+        <div class="fw-semibold small mt-2">Round for Review</div>
+        <div class="message-space">
+          <div class="text-success small">Verified</div>
+        </div>
+      </div>
+      <div class="line line-success"></div>
+    </div>
+
+
+    <div class="d-flex align-items-center step-wrapper">
+      <div class="step text-center position-relative">
+        <div class="circle completed">
+          <i class="bi bi-check-lg text-white"></i>
+        </div>
+        <div class="step-number">2</div> 
+        <div class="fw-semibold small mt-2">CBIL Score</div>
+        <div class="message-space">
+          <div class="text-success small">Verified</div>
+          <div class="text-secondary small">Score: 720</div>
+        </div>
+      </div>
+      <div class="line line-success"></div>
+    </div>
+
+
+    <div class="d-flex align-items-center step-wrapper">
+      <div class="step text-center position-relative">
+        <div class="circle completed">
+          <i class="bi bi-check-lg text-white"></i>
+        </div>
+        <div class="step-number">3</div> 
+        <div class="fw-semibold small mt-2">Document Verification</div>
+        <div class="message-space">
+          <div class="text-success small">Verified</div>
+        </div>
+      </div>
+      <div class="line line-primary"></div>
+    </div>
+
+
+    <div class="d-flex align-items-center step-wrapper res">
+      <div class="step text-center position-relative" (click)="openPhysicalPopup()">
+        <div class="circle in-progress">
+          <i class="bi bi-dot fs-3 text-white"></i>
+        </div>
+        <div class="step-number">4</div> 
+        <div class="fw-semibold small mt-2">Physical Verification</div>
+        <div class="message-space">
+          <div class="text-primary small">In Progress</div>
+        </div>
+      </div>
+      <div class="line line-pending"></div>
+    </div>
+
+
+    <div class="d-flex align-items-center step-wrapper">
+      <div class="step text-center position-relative">
+        <div class="circle pending"></div>
+        <div class="step-number">5</div> 
+        <div class="fw-semibold small mt-2">Sanction Verification</div>
+        <div class="message-space"></div>
+      </div>
+      <div class="line line-pending"></div>
+    </div>
+
+   
+    <div class="d-flex align-items-center step-wrapper">
+      <div class="step text-center position-relative">
+        <div class="circle pending"></div>
+        <div class="step-number">6</div> 
+        <div class="fw-semibold small mt-2">Disbursed</div>
+        <div class="message-space"></div>
+      </div>
+    </div>
+  </div> -->

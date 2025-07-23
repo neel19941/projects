@@ -1,0 +1,26 @@
+<!-- Main Popup -->
+<div class="modal-overlay" *ngIf="showMainPopup" (click)="close()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h5 class="modal-title">role Actions</h5>
+        <button type="button" class="btn-close" (click)="close()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="record-card" (click)="openUpdateComponent('update')" *ngIf="privilegeServ.hasPrivilege('EDIT_ROLES')">
+          <h6>Edit</h6>
+          <i class="fas fa-edit edit-icon"></i>
+        </div>
+        <div class="record-card" (click)="openDeleteConfirmation()" *ngIf="privilegeServ.hasPrivilege('DELETE_ROLES')">
+          <h6>Delete</h6>
+          <i class="fas fa-trash delete-icon"></i>
+        </div>
+        <div class="record-card" (click)="openPrivileges(roleId)" *ngIf="privilegeServ.hasPrivilege('PRIVILEGE')">  
+          <h6>Privileges</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Update Component -->
+   <app-add-role *ngIf="showUpdateComponent"   [roleId]="roleId" [target]="target" (closeModal)="closeUpdateComponent()"></app-add-role>
+   <app-confirm-modal *ngIf="showConfirmDialog" [message]="confirmMessage" (confirm)="handleDeleteConfirmation($event)"></app-confirm-modal>

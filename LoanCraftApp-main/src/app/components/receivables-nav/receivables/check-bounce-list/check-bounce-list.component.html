@@ -1,0 +1,87 @@
+<div class="container-fluid"  *ngIf="privilegeServ.hasPrivilege('CHEQUE_DEPOSIT')">
+   <div class="row header-bar">
+      <div class="col-12 col-md-6">
+          <h4 class="header-title">Cheque Deposits</h4>
+      </div>
+      <div class="col-12 col-md-6 text-md-end">
+          <div class="search-container">
+              <span class="add-icon" *ngIf="privilegeServ.hasPrivilege('ADD_CHEQUE_DEPOSIT')" (click)="openEmiPopup('add')">
+                  <i class="fas fa-plus"></i>
+              </span>
+              <input  type="text"  class="search-input"   placeholder="Search" (keyup)="onSearch($event)" />
+          </div>
+      </div>
+  </div>
+  
+  <!-- Table -->
+  <div class="row">
+<div class="col-12">
+  <div class="table-responsive">
+    <table class="table table-sm">
+      <thead class="table-custom-header">
+        <tr>
+          <th scope="col">S.No</th>
+          <th scope="col" (click)="onSort('applicationReferenceId')">Reference ID<span class="sort-icon" [ngClass]="getSortIcon('applicationReferenceId')"></span></th>
+          <th scope="col" (click)="onSort('updateddate')">Updated Date <span class="sort-icon" [ngClass]="getSortIcon('updateddate')"></span></th>
+          <th scope="col" (click)="onSort('firstName')">Full Name <span class="sort-icon" [ngClass]="getSortIcon('firstName')"></span></th>
+          <th scope="col" (click)="onSort('chequeNumber')">Cheque Number <span class="sort-icon" [ngClass]="getSortIcon('chequeNumber')"></span></th>
+          <th scope="col" (click)="onSort('amount')">Amount <span class="sort-icon" [ngClass]="getSortIcon('amount')"></span></th>
+          <th scope="col" (click)="onSort('postingDate')">Posting Date <span class="sort-icon" [ngClass]="getSortIcon('postingDate')"></span></th>
+          <th scope="col" (click)="onSort('remarks')">Remarks <span class="sort-icon" [ngClass]="getSortIcon('remarks')"></span></th>
+          <th scope="col" (click)="onSort('reason')">Reason <span class="sort-icon" [ngClass]="getSortIcon('reason')"></span></th>
+          <th scope="col" (click)="onSort('status')" *ngIf="privilegeServ.hasPrivilege('UPDATE_CHEQUE_DEPOSIT')">Status <span class="sort-icon" [ngClass]="getSortIcon('status')"></span></th>
+          <!-- <th scope="col" (click)="onSort('createddate')">Created Date <span class="sort-icon" [ngClass]="getSortIcon('createddate')"></span></th> -->
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let due of currentDues; let i = index">
+          <td>{{ generateSerialNumber(i) }}</td>
+           <td>{{ due.referenceId }}</td>
+          <td>{{ due.updateddate | date: 'yyyy-MM-dd' }}</td>
+           <td>{{ due.fullName }}</td>
+           <!-- <td>{{ due.referenceId }}</td> -->
+          <td>{{ due.chequeNumber || 'N/A' }}</td>
+          <td>{{ formatIndianCurrency(due.amount)  }}</td>
+          <td>{{ due.postingDate | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ due.remarks || 'N/A' }}</td>
+          <td>{{ due.reason || 'N/A' }}</td>
+          <!-- <td [ngClass]="{
+                'text-success': due.status?.toLowerCase() === 'resolved' || due.status?.toLowerCase() === 'posted',
+                'text-danger': due.status?.toLowerCase() === 'pending'
+              }"  (click)="openEmiPopup('update')">
+            {{ due.status || 'Pending' }}
+          </td> -->
+
+          <!-- <td class="clickable-status" [ngClass]="{ 'text-success': due.status?.toLowerCase() === 'resolved' || due.status?.toLowerCase() === 'posted',
+           'text-danger': due.status?.toLowerCase() === 'bounced' || due.status?.toLowerCase() === 'rejected' }"
+            (click)="openEmiPopupUpdate('update' , due)" *ngIf="privilegeServ.hasPrivilege('UPDATE_CHEQUE_DEPOSIT')">{{ due.status || 'Posted' }}</td> -->
+
+            <td class="clickable-status" 
+            [ngClass]="{ 'text-success': due.status?.toLowerCase() === 'resolved' || due.status?.toLowerCase() === 'posted',
+            'text-danger': due.status?.toLowerCase() === 'bounced' || due.status?.toLowerCase() === 'rejected'
+             }" (click)="onStatusClick(due)" *ngIf="privilegeServ.hasPrivilege('UPDATE_CHEQUE_DEPOSIT')"> {{ due.status || 'Posted' }}</td>
+        </tr>
+        <tr *ngIf="currentDues.length === 0">
+          <td colspan="10" class="text-center">No Cheque Bounce Records Found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+  </div>
+  
+  <!-- Pagination Controls -->
+  <div class="pagination-controls">
+      <button (click)="goToFirstPage()" [disabled]="currentPageIndex === 0">|<</button>
+      <button (click)="goToPreviousPage()" [disabled]="currentPageIndex === 0"><</button>
+      <span>Page {{ totalPages > 0 ? currentPageIndex + 1 : 0 }} of {{ totalPages }}</span>
+      <button (click)="goToNextPage()" [disabled]="currentPageIndex >= totalPages - 1">></button>
+      <button (click)="goToLastPage()" [disabled]="currentPageIndex >= totalPages - 1">>|</button>
+  </div>
+</div>
+
+<app-check-deposit *ngIf="showEmiDetailedInfoComponent" [mode]="mode" [chequeId]="chequeid" (closeModal)="closeEmiPopup()"></app-check-deposit>
+
+
+

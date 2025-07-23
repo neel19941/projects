@@ -1,0 +1,194 @@
+<!-- <div class="modal-overlay" (click)="close()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h5 class="modal-title">Add User</h5>
+        <button type="button" class="btn-close" (click)="close()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addUserForm" (ngSubmit)="submitForm()" class="container">
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label>Name <span class="text-danger">*</span></label>
+              <input type="text" formControlName="name" class="form-control" placeholder="Enter name" />
+              <div class="error-message" *ngIf="addUserForm.get('name')?.touched && addUserForm.get('name')?.invalid">
+                <span *ngIf="addUserForm.get('name')?.errors?.['required']">Name is required.</span>
+                <span *ngIf="addUserForm.get('name')?.errors?.['minlength']">Must be at least 3 characters.</span>
+              </div>
+            </div>
+  
+            <div class="col-md-6 form-group">
+              <label>Email <span class="text-danger">*</span></label>
+              <input type="email" formControlName="email" class="form-control" placeholder="Enter email" />
+              <div class="error-message" *ngIf="addUserForm.get('email')?.touched && addUserForm.get('email')?.invalid">
+                <span *ngIf="addUserForm.get('email')?.errors?.['required']">Email is required.</span>
+                <span *ngIf="addUserForm.get('email')?.errors?.['email']">Invalid email format.</span>
+              </div>
+            </div>
+  
+            <div class="col-md-6 form-group">
+              <label>Password <span class="text-danger">*</span></label>
+              <input type="password" formControlName="password" class="form-control" placeholder="Enter password" />
+              <div class="error-message" *ngIf="addUserForm.get('password')?.touched && addUserForm.get('password')?.invalid">
+                <span *ngIf="addUserForm.get('password')?.errors?.['required']">Password is required.</span>
+                <span *ngIf="addUserForm.get('password')?.errors?.['minlength']">Must be at least 6 characters.</span>
+              </div>
+            </div>
+  
+            <div class="col-md-6 form-group">
+              <label>Role <span class="text-danger">*</span></label>
+              <select formControlName="role" class="form-control">
+                <option value="" disabled>Select Role</option>
+                <option value="Employee">Employee</option>
+                <option value="Employer">Employer</option>
+              </select>
+              <div class="error-message" *ngIf="addUserForm.get('role')?.touched && addUserForm.get('role')?.invalid">
+                <span *ngIf="addUserForm.get('role')?.errors?.['required']">Role is required.</span>
+              </div>
+            </div>
+  
+            <div class="col-md-6 form-group">
+              <label>Department <span class="text-danger">*</span></label>
+              <input type="text" formControlName="department" class="form-control" placeholder="Enter department" />
+              <div class="error-message" *ngIf="addUserForm.get('department')?.touched && addUserForm.get('department')?.invalid">
+                <span *ngIf="addUserForm.get('department')?.errors?.['required']">Department is required.</span>
+              </div>
+            </div>
+          </div>
+  
+          <div class="form-group mt-3 d-flex justify-content-end">
+            <button type="button" class="btn btn-secondary custom-btn me-2" (click)="close()">Cancel</button>
+            <button type="submit" class="btn btn-primary custom-btn">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+   -->
+<!-- Modal Template -->
+<div class="modal-overlay">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">{{title}}</h5>
+      <button type="button" class="btn-close" (click)="close()"></button>
+    </div>
+    <div class="modal-body">
+      <!-- Add User Form -->
+      <form [formGroup]="addUserForm" class="container">
+
+        <div class="row">
+          <!-- Name -->
+          <div class="col-md-6 form-group">
+            <label for="name">Name <span class="text-danger">*</span></label>
+            <input type="text" id="name" formControlName="name" class="form-control" placeholder="Enter your name"
+              appTitleCase />
+            <div class="error-message">
+              <span
+                *ngIf="addUserForm.get('name')?.invalid && (addUserForm.get('name')?.touched || addUserForm.get('name')?.dirty)">
+                <span *ngIf="addUserForm.get('name')?.errors?.['required']">Name is required.</span>
+                <span *ngIf="addUserForm.get('name')?.errors?.['pattern']">Enter at least 4 letters (letters and spaces
+                  only).</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="col-md-6 form-group">
+            <label for="email">Email <span class="text-danger">*</span></label>
+            <input type="email" id="email" formControlName="email" class="form-control"
+              placeholder="Enter your email" />
+            <div class="error-message">
+              <span
+                *ngIf="addUserForm.get('email')?.invalid && (addUserForm.get('email')?.touched || addUserForm.get('email')?.dirty)">
+                <span *ngIf="addUserForm.get('email')?.errors?.['required']">Email is required.</span>
+                <span *ngIf="addUserForm.get('email')?.errors?.['pattern']">Invalid email format.</span>
+              </span>
+            </div>
+          </div>
+
+
+          <!-- Mobile Number -->
+          <!-- <div class="col-md-6 form-group">
+            <label>Mobile Number <span class="text-danger">*</span></label>
+            <input type="text" formControlName="mobileNumber" class="form-control"
+              placeholder="Enter your mobile number" />
+            <div class="error-message">
+              <span
+                *ngIf="addUserForm.get('mobileNumber')?.invalid && (addUserForm.get('mobileNumber')?.touched || addUserForm.get('mobileNumber')?.dirty)">
+                <span *ngIf="addUserForm.get('mobileNumber')?.errors?.['pattern']">Invalid mobile number.</span>
+                <span *ngIf="addUserForm.get('mobileNumber')?.errors?.['required']">Mobile Number is required.</span>
+              </span>
+            </div>
+          </div> -->
+          <div class="col-md-6 form-group mobile-wrapper">
+            <label for="mobileNumber">Mobile Number <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-text country-code">+91</span>
+              <input type="text" id="mobileNumber" formControlName="mobileNumber" class="form-control mobile-input"
+                placeholder="Enter your mobile number" />
+            </div>
+
+            <div class="error-message">
+              <span
+                *ngIf="addUserForm.get('mobileNumber')?.invalid && (addUserForm.get('mobileNumber')?.touched || addUserForm.get('mobileNumber')?.dirty)">
+                <span *ngIf="addUserForm.get('mobileNumber')?.errors?.['pattern']">Mobile number must be a valid
+                  10-digit Indian number.</span>
+                <span *ngIf="addUserForm.get('mobileNumber')?.errors?.['required']">Mobile Number is required.</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Password Field with Eye Icon -->
+          <div *ngIf="paswordField" class="col-md-6 form-group position-relative">
+            <label>Password <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-control"
+                placeholder="Enter your password" />
+              <span class="input-group-text" (click)="togglePasswordVisibility()" style="cursor: pointer;">
+                <i [ngClass]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+              </span>
+            </div>
+            <div class="error-message">
+              <span
+                *ngIf="addUserForm.get('password')?.invalid && (addUserForm.get('password')?.touched || addUserForm.get('password')?.dirty)">
+                <span *ngIf="addUserForm.get('password')?.errors?.['required']">Password is required.</span>
+                <!-- <span *ngIf="addUserForm.get('password')?.errors?.['minlength']">Password must be at least 6
+                  characters.</span> -->
+                <span
+                  *ngIf="addUserForm.get('password')?.errors?.['minlength'] || addUserForm.get('password')?.errors?.['pattern']">
+                  Must be 6+ chars with 1 uppercase, 1 lowercase, 1 number & 1 special character.
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Role Dropdown with Down Arrow -->
+          <div class="col-md-6 form-group position-relative">
+            <label for="role">Role <span class="text-danger">*</span></label>
+            <div class="position-relative">
+              <select id="role" formControlName="role" class="form-control">
+                <option value="">----Select Role----</option>
+                <option *ngFor="let role of roles" [value]="role.roleId">{{ role.roleName | capitalize}}</option>
+              </select>
+              <i class="bi bi-chevron-down dropdown-icon"></i>
+            </div>
+            <div class="error-message">
+              <span
+                *ngIf="addUserForm.get('role')?.invalid && (addUserForm.get('role')?.touched || addUserForm.get('role')?.dirty)">
+                <span *ngIf="addUserForm.get('role')?.errors?.['required']">Role is required.</span>
+              </span>
+            </div>
+          </div>
+
+        </div>
+        <!-- Submit and Cancel Buttons -->
+        <div class="form-group mt-3 d-flex justify-content-end">
+          <button type="button" class="btn btn-secondary custom-btn me-2" (click)="close()">Cancel</button>
+          <button *ngIf="!isEditMode" type="button" class="btn btn-primary custom-btn"
+            (click)="sendData()">Submit</button>
+          <button *ngIf="isEditMode" type="button" class="btn btn-primary custom-btn"
+            (click)="updateData()">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,131 @@
+<div class="container-fluid" *ngIf="privilegeServ.hasPrivilege('SANCTIONED')">
+    <!-- Header Bar -->
+    <div class="row header-bar">
+      <div class="col-12 col-md-6">
+        <h4 class="header-title">Sanctioned Applications</h4>
+      </div>
+      <div class="col-12 col-md-6 text-md-end">
+        <div class="search-container">
+          <!-- <span class="add-icon" (click)="openAddSanctionedApplication('add')">
+            <i class="fas fa-plus"></i>
+          </span> -->
+          <input type="text" class="search-input" [placeholder]="'Search' | titlecase" (keyup)="onSearch($event)"/>
+        </div>
+      </div>
+    </div>
+    <!-- Table -->
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead class="table-custom-header">
+              <tr>
+                <th scope="col">S.No</th>
+                <th scope="col" (mouseover)="hoverField = 'referenceid'" (mouseleave)="hoverField = null" (click)="onSort('referenceid')">
+                  Reference ID
+                  <span class="sort-icon" [ngClass]="getSortIcon('referenceid')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'createddate'" (mouseleave)="hoverField = null" (click)="onSort('createddate')">
+                  Created Date
+                  <span class="sort-icon" [ngClass]="getSortIcon('createddate')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'firstName'" (mouseleave)="hoverField = null" (click)="onSort('firstName')">
+                  Full Name
+                  <span class="sort-icon" [ngClass]="getSortIcon('firstName')"></span>
+                </th>
+                <!-- <th scope="col" (mouseover)="hoverField = 'lastName'" (mouseleave)="hoverField = null" (click)="onSort('lastName')">
+                  Last Name
+                  <span class="sort-icon" [ngClass]="getSortIcon('lastName')"></span>
+                </th> -->
+                <!-- <th scope="col" (mouseover)="hoverField = 'loanSactionId'" (mouseleave)="hoverField = null" (click)="onSort('loanSactionId')">Loan Sanction ID</th>
+                <th scope="col" (mouseover)="hoverField = 'loanRequested'" (mouseleave)="hoverField = null" (click)="onSort('loanRequested')">Loan Requested</th> -->
+                <!-- <th scope="col" (mouseover)="hoverField = 'amountSanctioned'" (mouseleave)="hoverField = null" (click)="onSort('amountSanctioned')">Amount Sanctioned</th> -->
+                <!-- <th scope="col" (mouseover)="hoverField = 'amountDisbursed'" (mouseleave)="hoverField = null" (click)="onSort('amountDisbursed')">Amount Disbursed</th> -->
+                <th scope="col" (mouseover)="hoverField = 'rateOfInterest'" (mouseleave)="hoverField = null" (click)="onSort('rateOfInterest')">
+                  Rate of Interest
+                  <span class="sort-icon" [ngClass]="getSortIcon('rateOfInterest')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'interestType'" (mouseleave)="hoverField = null" (click)="onSort('interestType')">
+                  Interest Type
+                  <span class="sort-icon" [ngClass]="getSortIcon('interestType')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'numberOfEmis'" (mouseleave)="hoverField = null" (click)="onSort('numberOfEmis')">
+                  Number of EMIs
+                  <span class="sort-icon" [ngClass]="getSortIcon('numberOfEmis')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'emiAmount'" (mouseleave)="hoverField = null" (click)="onSort('emiAmount')">
+                  EMI Amount
+                  <span class="sort-icon" [ngClass]="getSortIcon('emiAmount')"></span>
+                </th>
+                <!-- EMI Start Date -->
+<th scope="col" (mouseover)="hoverField = 'emiStartDate'" (mouseleave)="hoverField = null" (click)="onSort('emiStartDate')">
+  EMI Start Date
+  <span class="sort-icon" [ngClass]="getSortIcon('emiStartDate')"></span>
+</th>
+
+<!-- EMI End Date -->
+<th scope="col" (mouseover)="hoverField = 'emiEndDate'" (mouseleave)="hoverField = null" (click)="onSort('emiEndDate')">
+  EMI End Date
+  <span class="sort-icon" [ngClass]="getSortIcon('emiEndDate')"></span>
+</th>
+
+                <!-- <th scope="col" (mouseover)="hoverField = 'repaymentMode'" (mouseleave)="hoverField = null" (click)="onSort('repaymentMode')">
+                  Repayment Mode
+                  <span class="sort-icon" [ngClass]="getSortIcon('repaymentMode')"></span>
+                </th> -->
+                <th scope="col" (mouseover)="hoverField = 'status'" (mouseleave)="hoverField = null" (click)="onSort('status')">Status
+                  <span class="sort-icon" [ngClass]="getSortIcon('status')"></span>
+                </th>
+                <th scope="col" *ngIf="privilegeServ.hasPrivilege('FUNDS_OVERVIEW')">Funds</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let application of sanctionedApplications; let i = index">
+                <!-- <td>{{ application.loanSactionId }}</td>
+                <td>{{ application.loanRequested }}</td> -->
+                <!-- <td>{{ application.amountSanctioned }}</td> -->
+                <!-- <td>{{ application.amountDisbursed }}</td> -->
+                <td>{{ generateSerialNumber(i)}}</td>
+                <!-- <td>{{ application.referenceid }}</td> -->
+                <td class="clickable-cell position-relative"  (click)="application.isRequestedFileUpload === true && application.isFileUpload === false ? openRequestModel(application.loanId) : null">  {{ application.referenceid }}
+                  <span *ngIf="application.isRequestedFileUpload === true && application.isFileUpload === false"  class="notification-badge">1</span>
+               </td>
+                <td>{{ application.createddate | date: 'yyyy-MM-dd'}}</td>
+                <!-- <td>{{ application.firstName +" "+ application.lastName | capitalize}}</td> -->
+                <!-- <td>{{ application.lastName | capitalize}}</td> -->
+                 <td>{{ application.fullName}}</td>
+                <td>{{ application.rateOfInterest }}%</td>
+                <td>{{ application.interestType }}</td>
+                <td>{{ application.numberOfEmis }}</td>
+                <td>{{ formatIndianCurrency(application.emiAmount) }}</td>
+                 <td>{{ application.emiStartDate | date: 'yyyy-MM-dd' }}</td>
+                  <td>{{ application.emiEndDate | date: 'yyyy-MM-dd' }}</td>
+                  
+                <!-- <td>{{ application.repaymentMode }}</td> -->
+                <td [ngClass]="{'status-sanctioned': application.status.toLowerCase() === 'sanctioned', 'status-upcoming': application.status.toLowerCase() === 'upcoming'}">{{ application.status | capitalize }}</td>
+                <td class="text-center" *ngIf="privilegeServ.hasPrivilege('FUNDS_OVERVIEW')">
+                  <span (click)="viewDisbursedDetails(application)">
+                    <i class="fas fa-coins sanction-icon"></i>
+                  </span>
+                </td>
+              </tr>
+              <tr *ngIf="sanctionedApplications.length === 0">
+                <td colspan="12" class="text-center">No sanctioned applications found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="pagination-controls">
+      <button (click)="goToFirstPage()" [disabled]="currentPageIndex === 0">|<</button>
+      <button (click)="goToPreviousPage()" [disabled]="currentPageIndex === 0"><</button>
+      <!-- <span>Page {{ currentPageIndex + 1 }} of {{ totalPages }}</span> -->
+      <span>Page {{ totalPages > 0 ? currentPageIndex + 1 : 0 }} of {{ totalPages }}</span>
+      <button (click)="goToNextPage()" [disabled]="currentPageIndex >= totalPages - 1">></button>
+      <button (click)="goToLastPage()" [disabled]="currentPageIndex >= totalPages - 1">>|</button>
+    </div>
+</div>
+<app-customer-requests *ngIf="showRequestComponent" [LoanId]="loanId" (closeModal)="closeRequestPopup()"></app-customer-requests>
+<app-funds-overview *ngIf="showFundsPopup" [sanctionid]="sanctionid" [processingPercentage]="processingCharge" [documentCharge]="documentCharge" [amountSanctioned]="amountSanctioned" (closeModal)="closeAddSanctionedApplication()"></app-funds-overview>
+

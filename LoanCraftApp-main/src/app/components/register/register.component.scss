@@ -1,0 +1,190 @@
+.register-container {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  text-transform: capitalize;
+}
+
+.custom-snackbar {
+  position: fixed;
+  top: 20px; /* Distance from the top */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f8d7da; /* Default background for errors */
+  color: #721c24; /* Default text color for errors */
+  padding: 15px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center; /* Aligns icon and text vertically */
+  gap: 10px; /* Space between icon and text */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0s linear 0.3s;
+  z-index: 9999; /* Ensures visibility above other elements */
+}
+
+.custom-snackbar.show {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s;
+}
+
+.custom-snackbar.success {
+  background-color: #d4edda; /* Bootstrap's alert-success color */
+  color: #155724;
+}
+
+.custom-snackbar.error {
+  background-color: #f8d7da; /* Bootstrap's alert-danger color */
+  color: #721c24;
+}
+
+.custom-snackbar i {
+  font-size: 1.2rem;
+}
+
+/* Icons for success and error */
+.custom-snackbar.success i {
+  color: #155724; /* Icon color for success */
+}
+
+.custom-snackbar.error i {
+  color: #721c24; /* Icon color for error */
+}
+
+.loan-container {
+  width: 100%; 
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 0;
+
+  h3 {
+    text-align: center;
+    font-weight: bold;
+    // color: rgb(255, 136, 0);
+    color: rgb(6, 17, 170);;
+    margin-bottom: 40px;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+
+    label {
+      font-weight: 600;
+      color: #000000;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid rgb(29, 29, 29);
+      border-radius: 4px;
+      padding: 5px 20px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+      background-color: #ffffff;
+      // color: #004d40;
+      // color: orange;
+
+      &:focus {
+        // border-color: #00796b;
+        // color: orange;
+        outline: none;
+        box-shadow: none;
+      }
+    }
+
+    .input-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .form-control {
+        flex: 1;
+        border-right: none;
+      }
+
+      button {
+        border-left: none;
+        font-size: 0.8rem;
+        padding: 8px 20px 7px;
+        border: 1px solid rgb(29, 29, 29);
+        border-left: none;
+      }
+    }
+  }
+
+  .error-message {
+    color: #d32f2f;
+    font-size: 0.875rem;
+    height: 1rem;
+    margin-top: 0.25rem;
+  }
+  .mobile-wrapper {
+    .input-group {
+      display: flex;
+  
+      .country-code {
+        background-color: #e9ecef;
+        border: 1px solid rgb(29, 29, 29);
+        border-right: none;
+        border-radius: 4px 0 0 4px;
+        padding: 5px 15px;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+      }
+  
+      .mobile-input {
+        border: 1px solid rgb(29, 29, 29);
+        border-left: none;
+        border-radius: 0 4px 4px 0;
+        padding: 5px 20px;
+        font-size: 1rem;
+        flex: 1;
+        background-color: #ffffff;
+        width: 100%;
+  
+        &:focus {
+          outline: none;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}
+
+
+button {
+  display: inline-block;
+  // background-color: #004d40;
+  // background-color: rgb(255, 136, 0);
+  background-color: rgb(6, 17, 170);
+  color: #ffffff;
+  border: none;
+  padding: 5px 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 3px;
+  cursor: pointer; /* Default cursor for enabled buttons */
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  // background-color: #00332d; /* Darken on hover for enabled buttons */
+  // background-color: rgb(226, 130, 19);
+  background-color: rgb(6, 17, 170);
+}
+
+button:disabled {
+  background-color: #afafaf; /* Gray out disabled buttons */
+  color: #ffffff;
+}
+
+.text-center {
+  text-align: center;
+}

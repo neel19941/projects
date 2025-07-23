@@ -1,0 +1,99 @@
+/* General Modal Styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    z-index: 1050;
+    text-transform: capitalize;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 30px 30px 0px 30px;
+    border-radius: 12px !important; /* Ensure it's applied to all corners */
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    font-family: Arial, sans-serif;
+    max-height: 90vh;
+    overflow-y: auto; /* Allow scrolling if needed */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+  }
+  
+  /* Scrollbar Customization */
+  .modal-content::-webkit-scrollbar {
+    width: 2px; /* Make the scrollbar thinner */
+  }
+  
+  .modal-content::-webkit-scrollbar-track {
+    background-color: transparent; /* No track color */
+  }
+  
+  .modal-content::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3); /* Subtle thumb color */
+    border-radius: 10px; /* Rounded edges for the thumb */
+    visibility: visible; /* Ensure the thumb is visible when scrolling */
+  }
+  
+  /* Header Styling */
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  .modal-title {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #333;
+    text-align: center;
+  }
+
+/* Cancel button - subtle gray with border */
+.btn-cancel {
+  background-color: #dddddd;
+  color: #555;
+  border: 2px solid #ccc;
+}
+
+.btn-cancel:hover {
+  background-color: #e2e2e2;
+  border-color: #999;
+  color: #333;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+}
+
+/* Submit/Update button - primary blue */
+.btn-submit {
+  background-color: #007bff; /* bootstrap primary */
+  color: white;
+  box-shadow: 0 4px 12px rgb(0 123 255 / 0.3);
+}
+
+.btn-submit:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 16px rgb(0 86 179 / 0.5);
+}
+
+.payment-form{
+//   background-color: #fdfefe; /* very light gray */
+  border-radius: 16px;
+  padding: 25px 30px;
+//   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.readable-content{
+  background-color: rgb(235, 235, 235);
+  cursor: not-allowed;
+}

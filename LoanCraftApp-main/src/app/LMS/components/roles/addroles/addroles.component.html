@@ -1,0 +1,35 @@
+<div class="container">
+    <legend>{{ isEditMode ? 'Edit Role' : 'Add Role' }}</legend>
+    <form [formGroup]="loginForm" (ngSubmit)="saveRole()">
+      <div class="mb-3">
+        <label for="roleName" class="form-label">Role Name</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="roleName"
+          placeholder="Enter Role Name"
+        />
+        <div class="text-danger" *ngIf="loginForm.get('roleName')?.invalid && loginForm.get('roleName')?.touched">
+          Role Name is required and must be at least 3 characters long.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="description"
+          placeholder="Enter Description"
+        />
+        <div class="text-danger" *ngIf="loginForm.get('description')?.invalid && loginForm.get('description')?.touched">
+          Description must not exceed 255 characters.
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-primary">
+        {{ isEditMode ? 'Update' : 'Create' }}
+      </button>
+    </form>
+  </div>
+  

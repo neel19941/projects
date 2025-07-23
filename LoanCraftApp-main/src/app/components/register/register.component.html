@@ -1,0 +1,187 @@
+<app-plain-navigation></app-plain-navigation>
+<div id="customSnackbar" class="custom-snackbar" role="alert">
+  <i id="notificationIcon" class=""></i>
+  <span id="notificationMessage"></span>
+</div>
+
+<div class="register-container">
+  <div class="loan-container" id="loan-container">
+    <form [formGroup]="registrationForm" (ngSubmit)="sendData()" class="container">
+      <!-- Title -->
+      <h3>Register</h3>
+      <div class="row">
+
+        <!-- First Name -->
+        <div class="col-md-6 form-group">
+          <label for="firstname">First Name <span class="text-danger">*</span></label>
+          <input type="text" id="firstname" formControlName="firstname" class="form-control"
+            [placeholder]="'Enter your first name' | titlecase" appTitleCase />
+          <div class="error-message">
+            <span
+              *ngIf="registrationForm.get('firstname')?.invalid && (registrationForm.get('firstname')?.touched || registrationForm.get('firstname')?.dirty)">
+              <span *ngIf="registrationForm.get('firstname')?.errors?.['required']">First Name is required.</span>
+              <span *ngIf="registrationForm.get('firstname')?.errors?.['pattern']">Enter at least 4 letters (letters and
+                spaces only).</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Last Name -->
+        <div class="col-md-6 form-group">
+          <label for="lastname">Last Name <span class="text-danger">*</span></label>
+          <input type="text" id="lastname" formControlName="lastname" class="form-control"
+            [placeholder]="'Enter your last name' | titlecase" appTitleCase />
+          <div class="error-message">
+            <span
+              *ngIf="registrationForm.get('lastname')?.invalid && (registrationForm.get('lastname')?.touched || registrationForm.get('lastname')?.dirty)">
+              <span *ngIf="registrationForm.get('lastname')?.errors?.['required']">Last Name is required. </span>
+              <span *ngIf="registrationForm.get('lastname')?.errors?.['pattern']"> Enter at least 4 letters (letters and
+                spaces only). </span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- mobile number-->
+        <div class="col-md-6 form-group mobile-wrapper">
+          <label for="mobile">Mobile Number <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text country-code">+91</span>
+            <input type="text" id="mobile" formControlName="mobile" class="form-control mobile-input"
+              [placeholder]="'Enter your mobile number'| titlecase" />
+          </div>
+          <div class="error-message">
+            <span
+              *ngIf="registrationForm.get('mobile')?.invalid && (registrationForm.get('mobile')?.touched || registrationForm.get('mobile')?.dirty)">
+              <span *ngIf="registrationForm.get('mobile')?.errors?.['required']">Mobile Number is required.</span>
+              <span *ngIf="registrationForm.get('mobile')?.errors?.['pattern']">Mobile number must be a valid 10-digit
+                Indian number.</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <!-- <div class="col-md-6 form-group">
+          <label for="email">Email <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <input type="email" id="email" formControlName="email" class="form-control"
+              [placeholder]="'Enter your email'| titlecase" />
+            <button class="btn btn-secondary" (click)="sendOtp()"
+              [disabled]="registrationForm.get('email')?.invalid || otpSent" type="button">
+              Send OTP
+            </button>
+          </div>
+          <div class="error-message">
+            <span
+              *ngIf="registrationForm.get('email')?.invalid && (registrationForm.get('email')?.touched || registrationForm.get('email')?.dirty)">
+              <span *ngIf="registrationForm.get('email')?.errors?.['required']">Email is required.</span>
+              <span *ngIf="registrationForm.get('email')?.errors?.['email']">Invalid email format.</span>
+            </span>
+          </div>
+        </div> -->
+        <div class="col-md-6 form-group">
+          <label for="email">Email <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <input type="email" id="email" formControlName="email" class="form-control"
+              [placeholder]="'Enter your email' | titlecase" />
+            <button class="btn btn-secondary" (click)="sendOtp()"
+              [disabled]="registrationForm.get('email')?.invalid || otpSent" type="button">
+              Send OTP
+            </button>
+          </div>
+          <div class="error-message">
+            <span
+              *ngIf="registrationForm.get('email')?.invalid && (registrationForm.get('email')?.touched || registrationForm.get('email')?.dirty)">
+
+              <span *ngIf="registrationForm.get('email')?.errors?.['required']">
+                Email is required.
+              </span>
+
+              <span *ngIf="registrationForm.get('email')?.errors?.['pattern']">
+                Enter a valid email address.
+              </span>
+
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <!-- OTP Field with Validate OTP Button inside input group -->
+        <div class="col-md-6 form-group" *ngIf="showOtpField">
+          <label for="otp">OTP <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <input type="text" id="otp" formControlName="otp" class="form-control"
+              [placeholder]="'Enter the OTP sent to your email'| titlecase" />
+            <button class="btn btn-info" (click)="validateOtp()"
+              [disabled]="registrationForm.get('otp')?.invalid || otpVerified" type="button">
+              Verify OTP
+            </button>
+          </div>
+          <div class="error-message">
+            <span
+              *ngIf="registrationForm.get('otp')?.invalid && (registrationForm.get('otp')?.touched || registrationForm.get('otp')?.dirty)">
+              <span *ngIf="registrationForm.get('otp')?.errors?.['required']">OTP is required.</span>
+              <span *ngIf="registrationForm.get('otp')?.errors?.['pattern']">OTP must be numeric.</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- password -->
+        <div class="col-md-6 form-group">
+          <label for="password">Password <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <input type="password" [type]="isPasswordVisible ? 'text' : 'password'" id="password"
+              formControlName="password" class="form-control" [placeholder]="'Enter your password'| titlecase"
+              (keyup)="passwordMatchValidator()" />
+            <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility('password')">
+              <i [class]="isPasswordVisible ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+            </button>
+          </div>
+          <div class="error-message">
+            <span
+              *ngIf="registrationForm.get('password')?.invalid && (registrationForm.get('password')?.touched || registrationForm.get('password')?.dirty)">
+              <span *ngIf="registrationForm.get('password')?.errors?.['required']">Password is required.</span>
+              <span *ngIf="registrationForm.get('password')?.errors?.['pattern']">
+                Must be 6+ characters with an uppercase letter, a number, and a special character.
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <label for="cpassword">Confirm Password <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <input type="password" [type]="isConfirmPasswordVisible ? 'text' : 'password'" id="cpassword"
+              formControlName="cpassword" class="form-control" [placeholder]="'Re-enter your password'| titlecase"
+              (keyup)="passwordMatchValidator()" />
+            <button type="button" class="btn btn-outline-secondary"
+              (click)="togglePasswordVisibility('confirmPassword')">
+              <i [class]="isConfirmPasswordVisible ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+            </button>
+          </div>
+          <div class="error-message">
+            <span
+              *ngIf="passwordCheck && (registrationForm.get('cpassword')?.touched || registrationForm.get('cpassword')?.dirty)">Passwords
+              do not match.</span>
+            <span
+              *ngIf="registrationForm.get('cpassword')?.invalid && (registrationForm.get('cpassword')?.touched || registrationForm.get('cpassword')?.dirty)">
+
+              <span *ngIf="registrationForm.get('cpassword')?.errors?.['required'] && !passwordCheck">Confirm Password
+                is required.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-3">
+        <button type="submit" class="btn btn-primary"
+          [disabled]="registrationForm.invalid || !otpVerified || passwordCheck">Register</button>
+        <!-- <button type="submit" class="btn btn-primary"
+          [disabled]="registrationForm.invalid || passwordCheck">Register</button> -->
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,483 @@
+/* General Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  z-index: 1050;
+  text-transform: capitalize;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px 30px 0px 30px;
+  border-radius: 12px !important;
+  /* Ensure it's applied to all corners */
+  max-width: 700px;
+  width: 100%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  font-family: Arial, sans-serif;
+  max-height: 90vh;
+  overflow-y: auto;
+  /* Allow scrolling if needed */
+  overflow-x: hidden;
+  /* Hide horizontal scrollbar */
+}
+
+.input-group .btn-warning {
+  padding: 6px 12px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+/* Removes right side rounding from input */
+.no-rounded-end {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Removes left side rounding from button */
+.no-rounded-start {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+
+/* Scrollbar Customization */
+.modal-content::-webkit-scrollbar {
+  width: 2px;
+  /* Make the scrollbar thinner */
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background-color: transparent;
+  /* No track color */
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  /* Subtle thumb color */
+  border-radius: 10px;
+  /* Rounded edges for the thumb */
+  visibility: visible;
+  /* Ensure the thumb is visible when scrolling */
+}
+
+/* Header Styling */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.modal-title {
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: #333;
+  text-align: center;
+}
+
+/* Buttons */
+.custom-btn {
+  border-radius: 25px;
+  padding: 8px 30px;
+  font-weight: 600;
+  font-size: 1rem;
+
+  /* Optional transition for hover effect */
+  transition: all 0.3s ease;
+
+  &.btn-secondary {
+    background-color: white;
+    color: rgb(6, 17, 170);
+    border: 2px solid rgb(6, 17, 170);
+
+    &:hover {
+      background-color: rgb(6, 17, 170);
+      color: white;
+    }
+  }
+
+  &.btn-primary {
+    background-color: rgb(6, 17, 170);
+    border: none;
+
+    &:hover {
+      background-color: rgb(4, 11, 119);
+    }
+  }
+}
+
+/* Section heading for loan selection */
+.select-loan-section {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.section-heading {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+
+/* Existing form container */
+.payment-form {
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e0e0e0;
+  margin-bottom: 30px;
+}
+
+//   /* Outer container for the form */
+// .payment-form {
+//   max-width: 900px;
+//   margin: 30px auto;
+//   padding: 10px;
+//   background-color: #ffffff;
+//   border-radius: 12px;
+// //   box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+// //   border: 1px solid #e0e0e0;
+// }
+/* ================= Custom Bounce Form Styling ================= */
+
+.custom-bounce-form {
+  background-color: #fdfefe;
+  /* very light gray */
+  border-radius: 16px;
+  padding: 25px 30px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+/* Input and select fields */
+.custom-bounce-form .form-control,
+.custom-bounce-form .form-select {
+  background-color: #ffffff;
+  border: 1px solid #b0bec5;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 0.95rem;
+  transition: border 0.2s ease-in-out;
+}
+
+.custom-bounce-form .form-control:focus,
+.custom-bounce-form .form-select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.15rem rgba(0, 123, 255, 0.25);
+}
+
+/* Labels */
+.custom-bounce-form .form-label {
+  font-weight: 700;
+  color: #37474f;
+}
+
+/* Base styles for buttons */
+.form-group .btn {
+  border-radius: 30px;
+  /* nice rounded pill shape */
+  padding: 10px 32px;
+  /* vertical 10px, horizontal 32px */
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: none;
+  border: none;
+  cursor: pointer;
+  min-width: 100px;
+}
+
+/* Cancel button - subtle gray with border */
+.btn-cancel {
+  background-color: #dddddd;
+  color: #555;
+  border: 2px solid #ccc;
+}
+
+.btn-cancel:hover {
+  background-color: #e2e2e2;
+  border-color: #999;
+  color: #333;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+}
+
+/* Submit/Update button - primary blue */
+.btn-submit {
+  background-color: #007bff; /* bootstrap primary */
+  color: white;
+  box-shadow: 0 4px 12px rgb(0 123 255 / 0.3);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background-color: #0056b3;
+  box-shadow: 0 6px 16px rgb(0 86 179 / 0.5);
+}
+
+/* Disabled state for submit button */
+.btn-submit:disabled {
+  background-color: #c0c0c0;  /* lighter gray */
+  color: #6c757d; /* muted text */
+  box-shadow: none;
+  cursor : not-allowed;
+  opacity: 0.65;
+
+}
+
+/* Calendar icon adjustments */
+.custom-bounce-form .calendar-button {
+  border: 1px solid #b0bec5;
+  background-color: #f1f1f1;
+}
+
+.custom-bounce-form .calendar-button i {
+  color: #333;
+}
+
+.custom-bounce-form .calendar-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Invalid states */
+.custom-bounce-form .is-invalid {
+  border-color: #dc3545 !important;
+}
+
+.custom-bounce-form .invalid-feedback {
+  color: #dc3545;
+  font-size: 0.875rem;
+}
+
+/* Remarks text area */
+.custom-bounce-form textarea.form-control {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.receivable-amount-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+/* Optional: Button hover fix */
+.more-details-btn {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #202b3b;
+  /* Bootstrap primary */
+}
+
+.more-details-btn:hover {
+  color: #0a58ca;
+  text-decoration: underline;
+}
+
+.receivable-inline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 50%;
+  /* or 60% as preferred */
+  max-width: 500px;
+}
+
+.receivable-label {
+  font-size: 16px;
+  font-weight: 600;
+  flex: 1;
+  text-align: right;
+  color: #343a40;
+}
+
+.receivable-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #00750a;
+  /* Bootstrap primary */
+  flex: 1;
+  text-align: left;
+}
+
+
+/* Label styling */
+.payment-form .form-label {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+/* Input and select field styling */
+.payment-form .form-control,
+.payment-form .form-select {
+  min-height: 38px;
+  font-size: 0.95rem;
+}
+
+/* Textarea style */
+.payment-form textarea.form-control {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Invalid feedback */
+.payment-form .invalid-feedback {
+  font-size: 0.875rem;
+  color: #dc3545;
+}
+
+/* Calendar icon button */
+.calendar-button {
+  border: 1px solid #ced4da;
+}
+
+/* Submit button alignment */
+.payment-form .text-end {
+  margin-top: 20px;
+}
+
+/* Calendar button default */
+.calendar-button {
+  border: 1px solid #ced4da;
+  color: #495057;
+}
+
+.search-container {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.dropdown-arrow {
+  width: 10px;
+  height: 10px;
+  border-left: 2px solid black;
+  border-bottom: 2px solid black;
+  transform: rotate(-45deg);
+  transition: transform 0.3s ease;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(135deg);
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background: #f8f9fa;
+}
+
+.add-icon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2e2e2e;
+  /* Dark gray */
+  color: #f5f5f5;
+  /* Light gray */
+  border-radius: 10px;
+  /* Slightly rounded corners */
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Hover effect */
+.add-icon:hover {
+  background-color: #1a1a1a;
+  /* Almost black */
+  // transform: scale(1.05);
+}
+
+.no-results {
+  padding: 10px;
+  color: red;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* When invalid, turn border and icon red */
+.calendar-button.is-invalid {
+  border-color: #dc3545;
+  color: #dc3545;
+
+  i {
+    color: #dc3545;
+  }
+}
+
+// .btn-primary {
+//   padding: 0.5rem 1.5rem;
+//   font-size: 1rem;
+//   border-radius: 2rem; /* Rounded pill-style */
+//   transition: all 0.3s ease;
+//   background-color: #0d6efd;
+//   border-color: #0d6efd;
+//   font-weight: 500;
+// }
+
+// .btn-primary:hover {
+//   background-color: #0b5ed7;
+//   border-color: #0a58ca;
+// }
+
+// .btn-primary:disabled {
+//   opacity: 0.65;
+//   cursor: not-allowed;
+// }

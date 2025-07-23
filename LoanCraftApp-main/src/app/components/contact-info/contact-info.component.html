@@ -1,0 +1,95 @@
+<div class="modal-overlay">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">Update Contact Information</h5>
+      <button type="button" class="btn-close" (click)="close()"></button>
+    </div>
+    <div class="modal-body">
+      <!-- Contact Information Form -->
+      <form [formGroup]="contactForm" (ngSubmit)="sendData()" class="container">
+        <div class="row">
+          <!-- Mobile Number -->
+          <!-- <div class="col-md-6 form-group">
+            <label>Mobile Number <span class="text-danger">*</span></label>
+            <input type="text" formControlName="mobileNumber" class="form-control"
+            [placeholder]="'Enter your mobile number' | titlecase" />
+          
+            <div class="error-message">
+              <span *ngIf="contactForm.get('mobileNumber')?.invalid &&(contactForm.get('mobileNumber')?.touched || contactForm.get('mobileNumber')?.dirty)">
+                <span *ngIf="contactForm.get('mobileNumber')?.errors?.['pattern']">Mobile Number must be 10 digits only.</span>
+                <span *ngIf="contactForm.get('mobileNumber')?.errors?.['required']">Mobile Number is required.</span>
+              </span>
+            </div>
+          </div> -->
+          
+          <div class="col-md-6 form-group mobile-wrapper">
+            <label for="mobileNumber">Mobile Number <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-text country-code">+91</span>
+              <input type="text" id="mobileNumber" formControlName="mobileNumber" class="form-control mobile-input"
+                [placeholder]="'Enter your mobile number' | titlecase" />
+            </div>
+
+            <!-- Error Message -->
+            <div class="error-message">
+              <span
+                *ngIf="contactForm.get('mobileNumber')?.invalid && (contactForm.get('mobileNumber')?.touched || contactForm.get('mobileNumber')?.dirty)">
+                <span *ngIf="contactForm.get('mobileNumber')?.errors?.['pattern']">Mobile number must be a valid 10-digit Indian number.
+                  only.</span>
+                <span *ngIf="contactForm.get('mobileNumber')?.errors?.['required']">Mobile Number is required.</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <!-- <div class="col-md-6 form-group">
+            <label>Email <span class="text-danger">*</span></label>
+            <input type="email" formControlName="email" class="form-control"
+              [placeholder]="'Enter your email address' | titlecase" />
+      
+            <div class="error-message">
+              <span *ngIf="contactForm.get('email')?.invalid &&
+                        (contactForm.get('email')?.touched || contactForm.get('email')?.dirty)">
+                <span *ngIf="contactForm.get('email')?.errors?.['email']">
+                  Please enter a valid email address.
+                </span>
+                <span *ngIf="contactForm.get('email')?.errors?.['required']">
+                  Email is required.
+                </span>
+              </span>
+            </div>
+          </div> -->
+
+
+
+          <div class="col-md-6 form-group">
+  <label>Email <span class="text-danger">*</span></label>
+  <input type="email" formControlName="email" class="form-control"
+    [placeholder]="'Enter your email address' | titlecase" />
+
+  <div class="error-message">
+    <span *ngIf="contactForm.get('email')?.invalid && 
+                (contactForm.get('email')?.touched || contactForm.get('email')?.dirty)">
+      
+      <span *ngIf="contactForm.get('email')?.errors?.['required']">
+        Email is required.
+      </span>
+
+      <span *ngIf="contactForm.get('email')?.errors?.['pattern']">
+        Enter a valid email address.
+      </span>
+    </span>
+  </div>
+</div>
+
+        </div>
+
+        <!-- Submit and Cancel Buttons -->
+        <div class="form-group mt-3 d-flex justify-content-end">
+          <button type="button" class="btn btn-secondary custom-btn me-2" (click)="close()">Cancel</button>
+          <button type="submit" class="btn btn-primary custom-btn">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

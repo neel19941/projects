@@ -1,0 +1,108 @@
+/* ================= Modal Styles ================= */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4); /* Softer backdrop */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  z-index: 1050;
+}
+
+.modal-content {
+  background-color: #fdfdfd;
+  padding: 32px;
+  border-radius: 16px;
+  max-width: 750px;
+  width: 100%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-height: 90vh;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: none;
+  padding-bottom: 10px;
+}
+
+.modal-title {
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: #333;
+}
+
+.modal-body {
+  margin-top: 20px;
+}
+
+/* ================= Input & Form Enhancements ================= */
+
+// File input field
+input[type="file"] {
+  cursor: pointer;
+  border-radius: 0.5rem;
+  border: 1px solid #ced4da;
+  padding: 0.375rem 0.75rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    border-color: #86b7fe;
+  }
+
+  &:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  }
+}
+
+/* ================= Upload Button ================= */
+
+.btn-custom-upload {
+  background: linear-gradient(135deg, #00bfa6, #007bff);
+  color: #fff;
+  padding: 0.6rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(0, 123, 255, 0.2);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
+    background: linear-gradient(135deg, #009688, #0056b3);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: #ccc;
+    box-shadow: none;
+  }
+}
+
+/* ================= Alert Style ================= */
+.alert-info {
+  background-color: #e9f2fe;
+  border-color: #bee0fc;
+  color: #0c5460;
+  font-size: 0.9rem;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+}

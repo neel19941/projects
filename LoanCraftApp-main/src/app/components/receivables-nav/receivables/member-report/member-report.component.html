@@ -1,0 +1,373 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Search Dropdown -->
+    <div class="col-12 col-md-6 mb-3">
+      <div class="search-container">
+        <div class="dropdown-wrapper">
+          <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()" (focus)="isDropdownOpen = true"
+            [placeholder]="'Search by name, loan number, or mobile...'" class="form-control" />
+          <span class="dropdown-arrow" [class.open]="isDropdownOpen" (click)="toggleDropdown()"></span>
+        </div>
+        <div *ngIf="isDropdownOpen" class="dropdown">
+          <div *ngFor="let item of filteredList" (click)="selectItem(item)" class="dropdown-item">
+            {{ item.fullName }}{{ item.loanAccountNumber ? ' - ' + item.loanAccountNumber : '' }}
+          </div>
+          <div *ngIf="filteredList.length === 0" class="no-results text-danger p-2">
+            No matching records found
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-end mb-3">
+      <button class="btn btn-primary btn-sm" (click)="printReport()" [disabled]="!memberDetails"
+        [title]="!memberDetails ? 'Please select a loan first' : ''">
+        <i class="fas fa-print me-1"></i> Print Report
+      </button>
+    </div>
+    <div #printSection>
+      <!-- Report Section -->
+      <div class="combined-section mx-auto col-12">
+        <!-- Header -->
+        <div class="text-center mb-4">
+          <h4 class="fw-bold">Beacon Holdings</h4>
+          <div class="text-muted">Member Report on {{ today | date: 'dd-MM-yyyy hh:mm:ss a' }}</div>
+        </div>
+        <!-- Member Details -->
+        <div *ngIf="memberDetails" class="row border p-3 rounded mb-4 bg-white member-info">
+          <div class="col-md-6">
+            <div class="d-flex justify-content-between mb-1">
+              <span class="fw-bold w-50">Name</span>
+              <span class="w-50 text-start">: {{ memberDetails.fullname }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-1">
+              <span class="fw-bold w-50">Application Ref ID</span>
+              <span class="w-50 text-start">: {{ memberDetails.application_reference_id }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-1">
+              <span class="fw-bold w-50">Contact No.</span>
+              <span class="w-50 text-start">: {{ memberDetails.mobile_number }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-1">
+              <span class="fw-bold w-50">Email</span>
+              <span class="w-50 text-start email">: {{ memberDetails.email }}</span>
+            </div>
+            <!-- <div class="d-flex justify-content-between mb-1">
+              <span class="fw-bold w-50">Address</span>
+              <span class="w-50 text-start">: {{ memberDetails.address }}</span>
+            </div> -->
+            <div class="d-flex justify-content-between mb-1">
+              <span class="fw-bold w-50">Address</span>
+              <span class="w-50 text-start"> : {{ memberDetails.address + (memberDetails.location ? ', '
+                + memberDetails.location : '') + (memberDetails.city ? ', ' + memberDetails.city : '') +
+                (memberDetails.pincode ? ' - ' + memberDetails.pincode : '')
+                + (memberDetails.state ? ', ' + memberDetails.state : '') }}
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="d-flex justify-content-between mb-1">
+              <span class="fw-bold w-50">Status</span>
+              <span class="w-50 text-start">: {{ memberDetails.status }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-1">
+              <span class="fw-bold w-50">Loan Account No</span>
+              <span class="w-50 text-start">: {{ memberDetails.loan_account_number }}</span>
+            </div>
+            <!-- <div class="d-flex justify-content-between mb-1">
+              <span class="fw-bold w-50">Location</span>
+              <span class="w-50 text-start">: {{ memberDetails.location }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-1">
+              <span class="fw-bold w-50">City</span>
+              <span class="w-50 text-start">: {{ memberDetails.city }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-1">
+              <span class="fw-bold w-50">Pincode</span>
+              <span class="w-50 text-start">: {{ memberDetails.pincode }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-1">
+              <span class="fw-bold w-50">State</span>
+              <span class="w-50 text-start">: {{ memberDetails.state }}</span>
+            </div> -->
+            <div class="d-flex justify-content-between mb-1">
+              <span class="fw-bold w-50">Total Principal Due</span>
+              <span class="w-50 text-start">₹{{ formatIndianCurrency(summaryDetails.totalPrincipalAmountDue) }}</span>
+            </div>
+
+            <div class="d-flex justify-content-between mb-1">
+              <span class="fw-bold w-50">Total Interest Due</span>
+              <span class="w-50 text-start">₹{{ formatIndianCurrency(summaryDetails.totalInterestDue) }}</span>
+            </div>
+
+            <div class="d-flex justify-content-between mb-1">
+              <span class="fw-bold w-50 text-danger">Total Outstanding Amount</span>
+              <span class="w-50 text-start fw-bold text-danger">₹{{
+                formatIndianCurrency(summaryDetails.totalOutstandingAmount) }}</span>
+            </div>
+
+          </div>
+        </div>
+        <!-- Transactions Table -->
+        <h5 class="section-title text-center mb-4">Member Transaction History</h5>
+        <table class="table table-bordered table-striped table-hover table-sm">
+          <thead class="table-custom-header text-white text-nowrap bg-dark">
+            <tr>
+              <th>Payment Date</th>
+              <th>Mode</th>
+              <th>Description</th>
+              <th>Amount Paid</th>
+              <th>Other Charges</th>
+              <th>Penalty</th>
+              <th>Interest</th>
+              <th>Principal</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tx of transactions">
+              <td>{{ tx.payment_date | date: 'dd-MM-yyyy' }}</td>
+              <td>{{ tx.payment_mode }}</td>
+              <td>{{ tx.description }}</td>
+              <td>₹{{ formatIndianCurrency(tx.amount_paid) }}</td>
+              <td>₹{{ formatIndianCurrency(tx.other_charges) }}</td>
+              <td>₹{{ formatIndianCurrency(tx.penalty_component) }}</td>
+              <td>₹{{ formatIndianCurrency(tx.interest_component) }}</td>
+              <td>₹{{ formatIndianCurrency(tx.principal_component) }}</td>
+
+            </tr>
+
+            <tr *ngIf="transactions.length === 0">
+              <td colspan="8" class="text-center">No transactions found.</td>
+            </tr>
+
+            <!-- Total Row from summaryDetails -->
+            <tr *ngIf="transactions.length > 0" class="table-summary-row fw-bold bg-light">
+              <td colspan="3"  class="table-summary-label" >Total</td>
+
+              <!-- Total: Amount Paid -->
+              <td>₹{{ formatIndianCurrency(summaryDetails?.totalRepaymentAmount) }}</td>
+
+              <!-- Total: Other Charges -->
+              <td>₹{{ formatIndianCurrency(summaryDetails?.totalOtherCharges) }}</td>
+
+              <!-- Total: Penalty -->
+              <td>₹{{ formatIndianCurrency(summaryDetails?.totalPenalty) }}</td>
+
+              <!-- Total: Interest -->
+              <td>₹{{ formatIndianCurrency(summaryDetails?.totalInterestPaid) }}</td>
+
+              <!-- Total: Principal -->
+              <td>₹{{ formatIndianCurrency(summaryDetails?.totalPrincipalPaid) }}</td>
+            </tr>
+
+
+          </tbody>
+        </table>
+        <!-- Disbursement Details Table -->
+        <div *ngIf="disbursementDetails" class="mt-5">
+          <h5 class="section-title text-center mb-4">Disbursement Details</h5>
+          <table class="table table-bordered table-striped table-hover table-sm w-100 text-center">
+            <thead class="table-light">
+              <tr>
+                <th>Loan Sanction Amount</th>
+                <th>Disbursed Amount</th>
+                <th>Tenure</th>
+                <th>Processing Charge</th>
+                <th>Document Charge</th>
+                <th>Rate of Interest</th>
+                <th>EMI Amount</th>
+                <th>Disbursed Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>₹{{ formatIndianCurrency(disbursementDetails.amountSanctioned) }}</td>
+                <td>₹{{ formatIndianCurrency(disbursementDetails.disbursedAmount) }}</td>
+                <td>{{ disbursementDetails.numberOfEmis }} months</td>
+                <td>₹{{ formatIndianCurrency(disbursementDetails.loanProcessingCharges) }}</td>
+                <td>₹{{ formatIndianCurrency(disbursementDetails.documentationCharges) }}</td>
+                <td>{{ disbursementDetails.rateOfInterest }}%</td>
+                <td>₹{{ formatIndianCurrency(disbursementDetails.emiAmount) }}</td>
+                <td>{{ disbursementDetails.disbursedDate | date:'dd MMM yyyy' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+        <!-- Due Details Table -->
+        <div *ngIf="dueDetails?.length" class="mt-5">
+          <h5 class="section-title text-center mb-4">Due Details</h5>
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle table-sm w-100">
+              <thead class="table-light">
+                <tr>
+                  <th>SI.No</th>
+                  <th>EMI Number</th> <!-- 👈 Add this -->
+                  <th>EMI Month</th>
+                  <th>Due Date</th>
+                  <th>Due Days</th>
+                  <th>Due Amount (₹)</th>
+                  <th>Cheque Return Charges (₹)</th>
+                  <th>Late Penalty Charges (₹)</th>
+                  <th>Penalty (₹)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of dueDetails; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.emiNumber }}</td> <!-- 👈 Show EMI number -->
+                  <td>{{ item.emiMonth | titlecase }}</td>
+                  <td>{{ item.dueDate }}</td>
+                  <td>{{ item.dueDays }}</td>
+                  <td>{{ formatIndianCurrency(item.dueAmount) }}</td>
+                  <td>{{ formatIndianCurrency(item.chequeReturnCharge) }}</td>
+                  <td>{{ formatIndianCurrency(item.latePenalty) }}</td>
+                  <td class="penalty-cell">{{ formatIndianCurrency(item.penalty) }}</td>
+                </tr>
+              </tbody>
+
+            </table>
+          </div>
+        </div>
+
+        <!-- Reference Details Table with Column Headers -->
+        <div *ngIf="referencesDetails" class="mt-5">
+          <h5 class="section-title text-center mb-4">Reference Details</h5>
+          <table class="table table-bordered table-striped table-hover table-sm w-100 text-center">
+            <thead class="table-light">
+              <tr>
+                <th>Full Name</th>
+                <th>Mobile Number</th>
+                <th>Relationship</th>
+                <th>Known For (Years)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ referencesDetails.fullName }}</td>
+                <td>{{ referencesDetails.mobileNumber }}</td>
+                <td>{{ referencesDetails.relationship }}</td>
+                <td>{{ referencesDetails.knownForYears }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="table-responsive mb-4">
+          <table class="table table-bordered table-striped table-hover table-sm">
+            <thead class="table-custom-header text-white text-nowrap bg-dark">
+              <tr>
+                <th>Date</th>
+                <th>Payment Date</th>
+                <th>Mode</th>
+                <th>Description</th>
+                <th>Other Charges</th>
+                <th>Penalty</th>
+                <th>Interest</th>
+                <th>Principal</th>
+                <th>Amount Paid</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tx of transactions">
+                <td>{{ tx.createddate | date:'dd-MM-yyyy' }}</td>
+                <td>{{ tx.payment_date | date:'dd-MM-yyyy' }}</td>
+                <td>{{ tx.payment_mode }}</td>
+                <td>{{ tx.description }}</td>
+                <td>₹{{ formatIndianCurrency(tx.other_charges) }}</td>
+                <td>₹{{ formatIndianCurrency(tx.penalty_component) }}</td>
+                <td>₹{{ formatIndianCurrency(tx.interest_component) }}</td>
+                <td>₹{{ formatIndianCurrency(tx.principal_component) }}</td>
+                <td>₹{{ formatIndianCurrency(tx.amount_paid) }}</td>
+              </tr>
+              <tr *ngIf="transactions.length === 0">
+                <td colspan="9" class="text-center">No transactions found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div> -->
+<!-- <div *ngIf="summaryDetails" class="mb-4">
+          <div class="row justify-content-center">
+            <div class="col-md-6 table-responsive">
+              <table class="table table-bordered table-striped table-hover table-sm">
+                <thead class="table-custom-header text-white bg-secondary text-center">
+                  <tr>
+                    <th colspan="2">Summary Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th class="text-nowrap">Total Principal Paid</th>
+                    <td class="text-end">₹{{ formatIndianCurrency(summaryDetails.totalPrincipalPaid) }}</td>
+                  </tr>
+                  <tr>
+                    <th class="text-nowrap">Total Interest Paid</th>
+                    <td class="text-end">₹{{ formatIndianCurrency(summaryDetails.totalInterestPaid) }}</td>
+                  </tr>
+                  <tr>
+                    <th class="text-nowrap">Total Repayment Amount</th>
+                    <td class="text-end">₹{{ formatIndianCurrency(summaryDetails.totalRepaymentAmount) }}</td>
+                  </tr>
+                  <tr>
+                    <th class="text-nowrap">Total Principal Due</th>
+                    <td class="text-end">₹{{ formatIndianCurrency(summaryDetails.totalPrincipalAmountDue) }}</td>
+                  </tr>
+                  <tr>
+                    <th class="text-nowrap">Total Interest Due</th>
+                    <td class="text-end">₹{{ formatIndianCurrency(summaryDetails.totalInterestDue) }}</td>
+                  </tr>
+                  <tr>
+                    <th class="text-nowrap">Total Outstanding Amount</th>
+                    <td class="text-end fw-bold text-danger">₹{{
+                      formatIndianCurrency(summaryDetails.totalOutstandingAmount) }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div> -->
+
+<!-- ✅ Close table-responsive here -->
+<!-- Summary Details Section -->
+<!-- <div *ngIf="summaryDetails" class="table-responsive mb-4">
+  <table class="table table-bordered table-striped table-hover table-sm">
+    <thead class="table-custom-header text-white bg-secondary text-center">
+      <tr>
+        <th colspan="2">Summary Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th class="text-nowrap">Total Principal Paid</th>
+        <td class="text-end">₹{{ formatIndianCurrency(summaryDetails.totalPrincipalPaid) }}</td>
+      </tr>
+      <tr>
+        <th class="text-nowrap">Total Interest Paid</th>
+        <td class="text-end">₹{{ formatIndianCurrency(summaryDetails.totalInterestPaid) }}</td>
+      </tr>
+      <tr>
+        <th class="text-nowrap">Total Repayment Amount</th>
+        <td class="text-end">₹{{ formatIndianCurrency(summaryDetails.totalRepaymentAmount) }}</td>
+      </tr>
+      <tr>
+        <th class="text-nowrap">Total Principal Due</th>
+        <td class="text-end">₹{{ formatIndianCurrency(summaryDetails.totalPrincipalAmountDue) }}</td>
+      </tr>
+      <tr>
+        <th class="text-nowrap">Total Interest Due</th>
+        <td class="text-end">₹{{ formatIndianCurrency(summaryDetails.totalInterestDue) }}</td>
+      </tr>
+      <tr>
+        <th class="text-nowrap">Total Outstanding Amount</th>
+        <td class="text-end fw-bold text-danger">₹{{ formatIndianCurrency(summaryDetails.totalOutstandingAmount) }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div> -->

@@ -1,0 +1,131 @@
+.employer-login {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  overflow: hidden;
+  text-transform: capitalize;
+  // Blurred background image
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url('../../../assets/loan app employee login bg pic.png');
+        background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(1.8px); // adjust the blur level here
+    z-index: -1;
+    transform: scale(1.1); // scale up to cover the blur edges
+  }
+
+  .spacer {
+    flex: 0 0 40%; // take 20% space from the left
+  }
+
+  .login-container {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 400px;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  
+
+
+    h3 {
+      text-align: center;
+      font-weight: bold;
+      color: rgb(6, 17, 170);
+      margin-bottom: 40px;
+    }
+
+    .form-group {
+      margin-bottom: 0.3rem;
+
+      label {
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      input {
+        width: 100%;
+        border: none !important;
+        border-radius: 4px;
+        padding: 5px 20px;
+        font-size: 1rem;
+        background-color: #b6cae861;
+        &:focus {
+          outline: none;
+          box-shadow: none;
+        }
+      }
+
+      .input-group {
+        display: flex;
+
+        .form-control {
+          flex: 1;
+          border-right: none;
+        }
+
+        button {
+          border-left: none;
+          font-size: 0.8rem;
+          padding: 8px 20px 7px;
+          border: 1px solid rgb(29, 29, 29);
+        }
+      }
+    }
+
+    .error-message {
+      color: #d32f2f;
+      font-size: 0.875rem;
+      height: 1rem;
+      margin-top: 0.25rem;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    button {
+      background-color: rgb(6, 17, 170);
+      color: #fff;
+      padding: 5px 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: rgb(4, 13, 130);
+      }
+
+      &:disabled {
+        background-color: #afafaf;
+      }
+    }
+  }
+
+  // Mobile responsiveness
+  @media (max-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+
+    .spacer {
+      display: none;
+    }
+
+    .login-container {
+      margin: 0 auto;
+    }
+  }
+}

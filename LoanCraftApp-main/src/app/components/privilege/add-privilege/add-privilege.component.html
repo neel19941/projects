@@ -1,0 +1,58 @@
+<div class="modal-overlay">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h5 class="modal-title">{{title}}</h5>
+        <button type="button" class="btn-close" (click)="close()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addRoleForm" class="container">
+
+          <div class="row">
+
+            <div class="col-md-12 form-group">
+                <label>Card Type<span class="text-danger">*</span></label>
+                <input type="text" formControlName="type" class="form-control" [placeholder]="'Enter privilege type' | titlecase" />
+                <div class="error-message">
+                  <span *ngIf="addRoleForm.get('type')?.invalid && (addRoleForm.get('type')?.touched || addRoleForm.get('type')?.dirty)">
+                    <span *ngIf="addRoleForm.get('type')?.errors?.['required']">Card type is required.</span>
+                    <!-- <span *ngIf="addRoleForm.get('rolename')?.errors?.['pattern']">Role Name must be at least 6 letters</span> -->
+                  </span>
+                </div>
+              </div>
+
+            <div class="col-md-12 form-group">
+                <label>Name<span class="text-danger">*</span></label>
+                <input type="text" formControlName="name" class="form-control"  [placeholder]="'Enter name' | titlecase"/>
+                <div class="error-message">
+                  <span *ngIf="addRoleForm.get('name')?.invalid && (addRoleForm.get('name')?.touched || addRoleForm.get('name')?.dirty)">
+                    <span *ngIf="addRoleForm.get('name')?.errors?.['required']">Privilege name is required.</span>
+                    <!-- <span *ngIf="addRoleForm.get('rolename')?.errors?.['pattern']">Role Name must be at least 6 letters</span> -->
+                  </span>
+                </div>
+              </div>
+          
+              <div class="col-md-12 form-group">
+                <label>Privilege Type<span class="text-danger">*</span></label>
+                <input type="text" formControlName="cardType" class="form-control" [placeholder]="'Enter card type' | titlecase"/>
+                <div class="error-message">
+                  <span *ngIf="addRoleForm.get('cardType')?.invalid && (addRoleForm.get('cardType')?.touched || addRoleForm.get('cardType')?.dirty)">
+                    <span *ngIf="addRoleForm.get('cardType')?.errors?.['required']">Privilege type is required.</span>
+                    <!-- <span *ngIf="addRoleForm.get('rolename')?.errors?.['pattern']">Role Name must be at least 6 letters</span> -->
+                  </span>
+                </div>
+              </div>
+          </div>
+          
+          <!-- Submit and Cancel Buttons -->
+        <!-- Submit and Cancel Buttons -->
+        <div class="form-group mt-3 d-flex justify-content-end">
+          <button type="button" class="btn btn-secondary custom-btn me-2" (click)="close()">Cancel</button>
+          <button *ngIf="!isEditMode" type="button" class="btn btn-primary custom-btn"
+            (click)="savePrivilege()">Create</button>
+          <button *ngIf="isEditMode" type="button" class="btn btn-primary custom-btn"
+            (click)="updateData()">Update</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>

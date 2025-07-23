@@ -1,0 +1,37 @@
+<app-plain-navigation></app-plain-navigation>
+<div class="ucrf-container">
+  <div class="loan-container">
+    <h3>UCRF File Convert</h3>
+
+    <form (submit)="uploadFile($event, fileInput)" class="container">
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <label for="fileUpload">Select Excel File <span class="text-danger">*</span></label>
+          <input type="file" id="fileUpload" #fileInput (change)="onFileSelected($event)" class="form-control"
+            accept=".xls, .xlsx" />
+          <div class="error-message">
+            <span *ngIf="fileError">{{ fileError }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary btn-sm" [disabled]="!selectedFile">
+          Upload
+        </button>
+      </div>
+    </form>
+
+    <!-- <div class="text-center mt-3">
+      <button class="btn btn-success btn-sm" (click)="downloadTextFile()" [disabled]="isDownloadDisabled">
+        Download UCRF Format
+      </button>
+    </div> -->
+    <div class="text-center mt-3">
+      <a href="javascript:void(0);" (click)="downloadTextFile()" [class.disabled-link]="isDownloadDisabled">
+        Download UCRF Format
+      </a>
+    </div>
+    
+  </div>
+</div>

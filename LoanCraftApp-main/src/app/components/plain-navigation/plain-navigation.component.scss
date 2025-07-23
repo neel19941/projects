@@ -1,0 +1,27 @@
+.navbar {
+    background-color: rgb(6, 17, 170);
+    /* Blue background */
+}
+
+.navbar-brand {
+    color: #ffffff !important;
+    /* White text */
+    font-weight: bold;
+}
+
+.navbar-toggler-icon {
+    background-color: #ffffff;
+    /* White hamburger icon */
+}
+
+/* Remove any additional user section or links */
+.user-section {
+    display: none;
+}
+
+/* Prevent user section from collapsing */
+@media (max-width: 991px) {
+    .user-section {
+        display: none;
+    }
+}

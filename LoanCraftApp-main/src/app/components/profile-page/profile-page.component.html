@@ -1,0 +1,177 @@
+<!-- <div class="container mt-5">
+  <h2 class="mb-4">Profile Page</h2>
+  <div class="record-card mb-3 p-3">
+    <div class="section-header">
+      <h5>Personal Information
+        <i class="fas fa-edit edit-icon ml-2" (click)="openPersonalModal()"></i>
+      </h5>
+    </div>
+    <hr />
+    <div class="profile-item">
+      <span class="label">Full Name:</span>
+      <span class="value">{{ personalInfo.firstname }} {{ personalInfo.middlename }} {{ personalInfo.lastname }}</span>
+    </div>
+    <div class="profile-item">
+      <span class="label">Gender:</span>
+      <span class="value">{{ personalInfo.gender }}</span>
+    </div>
+    <div class="profile-item">
+      <span class="label">Date of Birth:</span>
+      <span class="value">{{ personalInfo.dob }}</span>
+    </div>
+    <div class="profile-item">
+      <span class="label">Father/Spouse's Name:</span>
+      <span class="value">{{ personalInfo.fathersOrSpousesName }}</span>
+    </div>
+    <div class="profile-item">
+      <span class="label">Highest Qualification:</span>
+      <span class="value">{{ personalInfo.highestQualification }}</span>
+    </div>
+    <div class="profile-item">
+      <span class="label">Aadhaar Number:</span>
+      <span class="value">{{ personalInfo.adhaarNumber }}</span>
+    </div>
+  </div>
+  <div class="record-card mb-3 p-3">
+    <div class="section-header">
+      <h5>Contact Information
+        <i class="fas fa-edit edit-icon ml-2" (click)="openContactPopup()"></i>
+      </h5>
+    </div>
+    <hr />
+    <div class="profile-item">
+      <span class="label">Email:</span>
+      <span class="value">{{ contactInfo.email || 'N/A' }}</span>
+    </div>
+    <div class="profile-item">
+      <span class="label">Primary Number:</span>
+      <span class="value">{{ contactInfo.primaryNumber }}</span>
+    </div>
+    <div class="profile-item">
+      <span class="label">Home Address:</span>
+      <span class="value">{{ contactInfo.homeAddress }}</span>
+    </div>
+    <div class="profile-item">
+      <span class="label">Address Information:</span>
+      <div class="nested-address">
+        <p><strong>Current Address:</strong></p>
+        <p>{{ contactInfo.tempAddress }}, {{ contactInfo.tempCity }}, {{ contactInfo.tempState }}, {{ contactInfo.tempLocation }}, {{ contactInfo.tempLandmark }}, {{ contactInfo.tempPincode }}</p>
+        <button class="btn btn-sm btn-link" (click)="openAddressPopup()">
+          <i class="fas fa-edit"></i> Edit Address Info
+        </button>
+        <p><strong>Permanent Address:</strong></p>
+        <p>{{ contactInfo.permanentAddress }}, {{ contactInfo.permanentCity }}, {{ contactInfo.permanentState }}, {{ contactInfo.permanentLocation }}, {{ contactInfo.permanentLandmark }}, {{ contactInfo.permanentPincode }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<app-personal-info *ngIf="showPersonalModal" (closeModal)="closePersonalModal()"></app-personal-info>
+<app-contact-info *ngIf="showContactModal" (closeModal)="closeContactPopup()"></app-contact-info>
+<app-address-info *ngIf="showAddressModal" (closeModal)="closeAddressPopup()"></app-address-info> -->
+
+<div class="container mt-5">
+  <h2 class="mb-4">Profile</h2>
+  <!-- Personal Information Section -->
+  <div class="record-card mb-3 p-3">
+    <div class="section-header">
+      <h5>
+        Personal Information
+        <i class="fas fa-edit edit-icon ml-2" (click)="openPersonalModal()"></i>
+      </h5>
+    </div>
+    <hr />
+    <div class="profile-item">
+      <span class="label">Full Name:</span>
+      <span class="value">
+        {{ customerData.firstName | capitalize}} {{ customerData.middleName | capitalize}} {{ customerData.lastName | capitalize}}
+      </span>
+    </div>
+    <div class="profile-item">
+      <span class="label">Gender:</span>
+      <span class="value">{{ customerData.gender | capitalize}}</span>
+    </div>
+    <div class="profile-item">
+      <span class="label">Date Of Birth:</span>
+      <span class="value">{{ customerData.dob | capitalize}}</span>
+    </div>
+    <div class="profile-item">
+      <span class="label">Father/Spouse's Name:</span>
+      <span class="value">{{ customerData.fathersOrSpousesName | capitalize}}</span>
+    </div>
+    <div class="profile-item">
+      <span class="label">Highest Qualification:</span>
+      <span class="value">{{ customerData.highestQualification | capitalize}}</span>
+    </div>
+    <div class="profile-item">
+      <span class="label">Aadhaar Number:</span>
+      <span class="value">{{ customerData.adhaarNumber }}</span>
+    </div>
+  </div>
+
+  <!-- Contact Information Section -->
+  <div class="record-card mb-3 p-3">
+    <div class="section-header">
+      <h5>
+        Contact Information
+        <i class="fas fa-edit edit-icon ml-2" (click)="openContactPopup()"></i>
+      </h5>
+    </div>
+    <hr />
+    <div class="profile-item">
+      <span class="label">Email:</span>
+      <span class="value">{{ customerData.email || '' }}</span>
+    </div>
+    <div class="profile-item">
+      <span class="label">Primary Number:</span>
+      <span class="value">{{ customerData.mobileNumber }}</span>
+    </div>
+    <div class="section-header">
+      <h5>
+     Address Information
+        <i class="fas fa-edit edit-icon ml-2" (click)="openAddressPopup()"></i>
+      </h5>
+    </div>
+
+    <div class="profile-item">
+      <span class="label">Current Address:</span>
+      <span class="value">
+        {{ (customerData.currentAddress?.address | capitalize) || '' }},
+        {{ (customerData.currentAddress?.city | capitalize) || '' }},
+        {{ (customerData.currentAddress?.state?.state | capitalize) || '' }},
+        {{ (customerData.currentAddress?.location | capitalize) || '' }},
+        {{ (customerData.currentAddress?.landmark | capitalize) || '' }},
+        {{ customerData.currentAddress?.stayedOfYears || '' }},
+        {{ customerData.currentAddress?.pincode || '' }}
+        
+        <!-- <p>{{ contactInfo.tempAddress }}, {{ contactInfo.tempCity }}, {{ contactInfo.tempState }}, {{ contactInfo.tempLocation }}, {{ contactInfo.tempLandmark }}, {{ contactInfo.tempPincode }}</p> -->
+      </span>
+
+    </div>
+          <!-- Centered Button -->
+          <!-- <div class="d-flex justify-content-center">
+            <button class="btn btn-sm btn-link" (click)="openAddressPopup()">
+              <i class="fas fa-edit"></i> Edit Address Info
+            </button>
+          </div> -->
+    <div class="profile-item">
+      <span class="label">Permanent Address:</span>
+      <span class="value">
+        {{ (customerData.permanentAddress?.address | capitalize) || '' }},
+        {{ (customerData.permanentAddress?.city | capitalize) || '' }},
+        {{ (customerData.permanentAddress?.state?.state | capitalize) || '' }},
+        {{ (customerData.permanentAddress?.location | capitalize) || '' }},
+        {{ (customerData.permanentAddress?.landmark | capitalize) || '' }},
+        {{ customerData.permanentAddress?.stayedOfYears || '' }},
+        {{ customerData.permanentAddress?.pincode || '' }}
+        
+        <!-- <p>{{ contactInfo.permanentAddress }}, {{ contactInfo.permanentCity }}, {{ contactInfo.permanentState }}, {{ contactInfo.permanentLocation }}, {{ contactInfo.permanentLandmark }}, {{ contactInfo.permanentPincode }}</p> -->
+      </span>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modals -->
+<app-personal-info *ngIf="showPersonalModal" (closeModal)="closePersonalModal()"></app-personal-info>
+<app-contact-info  *ngIf="showContactModal" (closeModal)="closeContactPopup()"></app-contact-info>
+<app-address-info  *ngIf="showAddressModal" (closeModal)="closeAddressPopup()"></app-address-info>

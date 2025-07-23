@@ -1,0 +1,39 @@
+<div class="modal-overlay" (click)="close()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">Application Tracking</h5>
+      <button type="button" class="btn-close" (click)="close()"></button>
+    </div>
+
+    <div class="modal-body">
+      <div class="d-flex flex-wrap justify-content-center stepper-container">
+        <div class="d-flex align-items-center step-wrapper" *ngFor="let step of steps; let i = index">
+          <div class="step text-center position-relative"
+            [ngClass]="{ 'clickable': step.label === 'Physical Verification' }"
+            (click)="step.label === 'Physical Verification' ? openPhysicalPopup() : null">
+
+            <!-- Circle -->
+            <div class="circle" [ngClass]="step.verified ? 'completed' : 'in-progress'">
+              <i *ngIf="step.verified" class="bi bi-check-lg text-white"></i>
+              <i *ngIf="!step.verified" class="bi bi-dot text-white fs-3"></i>
+            </div>
+
+            <div class="step-number">{{ i + 1 }}</div>
+            <div class="fw-semibold small mt-2">{{ step.label }}</div>
+
+            <!-- Message -->
+            <div class="message-space">
+              <div class="small" [ngClass]="step.verified ? 'text-success' : 'text-danger'">
+                {{ step.verified ? 'Verified' : 'Not Verified' }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Connector line -->
+          <div class="line" *ngIf="i < steps.length - 1"
+            [ngClass]="steps[i + 1].verified ? 'line-success' : 'line-in-progress'"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

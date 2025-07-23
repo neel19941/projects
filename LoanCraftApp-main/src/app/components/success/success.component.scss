@@ -1,0 +1,73 @@
+/* Full-page container with centered content */
+.success-container {
+  height: 100vh; /* Full viewport height */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  padding-top : 150px;
+  background-color: #f8f9fa; /* Optional background */
+}
+
+/* Center and reduce spacing for icon */
+.success-icon {
+  display: block;
+  margin: 0 auto 15px; /* Center and add margin below */
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /* Circular appearance */
+  background-color: #d4edda; /* Light green background */
+  padding: 15px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Animation for blinking effect */
+@keyframes blinkAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5); /* Enlarges the image */
+  }
+  100% {
+    transform: scale(1); /* Return to normal size */
+  }
+}
+
+.animate-icon {
+  animation: blinkAnimation 0.6s ease-out forwards; /* Apply the animation */
+}
+
+/* Success message styling */
+.success-message {
+  text-align: center;
+  color: #155724; /* Dark green text */
+  font-size: 22px;
+  font-weight: 600;
+  margin: 10px 0; /* Space above and below */
+}
+
+/* Go Back button */
+.success-action {
+  display: block;
+  margin: 20px auto 0; /* Center and add margin above */
+  font-size: 16px;
+  padding: 10px 20px;
+}
+/* Go Back Link */
+.go-back-link {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+  color: #007bff; /* Blue link color */
+  text-decoration: none; /* Remove underline */
+  margin-top: 20px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.go-back-link:hover {
+  color: #0056b3; /* Darker blue on hover */
+  text-decoration: underline; /* Underline on hover */
+  transform: translateY(-2px); /* Slight move up on hover */
+}
+  
+  
+  

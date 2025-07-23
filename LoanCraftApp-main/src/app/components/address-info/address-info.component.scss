@@ -1,0 +1,256 @@
+/* General Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  z-index: 1050;
+  text-transform: capitalize;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px !important; /* Ensure it's applied to all corners */
+  max-width: 700px;
+  width: 100%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  font-family: Arial, sans-serif;
+  max-height: 90vh;
+  overflow-y: auto; /* Allow scrolling if needed */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
+/* Scrollbar Customization */
+.modal-content::-webkit-scrollbar {
+  width: 6px; /* Make the scrollbar thinner */
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background-color: transparent; /* No track color */
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* Subtle thumb color */
+  border-radius: 10px; /* Rounded edges for the thumb */
+  visibility: visible; /* Ensure the thumb is visible when scrolling */
+}
+
+/* Header Styling */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.modal-title {
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+/* Close Button Styling */
+.btn-close {
+  font-size: 1.2rem;
+  color: #888;
+  transition: all 0.3s;
+}
+
+.btn-close:hover {
+  color: #333;
+}
+
+/* Modal Body Styling */
+.modal-body {
+  margin-top: 20px;
+  overflow-y: auto; /* Enable scroll for modal body */
+}
+
+.row {
+  margin-bottom: 15px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+/* Wrapper to hold the select and icon together */
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+/* Styling for the select element */
+select.form-control {
+  width: 100%;
+  padding: 10px 35px 10px 10px; /* Add padding to accommodate the icon */
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  background-color: #f8f9fa;
+  appearance: none; /* Remove default arrow */
+  -webkit-appearance: none; /* Remove default arrow in Safari */
+  -moz-appearance: none; /* Remove default arrow in Firefox */
+}
+
+/* Styling for the icon */
+.select-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px; /* Position the icon on the right */
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #888;
+  pointer-events: none; /* Make sure the icon doesn't interfere with the select element */
+}
+
+/* Styling for the error message */
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Form Labels */
+label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.text-danger {
+  font-size: 1rem;
+  color: #e63946;
+}
+.state-dropdown {
+  position: absolute;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  background-color: white;
+  z-index: 10;
+}
+
+.state-dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.state-dropdown li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.state-dropdown li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Input Fields */
+.form-control {
+  border: 1px solid #ccc;
+  border-radius: 18px;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+/* Error Messages */
+.error-message {
+  font-size: 0.85rem;
+  color: #e63946;
+  margin-top: 5px;
+}
+
+/* Checkbox and Labels */
+.form-check-label {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Button Customization */
+.custom-btn {
+  border-radius: 25px;
+  padding: 8px 60px;
+  font-weight: 600;
+  font-size: 1rem;
+
+  /* Optional transition for hover effect */
+  transition: all 0.3s ease;
+
+  &.btn-secondary {
+    // background-color: #6c757d;
+    background-color: white;
+    color : rgb(0, 75, 0);
+    border: 2px solid rgb(0, 75, 0);
+    // border: none;
+    &:hover {
+      // background-color: rgb(0, 75, 0);
+      // color : white;
+    }
+  }
+
+  &.btn-primary {
+    // background-color: #007bff;
+    background-color: rgb(0, 77, 0);
+    border: none;
+
+    &:hover {
+      // background-color: #0056b3;
+      background-color: rgb(1, 44, 1);
+    }
+  }
+}
+
+
+.btn-secondary {
+  background-color: #fff;
+  color: rgb(0, 75, 0);
+  border: 2px solid rgb(0, 75, 0);
+}
+
+.btn-secondary:hover {
+  background-color: rgb(0, 75, 0);
+  color: #fff;
+}
+
+.btn-primary {
+  background-color: rgb(0, 77, 0);
+  border: none;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: rgb(1, 44, 1);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .modal-content {
+      padding: 15px;
+      max-width: 95%;
+  }
+
+  .modal-header .modal-title {
+      font-size: 1rem;
+  }
+
+  .custom-btn {
+      padding: 8px 20px;
+      font-size: 0.9rem;
+  }
+}

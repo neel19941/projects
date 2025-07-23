@@ -1,0 +1,109 @@
+<!-- <app-plain-navigation></app-plain-navigation> -->
+<div class="container-fluid">
+    <!-- Header Bar -->
+    <div class="row header-bar">
+      <div class="col-12 col-md-6">
+        <h4 class="header-title">HRM Information</h4>
+      </div>
+      <div class="col-12 col-md-6 text-md-end">
+        <div class="search-container">
+          <!-- <span class="add-text" (click)="openAddUser()">AddUser</span>  -->
+          <span class="add-icon" (click)="openAddUser('add')" *ngIf="privilegeServ.hasPrivilege('ADD_HRM')">
+            <i class="fas fa-plus"></i>
+          </span>
+          <input 
+            type="text" 
+            class="search-input" 
+            placeholder="Search"
+            (keyup)="onSearch($event)"
+          />
+        </div>
+      </div>
+    </div>
+    <!-- Table -->
+    <div class="row" *ngIf="privilegeServ.hasPrivilege('LIST_HRM')">
+      <div class="col-12">
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead class="table-custom-header">
+              <tr>
+                <th scope="col" (click)="onSort('si')">S.No</th>
+                <th scope="col" (mouseover)="hoverField = 'name'" (mouseleave)="hoverField = null" (click)="onSort('name')">
+                  Name
+                  <span class="sort-icon" [ngClass]="getSortIcon('name')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'email'" (mouseleave)="hoverField = null" (click)="onSort('email')">
+                  Email
+                  <span class="sort-icon" [ngClass]="getSortIcon('email')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'designation'" (mouseleave)="hoverField = null" (click)="onSort('designation')">
+                  Designation
+                  <span class="sort-icon" [ngClass]="getSortIcon('designation')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'mobile_number'" (mouseleave)="hoverField = null" (click)="onSort('mobile_number')">
+                  Mobile Number
+                  <span class="sort-icon" [ngClass]="getSortIcon('mobile_number')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'createddate'" (mouseleave)="hoverField = null" (click)="onSort('createddate')">
+                  Created Date
+                  <span class="sort-icon" [ngClass]="getSortIcon('createddate')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'updateddate'" (mouseleave)="hoverField = null" (click)="onSort('updateddate')">
+                  Updated Date
+                  <span class="sort-icon" [ngClass]="getSortIcon('updateddate')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'addedby'" (mouseleave)="hoverField = null" (click)="onSort('addedby')">
+                  Added By
+                  <span class="sort-icon" [ngClass]="getSortIcon('addedby')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'status'" (mouseleave)="hoverField = null" (click)="onSort('status')">
+                  Status
+                  <span class="sort-icon" [ngClass]="getSortIcon('status')"></span>
+                </th>
+              </tr>
+            </thead>
+            
+            <tbody>
+              <tr *ngFor="let hrm of hrmInfo; let i = index">
+                 <!-- <th scope="row">{{ hrm.si }}</th> -->
+                 <td>{{ hrm.serialNum }}</td>
+                 <td class="clickable-cell" (click)="openHrmActionModal(hrm.user_id)">{{ hrm.name | capitalize}}</td>
+                 <td class="lowerCase">{{ hrm.email }}</td>
+                 <td>{{ hrm.designation | capitalize}}</td>
+                 <!-- <td>{{ hrm.mobile_number }}</td> -->
+                  <td>{{ hrm.mobile_number ? '+91 ' + hrm.mobile_number : 'N/A' }}</td>
+                 <td>{{ hrm.createddate }}</td>
+                 <td>{{ hrm.updateddate }}</td>
+                 <td>{{ hrm.addedby | capitalize}}</td>
+                 <td>{{ hrm.status }}</td>
+              </tr>
+              <tr *ngIf="hrmInfo.length === 0">
+                <td colspan="9" class="text-center">No HRM information found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="pagination-controls">
+      <button (click)="goToFirstPage()" [disabled]="currentPageIndex === 0">|<</button>
+      <button (click)="goToPreviousPage()" [disabled]="currentPageIndex === 0"><</button>
+      <!-- <span>Page {{ currentPageIndex + 1 }} of {{ totalPages }}</span> -->
+      <span>Page {{ totalPages > 0 ? currentPageIndex + 1 : 0 }} of {{ totalPages }}</span>
+      <button (click)="goToNextPage()" [disabled]="currentPageIndex >= totalPages - 1">></button>
+      <button (click)="goToLastPage()" [disabled]="currentPageIndex >= totalPages - 1">>|</button>
+    </div>
+  </div>
+  <app-add-user *ngIf="showAddUser" [mode]="mode" (closeModal)="closeAddUser()"></app-add-user>
+  <app-hrm-actions  *ngIf="showHrmActionModal" [userId]="selectedUserId"  (closeModal)="closeHrmActionModal()"></app-hrm-actions>
+  
+                  <!-- <td class="action-buttons">
+                  <span class="edit-icon" (click)="openHrmPopup(hrm.id)">
+                    <i class="fas fa-edit"></i>
+                  </span>
+                  <button class="btn btn-danger btn-sm" (click)="openDeleteConfirmation(hrm.id)">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td> -->
+  
+  

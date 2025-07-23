@@ -1,0 +1,98 @@
+<div class="container-fluid">
+
+    <div class="row">
+      <!-- Search Section -->
+      <div class="col-12 col-md-6">
+        <div class="search-container">
+          <p class="search-title">Search Application</p>
+          <div class="dropdown-wrapper">
+            <input 
+              type="text"
+              [(ngModel)]="searchTerm" 
+              (input)="onSearchChange()" 
+              (focus)="isDropdownOpen = true"
+              [placeholder]="'Search By Name, Loan Number, Or mobile...' | titlecase"
+              class="search-input"
+            />
+            <span class="dropdown-arrow" [class.open]="isDropdownOpen" (click)="toggleDropdown()"></span>
+          </div>
+    
+          <div *ngIf="isDropdownOpen" class="dropdown">
+            <div *ngFor="let item of filteredList" 
+                 (click)="selectItem(item)" 
+                 class="dropdown-item">
+              &nbsp;&nbsp;{{ item.fullName | capitalize }}&nbsp;&nbsp;&nbsp;&nbsp;
+              {{ item.applicationReferenceId }} {{ item.loanAccountNumber ? ' - ' + item.loanAccountNumber : '' }}
+            </div>
+            <div *ngIf="filteredList.length === 0" class="no-results">
+              No matching records found
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Upload Section -->
+      <div class="col-12 col-md-6" *ngIf="privilegeServ.hasPrivilege('PHYSICAL_DOCS_UPLOAD')">
+        <div class="upload-section text-center">
+          <p class="upload-text mb-2">Add physical documents here</p>
+          <button class="upload-btn" (click)="openPhysicalPopup()" [disabled]="!loanId || !restrictVerify">
+            📁 Upload Documents
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row mt-4" *ngIf="physicalDocuments.length > 0">
+      <div class="col-12">
+        <div class="table-responsive">
+          <table class="table table-bordered align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Document Name</th>
+                <th class="text-center" *ngIf="privilegeServ.hasPrivilege('DOCUMENTS_VERIFY')">Verification</th>
+                <th class="text-center" *ngIf="privilegeServ.hasPrivilege('VIEW_DOCS')">View</th>
+                <th class="text-center" *ngIf="privilegeServ.hasPrivilege('DOWNLOAD_DOCS')">Download</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let doc of physicalDocuments">
+                <td>
+                  {{ doc.fileName }}<br />
+                  <!-- <small class="text-muted">{{ doc.fileType }}</small> -->
+                </td>
+                <td class="text-center" *ngIf="privilegeServ.hasPrivilege('DOCUMENTS_VERIFY')">
+                  <div class="d-flex justify-content-center gap-3">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio"
+                             [name]="'decision-' + doc.id"
+                             [checked]="doc.docVerified === true"
+                             (change)="getVerify(doc, true)" />
+                      <label class="form-check-label text-success">Accept</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio"
+                             [name]="'decision-' + doc.id"
+                             [checked]="doc.docVerified === false"
+                             (change)="getVerify(doc, false)" />
+                      <label class="form-check-label text-danger">Reject</label>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-center" *ngIf="privilegeServ.hasPrivilege('VIEW_DOCS')">
+                  <i class="fas fa-eye doc-icon" (click)="viewDocument(doc.id)" title="View"></i>
+                </td>
+                <td class="text-center" *ngIf="privilegeServ.hasPrivilege('DOWNLOAD_DOCS')">
+                  <i class="fas fa-download doc-icon" (click)="downloadDocument(doc.id)" title="Download"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  
+  <app-physical-verifcation *ngIf="showPhysicalVerifyComponent"  [LoanId]="loanId" (closeModal)="closePhysicalVerification()"></app-physical-verifcation>
+
+    

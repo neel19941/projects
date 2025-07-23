@@ -1,0 +1,382 @@
+.modal-overlay{
+text-transform: capitalize;
+}
+
+.navbar {
+    margin-bottom: 20px; // Space between navbar and content
+
+    background-color: rgb(6, 17, 170);
+    /* Blue background */
+    // position: fixed;
+    // width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1050; // Ensure it stays above other elements
+    padding: 10px 20px; // Adjust padding for spacing
+    text-transform: capitalize;
+}
+.nav-item .dropdown-menu {
+    position: absolute !important;
+    z-index: 1100; /* Higher than navbar and header-bar */
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.main-content {
+    margin-top: 60px; // Adjust based on your navbar's height
+    padding: 0px; // Optional: Adds spacing for readability
+}
+  
+  .nav-link {
+    transition: background-color 0.3s;
+  }
+  
+  .nav-link:hover {
+    background-color: #e9ecef; // Hover effect for links
+  }
+
+  .navbar-brand,
+.nav-link {
+    color: #ffffff !important;
+    /* White text */
+}
+
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    /* Light overlay on hover */
+}
+
+// .navbar-toggler-icon {
+//     background-color: #ffffff;
+//     /* White hamburger icon */
+// }
+.custom-toggler {
+  border: none;
+  background-color: transparent;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  i {
+    font-size: 20px;
+    color: #ffffff;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+  }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+  }
+
+  &:hover i {
+    color: #e0e0e0;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+  }
+}
+
+/////////////////////////////////////////////////////////////////////////
+
+
+/* User section styling */
+.user-section {
+    white-space: nowrap;
+    /* Prevent wrapping of username and icon */
+}
+
+.username {
+    color: #ffffff;
+    /* White username text */
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* Styling the user icon */
+.user-icon {
+    font-size: 1.25rem;
+    /* Reduce the size of the user icon */
+    color: #ffffff;
+    /* White color */
+    background-color: rgba(255, 255, 255, 0.2);
+    /* Semi-transparent background */
+    border-radius: 50%;
+    /* Makes the icon circular */
+    padding: 0.4rem;
+    /* Adds space inside the circular border */
+    border: 2px solid #ffffff;
+    /* White border around the icon */
+    box-sizing: content-box;
+    /* Ensures border doesn’t shrink the icon */
+}
+
+/* Add hover effect for the user icon */
+.user-icon:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    /* Slightly lighter background on hover */
+    border-color: rgba(255, 255, 255, 0.8);
+    /* Lighter border on hover */
+}
+
+.fas.fa-user {
+    font-size: 15px;
+    color: #ffffff;
+    /* White FontAwesome user icon */
+}
+
+.nav-item.dropdown .dropdown-menu {
+    min-width: 10rem;
+    text-align: left;
+}
+
+.nav-item .dropdown-item {
+    color: #000;
+    /* Dark text for dropdown items */
+}
+
+.nav-item .dropdown-item:hover {
+    background-color: rgb(6, 17, 170);
+    /* Blue hover */
+    color: #fff;
+    /* White text on hover */
+}
+.mobile-wrapper {
+  .input-group {
+    display: flex;
+
+    .country-code {
+      background-color: #e9ecef;
+  
+      border-right: none;
+      border-radius: 14px 0 0 14px;
+      padding: 5px 15px;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .mobile-input {
+      // border-left: none;
+      // border-radius: 0 4px 4px 0;
+      // padding: 5px 20px;
+      // font-size: 1rem;
+      // flex: 1;
+      // background-color: #ffffff;
+      // width: 100%;
+
+      &:focus {
+        outline: none;
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+/* Prevent user section from collapsing */
+@media (max-width: 991px) {
+    .user-section {
+        order: 1;
+        /* Keep the user section always visible, even on smaller screens */
+    }
+}
+
+.register{
+    color: white;
+    font-size: 27px;
+    margin-right: 13px;
+}
+/* General Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px; /* Add padding to handle small screens */
+  z-index: 1050;
+  overflow-y: auto;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 700px;
+  width: 100%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  font-family: Arial, sans-serif;
+  max-height: 90vh; /* Restrict the modal height to 90% of the viewport height */
+  overflow-y: auto; /* Enable vertical scroll */
+}
+
+/* Header and Body */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+
+  .modal-title {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #333;
+  }
+
+  .btn-close {
+    font-size: 1.2rem;
+    color: #888;
+    transition: all 0.3s;
+
+    &:hover {
+      color: #333;
+    }
+  }
+}
+
+.modal-body {
+  margin-top: 20px;
+}
+
+/* Form Label Styling */
+label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+
+  .text-danger {
+    font-size: 1.2rem;
+    margin-left: 2px;
+  }
+}
+
+/* Input Fields and Select */
+.form-control,
+select {
+  border: 1px solid #ccc;
+  border-radius: 18px;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+
+  &:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  }
+}
+
+.select-wrapper {
+  position: relative;
+
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 30px;
+  }
+
+  i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    pointer-events: none;
+  }
+}
+
+/* Error Messages */
+.error-message {
+  height: 1.2rem;
+  font-size: 0.85rem;
+  color: #e63946;
+  margin-top: 3px;
+}
+.input-group-text{
+  border-radius: 0 18px 18px 0;
+}
+/* Buttons */
+.custom-btn {
+  border-radius: 25px;
+  padding: 8px 60px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+
+  &.btn-secondary {
+    background-color: white;
+    color: rgb(6, 17, 170);
+    border: 2px solid rgb(6, 17, 170);
+
+    &:hover {
+      background-color: rgb(6, 17, 170);
+      color: white;
+    }
+  }
+
+  &.btn-primary {
+    background-color: rgb(6, 17, 170);
+    border: none;
+
+    &:hover {
+      background-color: rgb(4, 11, 119);
+    }
+  }
+}
+
+.copybutton{
+  color:rgb(6 17 169); 
+  border: 2px solid rgb(6 17 169);;
+}
+.copybutton:hover{
+  color:white;
+  background-color: rgb(6 17 169);
+}
+.copyinput{
+  border: 1px solid rgb(6 17 169);;
+
+}
+// Style for dropdown arrow
+.position-relative .dropdown-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #555;
+}
+
+/* Spacing */
+.row {
+  margin-bottom: 15px;
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    padding: 15px; /* Reduce padding */
+    max-width: 95%; /* Adjust width for smaller screens */
+  }
+
+  .modal-header .modal-title {
+    font-size: 1rem; /* Adjust title size */
+  }
+
+  .custom-btn {
+    padding: 8px 20px; /* Reduce button padding */
+    font-size: 0.9rem; /* Adjust button font size */
+  }
+}

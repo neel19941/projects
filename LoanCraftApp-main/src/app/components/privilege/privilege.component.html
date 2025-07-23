@@ -1,0 +1,48 @@
+<!-- <app-plain-navigation></app-plain-navigation> -->
+<div class="container-fluid">
+    <!-- Header Bar -->
+    <div class="row header-bar">
+        <div class="col-12 col-md-6">
+            <h4 class="header-title">Privileges</h4>
+        </div>
+        <div class="col-12 col-md-6 text-md-end">
+            <div class="search-container">
+                <span class="add-icon" (click)="openAddRole('add')">
+                    <i class="fas fa-plus"></i>
+                </span>
+                
+            </div>
+        </div>
+    </div>
+  
+    <!-- Table -->
+ 
+        <!-- Cards Section -->
+        <div class="cards-container">
+            <div class="card" *ngFor="let card of privilegResp; let cardId = index">  
+              <div class="card-header"></div>
+              <div class="card-content" *ngIf="card.privileges?.length">
+                <div class="checkbox-container">
+                  <label *ngFor="let priv of card.privileges; let privId = index">
+                    <input type="checkbox" [checked]="priv.selected" [class]="privId === 0 ? 'access-check-box' : 'access-check-boxs'"
+                     (change)="selectInidividualAccess($event, card.privileges, privId, cardId, card, priv, privilegResp)">
+                     <div style="padding: 4px;" [class]="privId === 0 ? 'fontstyle' : 'general'"> {{priv.name}} </div>
+                  
+                  </label>
+                </div>
+              </div>    
+            </div>
+          </div>
+    
+          <div class="main-card-actions">
+            <button (click)="onCancel()">Go To Roles</button>
+            <button (click)="savePrivileges()">Save</button>  
+          </div>
+    
+    <!-- Pagination Controls -->
+
+    <app-add-privilege  *ngIf="showAddRole" [target]="target" (closeModal)="closeAddRole()"></app-add-privilege>
+<app-add-privilege *ngIf="showRoleModal" [roleId]="selectedRoleId"  (closeModal)="closeRoleModal()"></app-add-privilege>
+
+  </div>
+ 

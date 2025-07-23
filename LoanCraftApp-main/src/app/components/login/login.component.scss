@@ -1,0 +1,142 @@
+/* login.component.scss */
+
+/* Full-screen container for the login */
+.login-container {
+  background-color: #f7e6fc;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Customizing the form container */
+.container {
+  max-width: 400px;
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.container:hover {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+h2.text-center {
+  font-weight: 600;
+  color : #7d08dd;
+  margin: 20px 0px;
+}
+
+/* Styling the input fields */
+input.form-control {
+  border: none;
+  border-bottom: 2px solid #ddd;
+  padding: 6px;
+  font-size: 1rem;
+  background-color: transparent;
+  width: 100%;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 10px;
+}
+
+input.form-control:focus {
+  outline: none; 
+  border: 2px solid #007bff; 
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
+  border-radius: 8px; 
+}
+
+/* Styling the labels */
+label.form-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.mb-custom {
+  margin-bottom: 50px;
+}
+
+/* Styling error messages */
+.text-danger small {
+  font-size: 0.875rem;
+  color: #dc3545;
+  margin-top: 5px;
+  display: block;
+}
+
+/* Custom button styles */
+/* Styling the button container to center the button */
+.button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Custom button styles */
+button.login-button {
+  background-color: #971cfc;
+  border: none;
+  font-size: 16px;
+   color : white;
+  width: 50%; 
+  padding: 5px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out;
+ 
+}
+.button-container {
+  padding: 10px;
+}
+
+
+.custom-snackbar {
+  position: fixed;
+  top: 20px; /* Distance from the top */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f8d7da; /* Default background for errors */
+  color: #721c24; /* Default text color for errors */
+  padding: 15px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center; /* Aligns icon and text vertically */
+  gap: 10px; /* Space between icon and text */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0s linear 0.3s;
+  z-index: 9999; /* Ensures visibility above other elements */
+}
+
+.custom-snackbar.show {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s;
+}
+
+.custom-snackbar.success {
+  background-color: #d4edda; /* Bootstrap's alert-success color */
+  color: #155724;
+}
+
+.custom-snackbar.error {
+  background-color: #f8d7da; /* Bootstrap's alert-danger color */
+  color: #721c24;
+}
+
+.custom-snackbar i {
+  font-size: 1.2rem;
+}
+
+/* Icons for success and error */
+.custom-snackbar.success i {
+  color: #155724; /* Icon color for success */
+}
+
+.custom-snackbar.error i {
+  color: #721c24; /* Icon color for error */
+}

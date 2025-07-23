@@ -1,0 +1,93 @@
+
+<div class="container-fluid" *ngIf="privilegeServ.hasPrivilege('CURRENTDUES')">
+  <!-- Header Bar -->
+  <div class="row header-bar">
+      <div class="col-12 col-md-6">
+          <h4 class="header-title">Current Month Dues</h4>
+      </div>
+      <div class="col-12 col-md-6 text-md-end">
+          <div class="search-container">
+              <!-- <span class="add-icon" (click)="openAddApplication('add')">
+                  <i class="fas fa-plus"></i>
+              </span> -->
+              <input  type="text" class="search-input"  placeholder="Search"  (keyup)="onSearch($event)"/>
+          </div>
+      </div>
+  </div>
+  
+  <!-- Table -->
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-sm">
+          <thead class="table-custom-header">
+            <tr>
+              <th scope="col">S.No</th>
+              <th scope="col" (mouseover)="hoverField = 'applicationReferenceId'" (mouseleave)="hoverField = null" (click)="onSort('applicationReferenceId')">
+                Reference ID
+                <span class="sort-icon" [ngClass]="getSortIcon('applicationReferenceId')"></span>
+              </th>
+              <th scope="col" (mouseover)="hoverField = 'loanAccountNumber'" (mouseleave)="hoverField = null" (click)="onSort('loanAccountNumber')">
+                Loan Account Number
+                <span class="sort-icon" [ngClass]="getSortIcon('loanAccountNumber')"></span>
+              </th>
+              <th scope="col" (mouseover)="hoverField = 'firstName'" (mouseleave)="hoverField = null" (click)="onSort('firstName')">
+                Full Name
+                <span class="sort-icon" [ngClass]="getSortIcon('firstName')"></span>
+              </th>
+              <th scope="col" (mouseover)="hoverField = 'mobileNumber'" (mouseleave)="hoverField = null" (click)="onSort('mobileNumber')">
+                Mobile Number
+                <span class="sort-icon" [ngClass]="getSortIcon('mobileNumber')"></span>
+              </th>
+              <th scope="col" (mouseover)="hoverField = 'dueDate'" (mouseleave)="hoverField = null" (click)="onSort('dueDate')">
+                Due Date
+                <span class="sort-icon" [ngClass]="getSortIcon('dueDate')"></span>
+              </th>
+              <th scope="col" (mouseover)="hoverField = 'dueAmount'" (mouseleave)="hoverField = null" (click)="onSort('dueAmount')">
+                Due Amount
+                <span class="sort-icon" [ngClass]="getSortIcon('dueAmount')"></span>
+              </th>
+              <th scope="col" (mouseover)="hoverField = 'amountPaid'" (mouseleave)="hoverField = null" (click)="onSort('amountPaid')">
+                Amount Paid
+                <span class="sort-icon" [ngClass]="getSortIcon('amountPaid')"></span>
+              </th>
+              <th scope="col" (mouseover)="hoverField = 'amountStatus'" (mouseleave)="hoverField = null" (click)="onSort('amountStatus')">
+                Status
+                <span class="sort-icon" [ngClass]="getSortIcon('amountStatus')"></span>
+              </th>
+            </tr>
+          </thead>
+          
+          <tbody>
+            <tr *ngFor="let due of currentDues; let i = index">
+              <td>{{ generateSerialNumber(i) }}</td>
+              <td>{{due.applicationReferenceId}}</td>
+              <td>{{ due.loanAccountNumber }}</td>
+              <td>{{ due.fullName | capitalize}}</td>
+             <td>{{ due.mobileNumber ? '+91 ' + due.mobileNumber : 'N/A' }}</td>
+              <td>{{ due.dueDate | date:'yyyy-MM-dd' }}</td>
+              <td>{{ due.dueAmount | currency:'INR' }}</td>
+              <td>{{ due.amountPaid | currency:'INR' }}</td>
+              <td [ngClass]="{'status-paid': due.amountStatus.toLowerCase() === 'paid', 'status-upcoming': due.amountStatus.toLowerCase() === 'upcoming'}">
+                {{ due.amountStatus | capitalize }}
+              </td>
+            </tr>
+            <tr *ngIf="currentDues.length === 0">
+              <td colspan="8" class="text-center">No Current Dues found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Pagination Controls -->
+  <div class="pagination-controls">
+      <button (click)="goToFirstPage()" [disabled]="currentPageIndex === 0">|<</button>
+      <button (click)="goToPreviousPage()" [disabled]="currentPageIndex === 0"><</button>
+      <!-- <span>Page {{ currentPageIndex + 1 }} of {{ totalPages }}</span> -->
+      <span>Page {{ totalPages > 0 ? currentPageIndex + 1 : 0 }} of {{ totalPages }}</span>
+      <button (click)="goToNextPage()" [disabled]="currentPageIndex >= totalPages - 1">></button>
+      <button (click)="goToLastPage()" [disabled]="currentPageIndex >= totalPages - 1">>|</button>
+  </div>
+</div>

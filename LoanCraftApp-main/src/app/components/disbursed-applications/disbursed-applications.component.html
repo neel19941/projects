@@ -1,0 +1,124 @@
+<div class="container-fluid" *ngIf="privilegeServ.hasPrivilege('DISBURSED')">
+    <!-- Header Bar -->
+    <div class="row header-bar">
+      <div class="col-12 col-md-6">
+        <h4 class="header-title">Disbursed Applications</h4>
+      </div>
+      <div class="col-12 col-md-6 text-md-end">
+        <div class="search-container">
+          <!-- <span class="add-icon" (click)="openAddSanctionedApplication('add')">
+            <i class="fas fa-plus"></i>
+          </span> -->
+          <input 
+            type="text" 
+            class="search-input" 
+            [placeholder]="'Search' | titlecase"
+            (keyup)="onSearch($event)"
+          />
+        </div>
+      </div>
+    </div>
+    <!-- Table -->
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead class="table-custom-header">
+              <tr>
+                <th scope="col">S.No</th>
+                <th scope="col" (mouseover)="hoverField = 'referenceid'" (mouseleave)="hoverField = null" (click)="onSort('referenceid')">
+                  Reference ID
+                  <span class="sort-icon" [ngClass]="getSortIcon('referenceid')"></span>
+                </th>
+               <th scope="col" (mouseover)="hoverField = 'firstName'" (mouseleave)="hoverField = null" (click)="onSort('firstName')">
+                  Full Name
+                  <span class="sort-icon" [ngClass]="getSortIcon('firstName')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'loanAccountNumber'" (mouseleave)="hoverField = null" (click)="onSort('loanAccountNumber')">
+                 Loan Account Number
+                 <span class="sort-icon" [ngClass]="getSortIcon('loanAccountNumber')"></span>
+                 </th>
+
+                <th scope="col" (mouseover)="hoverField = 'date'" (mouseleave)="hoverField = null" (click)="onSort('date')">
+                    Date
+                    <span class="sort-icon" [ngClass]="getSortIcon('date')"></span>
+                  </th>
+                  <th scope="col" (mouseover)="hoverField = 'accountNo'" (mouseleave)="hoverField = null" (click)="onSort('accountNo')">
+                    Account No
+                    <span class="sort-icon" [ngClass]="getSortIcon('accountNo')"></span>
+                  </th>
+                  <th scope="col" (mouseover)="hoverField = 'isfc'" (mouseleave)="hoverField = null" (click)="onSort('isfc')">
+                    IFSC Code
+                    <span class="sort-icon" [ngClass]="getSortIcon('isfc')"></span>
+                  </th>
+                  <th scope="col" (mouseover)="hoverField = 'disbursedAmount'" (mouseleave)="hoverField = null" (click)="onSort('disbursedAmount')">
+                    Disbursed Amount
+                    <span class="sort-icon" [ngClass]="getSortIcon('disbursedAmount')"></span>
+                  </th>
+                  <th scope="col" (mouseover)="hoverField = 'remarks'" (mouseleave)="hoverField = null" (click)="onSort('remarks')">
+                    Remarks
+                    <span class="sort-icon" [ngClass]="getSortIcon('remarks')"></span>
+                  </th>
+                  <th scope="col" (mouseover)="hoverField = 'createddate'" (mouseleave)="hoverField = null" (click)="onSort('createddate')">
+                    Created Date
+                    <span class="sort-icon" [ngClass]="getSortIcon('createddate')"></span>
+                  </th>
+                  <th scope="col" (mouseover)="hoverField = 'updateddate'" (mouseleave)="hoverField = null" (click)="onSort('updateddate')">
+                    Updated Date
+                    <span class="sort-icon" [ngClass]="getSortIcon('updateddate')"></span>
+                  </th>
+                  <th scope="col" (mouseover)="hoverField = 'branch'" (mouseleave)="hoverField = null" (click)="onSort('branch')">
+                    Branch
+                    <span class="sort-icon" [ngClass]="getSortIcon('branch')"></span>
+                  </th>
+                  
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr *ngFor="let application of sanctionedApplications; let i = index">
+
+                <!-- <td>{{ application.loanSactionId }}</td>
+                <td>{{ application.loanRequested }}</td> -->
+                <!-- <td>{{ application.amountSanctioned }}</td> -->
+                <!-- <td>{{ application.amountDisbursed }}</td> -->
+
+                <td>{{ generateSerialNumber(i) }}</td>
+                <td class="clickable-cell" (click)="openPaymentModal(application.disbursmentId)">{{ application.referenceid }}</td>
+                <td>{{ application.fullName }}</td>
+                <td>{{ application.loanAccountNumber }}</td>
+                <td>{{ application.date }}</td>
+                <td>{{ application.accountNo}}</td>
+                <td>{{ application.isfc}}</td>
+                <td>{{ formatIndianCurrency(application.disbursedAmount) }}</td>
+                <td>{{ application.remarks | capitalize}}</td>
+                <td>{{ application.createddate | date: 'yyyy-MM-dd' }}</td>
+                <td>{{ application.updateddate | date: 'yyyy-MM-dd'}}</td>
+                <td>{{ application.branch | capitalize}}</td>
+
+                <!-- <td class="text-center">
+                  <span (click)="viewDisbursedDetails(application)">
+                    <i class="fas fa-coins sanction-icon"></i>
+                  </span>
+                </td> -->
+
+              </tr>
+              <tr *ngIf="sanctionedApplications.length === 0">
+                <td colspan="12" class="text-center">No Disbursed applications found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="pagination-controls">
+      <button (click)="goToFirstPage()" [disabled]="currentPageIndex === 0">|<</button>
+      <button (click)="goToPreviousPage()" [disabled]="currentPageIndex === 0"><</button>
+      <!-- <span>Page {{ currentPageIndex + 1 }} of {{ totalPages }}</span> -->
+      <span>Page {{ totalPages > 0 ? currentPageIndex + 1 : 0 }} of {{ totalPages }}</span>
+      <button (click)="goToNextPage()" [disabled]="currentPageIndex >= totalPages - 1">></button>
+      <button (click)="goToLastPage()" [disabled]="currentPageIndex >= totalPages - 1">>|</button>
+    </div>
+</div>
+
+<app-payment-transaction  *ngIf="showPaymentModal" [selectedDisId]="selectedDisbursedId"  (closeModal)="closePaymentModal()"></app-payment-transaction>

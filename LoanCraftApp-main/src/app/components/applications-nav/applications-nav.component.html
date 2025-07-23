@@ -1,0 +1,51 @@
+<div class="container-box">
+  <!-- Left Panel with Links -->
+  <div class="nav-box">
+    <ul class="nav flex-column">
+      <li class="nav-item" *ngIf="privilegeServ.hasPrivilege('LOANS')">
+        <a class="nav-link" routerLink="applications-list" routerLinkActive="active">Applications</a>
+      </li>
+      <li class="nav-item" *ngIf="privilegeServ.hasPrivilege('PHYSICAL_VERIFICATION')">
+        <a class="nav-link" routerLink="physical-docs-verify" routerLinkActive="active">Physical Verification</a>
+      </li>
+      <!-- Verification with dropdown sub-links -->
+      <!-- <li class="nav-item">
+        <a class="nav-sub-link" href="javascript:void(0);" routerLinkActive="active" (click)="toggleVerificationDropdown()" [ngClass]="{'active': isVerificationDropdownOpen}">
+          Verification
+          <span class="dropdown-arrow" [class.open]="isVerificationDropdownOpen"></span>
+        </a>
+        <ul *ngIf="isVerificationDropdownOpen" class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="verification-list" routerLinkActive="active">Application Tracking</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="physical-docs-verify" routerLinkActive="active">Physical Verification</a>
+          </li>
+        </ul>
+      </li> -->
+      <li class="nav-item" *ngIf="privilegeServ.hasPrivilege('APPROVED')">
+        <a class="nav-link" routerLink="approved-lists" routerLinkActive="active">Approved</a>
+      </li>
+      <li class="nav-item" *ngIf="privilegeServ.hasPrivilege('SANCTIONED')">
+        <a class="nav-link" routerLink="sanctioned-lists" routerLinkActive="active">Sanctioned</a>
+      </li>
+      <li class="nav-item" *ngIf="privilegeServ.hasPrivilege('DISBURSED')">
+        <a class="nav-link" routerLink="disbursed-list" routerLinkActive="active">Disbursed</a>
+      </li>
+      <li class="nav-item" *ngIf="privilegeServ.hasPrivilege('REJECTED')">
+        <a class="nav-link" routerLink="rejected-list" routerLinkActive="active">Rejected</a>
+      </li>
+
+      <li class="nav-item" *ngIf="privilegeServ.hasPrivilege('APPLICATION_TRACKING')">
+        <a class="nav-link" routerLink="application-tracking" routerLinkActive="active">Application Tracking</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Right Content Display -->
+  <div class="content-box">
+    <div class="content-scroll">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

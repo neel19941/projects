@@ -1,0 +1,80 @@
+<!-- Navbar (unchanged) -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand capitalize-all" href="javascript:void(0);" >LoanCraft</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <i class="fas fa-bars"></i>
+</button> -->
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link capitalize-all active" aria-current="page" (click)="redirectToDashboard()"   [class.active]="activeTab === 'home'" 
+            href="javascript:void(0);">Home</a>
+        </li>
+        <li *ngIf="menus" class="nav-item">
+          <a class="nav-link capitalize-all" href="javascript:void(0);">Features</a>
+        </li>
+        <li *ngIf="menus" class="nav-item">
+          <a class="nav-link capitalize-all" href="javascript:void(0);" (click)="navigateToHrm()">HRM</a>
+        </li>
+        <li *ngIf="menus" class="nav-item">
+          <a class="nav-link capitalize-all" href="javascript:void(0);" (click)="navigateToCustomes()">Customer info</a>
+        </li>
+        <li *ngIf="menus" class="nav-item">
+          <a class="nav-link capitalize-all" href="javascript:void(0);" (click)="navigateToRoles()">Roles</a>
+        </li>
+        <li *ngIf="menus" class="nav-item">
+          <a class="nav-link capitalize-all" href="javascript:void(0);" (click)="navigateToApplications()">Applications</a>
+        </li>
+        <!-- <li *ngIf="menus" class="nav-item">
+          <a class="nav-link" href="javascript:void(0);" (click)="navigateToApprovedLists()">Approved Applications</a>
+        </li>
+        <li *ngIf="menus" class="nav-item">
+          <a class="nav-link" href="javascript:void(0);" (click)="navigateToSanctionedLists()">Sanctioned Applications</a>
+        </li> -->
+        <!-- <li *ngIf="!menus" class="nav-item">
+          <a class="nav-link capitalize-all" href="javascript:void(0);">Pricing</a>
+        </li>
+        <li *ngIf="!menus" class="nav-item">
+          <a class="nav-link capitalize-all" href="javascript:void(0);">About</a>
+        </li> -->
+        <li *ngIf="!menus" class="nav-item">
+          <a class="nav-link capitalize-all" href="javascript:void(0);" (click)="navigateTocustomerApplications()">My Applications</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="d-flex align-items-center ms-auto user-section">
+      <span class="username me-2">{{firstname | capitalize}}&nbsp;{{lastname | capitalize}}</span>
+      <a class="nav-link dropdown-toggle p-0" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        <i class="fas fa-user user-icon"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+        <li *ngIf="!menus"><a class="dropdown-item capitalize-all" href="javascript:void(0)" (click)="navigateToProfile()">
+          Update  Profile</a>
+          </li>
+        <!-- <li><a class="dropdown-item" href="#">Page 2</a></li> -->
+        <li *ngIf="!menus">
+          <hr class="dropdown-divider" />
+        </li>
+        <li><a class="dropdown-item capitalize-all" (click)="logout()">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Conditional Modal Display -->
+<app-personal-info *ngIf="showModal" (closeModal)="closeModal()"></app-personal-info>
+
+<!-- Main Body Content -->
+<!-- <router-outlet></router-outlet> -->
+ <!-- Main Body Content -->
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>

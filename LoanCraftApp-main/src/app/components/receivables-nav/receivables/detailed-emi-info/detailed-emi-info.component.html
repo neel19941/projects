@@ -1,0 +1,41 @@
+<div class="modal-overlay">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">{{title}}</h5>
+      <button type="button" class="btn-close" (click)="close()"></button>
+    </div>
+    <div class="modal-body">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>SI.No</th>
+              <th>EMI Month</th>
+              <th>Due Date</th>
+              <th>Due Days</th>
+              <th>Due Amount (₹)</th>
+              <th>cheque Return Charges (₹)</th>
+              <th>Late Penalty Charges (₹)</th>
+              <th>Penalty (₹)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of EmiDetailsData; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.emiMonth | capitalize }}</td>
+              <td>{{ item.dueDate }}</td>
+              <td>{{ item.dueDays }}</td>
+              <td>{{ formatIndianCurrency(item.dueAmount) }}</td>
+              <td>{{ formatIndianCurrency(item.chequeReturnCharge) }}</td>
+               <td>{{ formatIndianCurrency(item.latePenalty) }}</td>
+              <td class="penalty-cell">{{ formatIndianCurrency(item.penalty) }}</td>
+            </tr>
+            <tr *ngIf="EmiDetailsData.length === 0" class="no-data-row">
+              <td colspan="8" class="text-center text-danger">No EMI Due Info Available.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

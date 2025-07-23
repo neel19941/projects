@@ -1,0 +1,974 @@
+<!-- Notification Container (Hidden by default) -->
+<!-- <div id="customSnackbar" class="custom-snackbar" role="alert">
+  <span id="notificationMessage"></span>
+</div> -->
+
+<!-- <div id="customSnackbar" class="custom-snackbar" role="alert">
+  <i id="notificationIcon" class=""></i>
+  <span id="notificationMessage"></span>
+</div> -->
+
+<div class="loan-container" id="loan-container">
+
+  <form [formGroup]="loanForm" (ngSubmit)="sendData()" class="container">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="stepper">
+          <div class="step" [ngClass]="{'active': currentPage >= 1}">1</div>
+          <div class="line" [ngClass]="{'active': currentPage > 1}"></div>
+          <div class="step" [ngClass]="{'active': currentPage >= 2}">2</div>
+          <!-- <div class="line" [ngClass]="{'active': currentPage > 2}"></div>
+          <div class="step" [ngClass]="{'active': currentPage >= 3}">3</div>
+          <div class="line" [ngClass]="{'active': currentPage > 3}"></div>
+          <div class="step" [ngClass]="{'active': currentPage >= 4}">4</div> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="section" *ngIf="currentPage === 1">
+      <p class="para">Business /Employement Details </p>
+      <div class="row">
+
+        <!-- <div class="col-md-3 form-group">
+          <label for="empemploymentType">Business / Employment Type<span class="text-danger">*</span></label>
+          <input type="text" id="empemploymentType" formControlName="empemploymentType" class="form-control"
+            autocomplete="off" />
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('empemploymentType')?.invalid && (loanForm.get('empemploymentType')?.touched || loanForm.get('empemploymentType')?.dirty)">
+              <span *ngIf="loanForm.get('empemploymentType')?.errors?.['required']">Employment Type is required.</span>
+              <span *ngIf="loanForm.get('empemploymentType')?.errors?.['pattern']">Employment Type must be
+                letters</span>
+              <span
+                *ngIf="!loanForm.get('empemploymentType')?.errors?.['pattern'] && loanForm.get('empemploymentType')?.errors?.['minlength']">Employment
+                Type must be at least 3 characters.</span>
+            </span>
+          </div>
+        </div> -->
+
+        <div class="col-md-3 form-group position-relative">
+          <label for="empemploymentType" class="capitalize-all">Business / Employment Type<span
+              class="text-danger">*</span></label>
+          <div class="select-wrapper">
+            <select id="empemploymentType" formControlName="empemploymentType" class="form-control">
+              <option value="" disabled selected class="capitalize-all">Select Employment Type</option>
+              <option *ngFor="let type of employmentTypes" class="capitalize-all" [value]="type">{{ type }}</option>
+            </select>
+            <i class="fa fa-chevron-down select-icon"></i>
+          </div>
+
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('empemploymentType')?.invalid && (loanForm.get('empemploymentType')?.touched || loanForm.get('empemploymentType')?.dirty)">
+              <span *ngIf="loanForm.get('empemploymentType')?.errors?.['required']" class="capitalize-all">Employment
+                Type is required.</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-3 form-group position-relative" *ngIf="employeeCategory">
+          <label for="employmentCategory" class="capitalize-all">Employment Category <span
+              class="text-danger">*</span></label>
+          <div class="select-wrapper">
+            <select id="employmentCategory" formControlName="employmentCategory" class="form-control">
+              <option value="" disabled selected class="capitalize-all">Select Category</option>
+              <option *ngFor="let category of employmentCategories" class="capitalize-all" [value]="category">{{
+                category }}</option>
+            </select>
+            <i class="fa fa-chevron-down select-icon"></i>
+          </div>
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('employmentCategory')?.invalid && (loanForm.get('employmentCategory')?.touched || loanForm.get('employmentCategory')?.dirty)">
+              <span *ngIf="loanForm.get('employmentCategory')?.errors?.['required']" class="capitalize-all">Employment
+                Category is
+                required.</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-3 form-group" *ngIf="othersType">
+          <label for="empotherDetails" class="capitalize-all">Others <span class="text-danger">*</span></label>
+          <input type="text" id="empotherDetails" formControlName="empotherDetails" class="form-control"
+            [placeholder]="'Add Others Type' | titlecase" appTitleCase />
+
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('empotherDetails')?.invalid && (loanForm.get('empotherDetails')?.touched || loanForm.get('empotherDetails')?.dirty)">
+              <span *ngIf="loanForm.get('empotherDetails')?.errors?.['required']" class="capitalize-all">
+                This field is required.
+              </span>
+              <span *ngIf="loanForm.get('empotherDetails')?.errors?.['pattern']" class="capitalize-all">
+                Please enter valid text.
+              </span>
+              <span
+                *ngIf="!loanForm.get('empotherDetails')?.errors?.['pattern'] && loanForm.get('empotherDetails')?.errors?.['minlength']"
+                class="capitalize-all">
+                Must be at least 3 characters long.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <!-- <div class="col-md-3 form-group">
+          <label for="empsalary">Salary <span class="text-danger">*</span></label>
+          <input type="number" id="empsalary" formControlName="empsalary" class="form-control" />
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('empsalary')?.invalid && (loanForm.get('empsalary')?.touched || loanForm.get('empsalary')?.dirty)">
+              <span *ngIf="loanForm.get('empsalary')?.errors?.['required']">Employee salary is required.</span>
+              <span *ngIf="loanForm.get('empsalary')?.errors?.['min']">The employee's salary must be at least
+                10,000.</span>
+            </span>
+          </div>
+        </div> -->
+        <div class="col-md-3 form-group">
+          <label for="empsalary" class="capitalize-all">Salary /income per month<span
+              class="text-danger">*</span></label>
+          <input type="text" id="empsalary" formControlName="empsalary" class="form-control"
+            (input)="formatCommas('empsalary')" [placeholder]="'Enter salary / income' | titlecase" />
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('empsalary')?.invalid && (loanForm.get('empsalary')?.touched || loanForm.get('empsalary')?.dirty)">
+              <span *ngIf="loanForm.get('empsalary')?.errors?.['required']" class="capitalize-all">Employee salary
+                /income is required</span>
+              <span *ngIf="loanForm.get('empsalary')?.errors?.['pattern']" class="capitalize-all">Only numbers are
+                allowed.</span>
+              <span *ngIf="loanForm.get('empsalary')?.errors?.['min']" class="capitalize-all">Please enter a valid
+                salary / income.</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- <div class="col-md-3 form-group">
+          <label for="empyearsinEmployment" class="capitalize-all">Years in Current Company/Business <span
+              class="text-danger">*</span></label>
+          <input type="text" id="empyearsinEmployment" formControlName="empyearsinEmployment" class="form-control" />
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('empyearsinEmployment')?.invalid && (loanForm.get('empyearsinEmployment')?.touched || loanForm.get('empyearsinEmployment')?.dirty)">
+              <span *ngIf="loanForm.get('empyearsinEmployment')?.errors?.['required']" class="capitalize-all">
+                Years in employment is required.
+              </span>
+              <span *ngIf="loanForm.get('empyearsinEmployment')?.errors?.['min']" class="capitalize-all">
+                Years must be a positive number.
+              </span>
+              <span
+                *ngIf="!loanForm.get('empyearsinEmployment')?.errors?.['min'] && loanForm.get('empyearsinEmployment')?.errors?.['pattern']"
+                class="capitalize-all">
+                Please enter a valid number
+              </span>
+            </span>
+          </div>
+        </div> -->
+
+        <div class="col-md-3 form-group">
+          <label for="empyearsinEmployment" class="capitalize-all">
+            Years in Current Company/Business <span class="text-danger">*</span>
+          </label>
+          <input type="text" id="empyearsinEmployment" formControlName="empyearsinEmployment" class="form-control" />
+
+          <div class="error-message">
+            <span *ngIf="loanForm.get('empyearsinEmployment')?.invalid && 
+                (loanForm.get('empyearsinEmployment')?.touched || loanForm.get('empyearsinEmployment')?.dirty)">
+
+              <span *ngIf="loanForm.get('empyearsinEmployment')?.errors?.['required']" class="capitalize-all">
+                Years in employment is required.
+              </span>
+
+              <span *ngIf="loanForm.get('empyearsinEmployment')?.errors?.['min']" class="capitalize-all">
+                Years must be a positive number.
+              </span>
+
+              <span *ngIf="loanForm.get('empyearsinEmployment')?.errors?.['max']" class="capitalize-all">
+                Maximum allowed is 100 years.
+              </span>
+
+              <span *ngIf="loanForm.get('empyearsinEmployment')?.errors?.['pattern'] && 
+                   !loanForm.get('empyearsinEmployment')?.errors?.['min'] &&
+                   !loanForm.get('empyearsinEmployment')?.errors?.['max']" class="capitalize-all">
+                Please enter a valid number.
+              </span>
+
+            </span>
+          </div>
+        </div>
+
+
+        <!-- <div class="col-md-3 form-group">
+          <label for="empcompanyName" class="capitalize-all">Company Name / business name<span
+              class="text-danger">*</span></label>
+          <input type="text" id="empcompanyName" formControlName="empcompanyName" class="form-control" appTitleCase />
+
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('empcompanyName')?.invalid && (loanForm.get('empcompanyName')?.touched || loanForm.get('empcompanyName')?.dirty)">
+              <span *ngIf="loanForm.get('empcompanyName')?.errors?.['required']" class="capitalize-all">Company Name is
+                required.</span>
+              <span *ngIf="loanForm.get('empcompanyName')?.errors?.['pattern']" class="capitalize-all">Company Name must
+                be letters</span>
+              <span
+                *ngIf="!loanForm.get('empcompanyName')?.errors?.['pattern'] && loanForm.get('empcompanyName')?.errors?.['minlength']"
+                class="capitalize-all">Company
+                Name must be at least 3 characters.</span>
+            </span>
+          </div>
+        </div> -->
+
+        <div class="col-md-3 form-group">
+          <label for="empcompanyName" class="capitalize-all">
+            Company Name / Business Name <span class="text-danger">*</span>
+          </label>
+          <input type="text" id="empcompanyName" formControlName="empcompanyName" class="form-control" appTitleCase
+            placeholder="Enter Company Name" />
+
+          <!-- Validation Errors -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('empcompanyName')?.invalid && (loanForm.get('empcompanyName')?.touched || loanForm.get('empcompanyName')?.dirty)">
+              <span *ngIf="loanForm.get('empcompanyName')?.errors?.['required']">
+                Company Name is required.
+              </span>
+              <span *ngIf="loanForm.get('empcompanyName')?.errors?.['pattern']">
+                Company Name must contain letters or numbers
+              </span>
+              <span
+                *ngIf="!loanForm.get('empcompanyName')?.errors?.['pattern'] && loanForm.get('empcompanyName')?.errors?.['minlength']">
+                Company Name must be at least 3 characters.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <!-- <div class="col-md-3 form-group">
+          <label for="empcompanyAdrees" class="capitalize-all">Business / Office Address <span
+              class="text-danger">*</span></label>
+          <textarea id="empcompanyAdrees" formControlName="empcompanyAdrees" class="form-control" rows="2"
+            autofilll="no" appTitleCase></textarea>
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('empcompanyAdrees')?.invalid && (loanForm.get('empcompanyAdrees')?.touched || loanForm.get('empcompanyAdrees')?.dirty)">
+              <span *ngIf="loanForm.get('empcompanyAdrees')?.errors?.['required']" class="capitalize-all">Address is
+                required.</span>
+              <span *ngIf="loanForm.get('empcompanyAdrees')?.errors?.['pattern']" class="capitalize-all">Address shourld
+                not lead 10 max</span>
+              <span
+                *ngIf="!loanForm.get('empcompanyAdrees')?.errors?.['pattern'] && loanForm.get('empcompanyAdrees')?.errors?.['maxLength']"
+                class="capitalize-all">Address
+                must be max 10 characters.</span>
+            </span>
+          </div>
+        </div> -->
+
+        <div class="col-md-3 form-group">
+          <label for="empcompanyAdrees" class="capitalize-all">
+            Business / Office Address <span class="text-danger">*</span>
+          </label>
+          <textarea id="empcompanyAdrees" formControlName="empcompanyAdrees" class="form-control" rows="2"
+            autocomplete="off" appTitleCase></textarea>
+
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('empcompanyAdrees')?.invalid && (loanForm.get('empcompanyAdrees')?.touched || loanForm.get('empcompanyAdrees')?.dirty)">
+
+              <span *ngIf="loanForm.get('empcompanyAdrees')?.errors?.['required']" class="capitalize-all">
+                Address is required.
+              </span>
+
+              <span *ngIf="loanForm.get('empcompanyAdrees')?.errors?.['pattern']" class="capitalize-all">
+                Address cannot be only spaces.
+              </span>
+
+            </span>
+          </div>
+        </div>
+
+        <!-- <div class="col-md-3 form-group">
+          <label for="emppincode">Pincode <span class="text-danger">*</span></label>
+          <input type="number" id="emppincode" formControlName="emppincode" class="form-control" />
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('emppincode')?.invalid && (loanForm.get('emppincode')?.touched || loanForm.get('emppincode')?.dirty)">
+              <span *ngIf="loanForm.get('emppincode')?.errors?.['required']">Pincode is required.</span>
+              <span *ngIf="loanForm.get('emppincode')?.errors?.['pattern']">Pincode must be a 6-digit number.</span>
+            </span>
+          </div>
+        </div> -->
+        <div class="col-md-3 form-group">
+          <label for="emppincode" class="capitalize-all">Pincode <span class="text-danger">*</span></label>
+          <input type="text" id="emppincode" formControlName="emppincode" class="form-control"
+            [placeholder]="'Enter 6-digit Pincode' | titlecase" />
+
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('emppincode')?.invalid && (loanForm.get('emppincode')?.touched || loanForm.get('emppincode')?.dirty)">
+              <span *ngIf="loanForm.get('emppincode')?.errors?.['required']" class="capitalize-all">Pincode is
+                required.</span>
+              <span *ngIf="loanForm.get('emppincode')?.errors?.['pattern']" class="capitalize-all">Pincode must be a
+                6-digit number.</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- <p class="para">Supporting Documents</p> -->
+        <p></p>
+        <div class="col-md-3 form-group">
+          <label for="applicantAddressDocumentProof" class="capitalize-all">Document Type <span
+              class="text-danger">*</span></label>
+          <select id="applicantAddressDocumentProof" formControlName="applicantAddressDocumentProof"
+            class="form-control">
+            <option value="" class="capitalize-all">--- Select Document Type ---</option>
+            <!-- <option value="Aadhar">Aadhar</option> -->
+            <option value="PAN" class="capitalize-all">PAN</option>
+            <option value="Voter ID" class="capitalize-all">Voter ID</option>
+            <option value="Driving License" class="capitalize-all">Driving License</option>
+            <option value="Passport" class="capitalize-all">Passport</option>
+          </select>
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('applicantAddressDocumentProof')?.invalid && (loanForm.get('applicantAddressDocumentProof')?.touched || loanForm.get('applicantAddressDocumentProof')?.dirty)">
+              <span *ngIf="loanForm.get('applicantAddressDocumentProof')?.errors?.['required']" class="capitalize-all">
+                Document type is required.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <!-- <div class="col-md-3 form-group">
+          <label for="identityDocument" class="form-label">Upload File <span class="text-danger">*</span></label>
+          <div class="position-relative">
+            <input type="file" id="identityDocument" class="d-none" (change)="onFileSelected($event)"
+              accept=".jpg,.jpeg,.png,.pdf" />
+            <div class="form-control d-flex align-items-center justify-content-between px-2"
+              (click)="triggerFileUpload()" style="cursor: pointer;">
+              <span class="text-truncate">
+                {{ selectedFile?.name || 'Choose File' }}
+              </span>
+              <i class="bi bi-upload ms-2"></i>
+            </div>
+          </div>
+          <div class="mt-1">
+            <small class="error-message" *ngIf="fileUploadError">
+              {{ fileUploadError }}
+            </small>
+            <small class="text-success" *ngIf="selectedFile && !fileUploadError">
+              File selected successfully
+            </small>
+          </div>
+        </div> -->
+
+        <div class="col-md-3 form-group">
+          <label for="applicantAddressNumberProof" class="capitalize-all">Number <span
+              class="text-danger">*</span></label>
+          <input type="text" id="applicantAddressNumberProof" formControlName="applicantAddressNumberProof"
+            (input)="convertToUppercase()" class="form-control" />
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('applicantAddressNumberProof')?.invalid && (loanForm.get('applicantAddressNumberProof')?.touched || loanForm.get('applicantAddressNumberProof')?.dirty)">
+              <!-- Dynamic Error Messages -->
+              <span
+                *ngIf="loanForm.get('applicantAddressDocumentProof')?.value === 'Aadhar' && loanForm.get('applicantAddressNumberProof')?.errors?.['pattern']"
+                class="capitalize-all">
+                Aadhar must be a 12-digit number.
+              </span>
+              <span
+                *ngIf="loanForm.get('applicantAddressDocumentProof')?.value === 'PAN' && loanForm.get('applicantAddressNumberProof')?.errors?.['pattern']"
+                class="capitalize-all">
+                PAN must follow the format ABCDE1234F.
+              </span>
+              <span
+                *ngIf="loanForm.get('applicantAddressDocumentProof')?.value === 'Voter ID' && loanForm.get('applicantAddressNumberProof')?.errors?.['pattern']"
+                class="capitalize-all">
+                Voter ID must follow the format ABC1234567.
+              </span>
+              <span
+                *ngIf="loanForm.get('applicantAddressDocumentProof')?.value === 'Driving License' && loanForm.get('applicantAddressNumberProof')?.errors?.['pattern']"
+                class="capitalize-all">
+                Driving License must follow the format DL01ABC1234.
+              </span>
+              <span
+                *ngIf="loanForm.get('applicantAddressDocumentProof')?.value === 'Passport' && loanForm.get('applicantAddressNumberProof')?.errors?.['pattern']"
+                class="capitalize-all">
+                Passport must follow the format A1234567.
+              </span>
+              <span *ngIf="loanForm.get('applicantAddressNumberProof')?.errors?.['required']" class="capitalize-all">
+                Number is required for the selected document type.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-3 form-group">
+          <label for="applicantAddressIssueDateProof" class="capitalize-all">Issue Date<span
+              class="text-danger"></span></label>
+          <input type="date" id="applicantAddressIssueDateProof" formControlName="applicantAddressIssueDateProof"
+            class="form-control" (change)="onIssueDateChange($event)" />
+        </div>
+        <div class="col-md-3 form-group"
+          *ngIf="loanForm.get('applicantAddressDocumentProof')?.value !== 'PAN' && loanForm.get('applicantAddressDocumentProof')?.value !== 'Voter ID'">
+          <label for="applicantAddressExpDateProof" class="capitalize-all">Expired Date<span
+              class="text-danger"></span></label>
+          <input type="date" id="applicantAddressExpDateProof" formControlName="applicantAddressExpDateProof"
+            class="form-control" (change)="onExpiryDateChange($event)" />
+        </div>
+        <!-- 1. Bank Statement Upload -->
+        <p class="para">Required Documents</p>
+        <div class="required-documents-section row">
+          <div class="col-md-3 form-group">
+            <label for="bankStatement" class="form-label capitalize-all">Bank Statements
+              <span class="text-danger">*</span>
+            </label>
+            <div class="position-relative">
+              <input type="file" id="bankStatement" class="d-none" multiple
+                (change)="onBankStatementSelected($event)" />
+              <div class="form-control d-flex align-items-center justify-content-between px-2"
+                (click)="triggerBankStatementUpload()" style="cursor: pointer;">
+                <span class="text-truncate"> {{ selectedBankStatementFileNames || 'Choose Files' }} </span>
+                <i class="bi bi-upload ms-2"></i>
+              </div>
+            </div>
+
+            <div class="mt-1">
+              <ng-container *ngIf="bankStatementFiles.length > 0 && !bankStatementFileErrors.length">
+                <small class="text-success capitalize-all">Files selected successfully</small>
+              </ng-container>
+              <ng-container *ngIf="bankStatementFileErrors.length">
+                <small class="text-danger d-block" *ngFor="let err of bankStatementFileErrors">{{ err }}</small>
+              </ng-container>
+              <!-- Scrollable list of selected files -->
+              <div *ngIf="bankStatementFiles.length" class="file-list-scroll mt-1">
+                <div class="d-flex justify-content-between align-items-center border rounded p-1 mb-1"
+                  *ngFor="let file of bankStatementFiles; let i = index">
+                  <span class="text-truncate me-2" style="max-width: 180px;">{{ file.name }}</span>
+                  <button type="button" class="btn btn-sm btn-outline-danger py-0 px-2"
+                    (click)="removeBankStatementFile(i)">
+                    &times;
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3 form-group">
+            <label for="aadharCard" class="form-label capitalize-all">Aadhar Card
+              <span class="text-danger">*</span>
+            </label>
+
+            <div class="position-relative">
+              <input type="file" id="aadharCard" class="d-none" (change)="onAadharCardSelected($event)"
+                accept=".jpg,.jpeg,.png,.pdf" />
+              <div class="form-control d-flex align-items-center justify-content-between px-2"
+                (click)="triggerAadharCardUpload()" style="cursor: pointer;">
+                <span class="text-truncate">
+                  {{ aadharCardFile?.name || 'Choose File' }}
+                </span>
+                <i class="bi bi-upload ms-2"></i>
+              </div>
+            </div>
+
+            <div class="mt-1">
+              <small class="text-danger capitalize-all" *ngIf="aadharCardError">{{ aadharCardError }}</small>
+
+              <ng-container *ngIf="aadharCardFile && !aadharCardError">
+                <small class="text-success capitalize-all d-block">File selected successfully</small>
+
+                <!-- File preview list (even if single) -->
+                <div class="file-list-scroll mt-1">
+                  <div class="d-flex justify-content-between align-items-center border rounded p-1 mb-1">
+                    <span class="text-truncate me-2" style="max-width: 180px;">{{ aadharCardFile.name }}</span>
+                    <button type="button" class="btn btn-sm btn-outline-danger py-0 px-2"
+                      (click)="removeAadharCardFile()">
+                      &times;
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="col-md-3 form-group">
+            <label for="panCard" class="form-label capitalize-all">PAN Card
+              <span class="text-danger">*</span>
+            </label>
+
+            <div class="position-relative">
+              <input type="file" id="panCard" class="d-none" (change)="onPanCardSelected($event)"
+                accept=".jpg,.jpeg,.png,.pdf" />
+              <div class="form-control d-flex align-items-center justify-content-between px-2"
+                (click)="triggerPanCardUpload()" style="cursor: pointer;">
+                <span class="text-truncate"> {{ panCardFile?.name || 'Choose File' }} </span>
+                <i class="bi bi-upload ms-2"></i>
+              </div>
+            </div>
+
+            <div class="mt-1">
+              <small class="text-danger capitalize-all" *ngIf="panCardError">{{ panCardError }}</small>
+              <ng-container *ngIf="panCardFile && !panCardError">
+                <small class="text-success capitalize-all d-block">File selected successfully</small>
+                <!-- File display container (even for single file) -->
+                <div class="file-list-scroll mt-1">
+                  <div class="d-flex justify-content-between align-items-center border rounded p-1 mb-1">
+                    <span class="text-truncate me-2" style="max-width: 180px;">{{ panCardFile.name }}</span>
+                    <button type="button" class="btn btn-sm btn-outline-danger py-0 px-2" (click)="removePanCardFile()">
+                      &times;</button>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+
+          <!-- 3. Payslip Upload -->
+          <div class="col-md-3 form-group">
+            <label for="payslip" class="form-label capitalize-all">Payslips
+              <span class="text-danger">*</span>
+            </label>
+            <div class="position-relative">
+              <input type="file" id="payslip" class="d-none" multiple (change)="onPayslipSelected($event)"
+                accept=".jpg,.jpeg,.png,.pdf" />
+              <div class="form-control d-flex align-items-center justify-content-between px-2"
+                (click)="triggerPayslipUpload()" style="cursor: pointer;">
+                <span class="text-truncate capitalize-all">{{ selectedPayslipFileNames || 'Choose Files' }}</span>
+                <i class="bi bi-upload ms-2"></i>
+              </div>
+            </div>
+
+            <div class="mt-1">
+              <ng-container *ngIf="payslipFiles.length > 0 && !payslipFileErrors.length">
+                <small class="text-success capitalize-all">Files selected successfully</small>
+              </ng-container>
+              <ng-container *ngIf="payslipFileErrors.length">
+                <small class="text-danger d-block" *ngFor="let err of payslipFileErrors">{{ err }}</small>
+              </ng-container>
+
+              <!-- Scrollable list of selected files -->
+              <div *ngIf="payslipFiles.length" class="file-list-scroll mt-1">
+                <div class="d-flex justify-content-between align-items-center border rounded p-1 mb-1"
+                  *ngFor="let file of payslipFiles; let i = index">
+                  <span class="text-truncate me-2" style="max-width: 180px;">{{ file.name }}</span>
+                  <button type="button" class="btn btn-sm btn-outline-danger py-0 px-2" (click)="removePayslipFile(i)">
+                    &times;
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-3 form-group">
+            <label for="otherDocuments" class="form-label capitalize-all">Others</label>
+            <div class="position-relative">
+              <input type="file" id="otherDocuments" class="d-none" multiple (change)="onOthersSelected($event)"
+                accept=".jpg,.jpeg,.png,.pdf" />
+              <div class="form-control d-flex align-items-center justify-content-between px-2"
+                (click)="triggerOthersUpload()" style="cursor: pointer;">
+                <span class="text-truncate"> {{ selectedOtherFileNames || 'Choose Files' }} </span>
+                <i class="bi bi-upload ms-2"></i>
+              </div>
+            </div>
+            <div class="mt-1">
+              <ng-container *ngIf="otherFiles.length > 0 && !otherFileErrors.length">
+                <small class="text-success capitalize-all">Files selected successfully</small>
+              </ng-container>
+              <ng-container *ngIf="otherFileErrors.length">
+                <small class="text-danger d-block" *ngFor="let err of otherFileErrors">{{ err }}</small>
+              </ng-container>
+
+              <!-- Scrollable file list with delete button -->
+              <div *ngIf="otherFiles.length" class="file-list-scroll mt-1">
+                <div class="d-flex justify-content-between align-items-center border rounded p-1 mb-1"
+                  *ngFor="let file of otherFiles; let i = index">
+                  <span class="text-truncate me-2" style="max-width: 180px;">{{ file.name }}</span>
+                  <button type="button" class="btn btn-sm btn-outline-danger py-0 px-2" (click)="removeOtherFile(i)">
+                    &times;
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" *ngIf="currentPage === 2">
+      <p class="para">Details of Loan Applied For</p>
+      <!-- Purpose of Loan -->
+      <div class="row">
+        <!-- <div class="col-md-4 form-group">
+          <label for="purposeOfLoan">Purpose of Loan <span class="text-danger">*</span></label>
+          <input type="text" id="purposeOfLoan" formControlName="purposeOfLoan" class="form-control"
+            placeholder="Enter the Purpose of Loan" />
+      
+          <div class="error-message">
+            <span *ngIf="loanForm.get('purposeOfLoan')?.invalid && 
+        (loanForm.get('purposeOfLoan')?.touched || loanForm.get('purposeOfLoan')?.dirty)">
+              <span *ngIf="loanForm.get('purposeOfLoan')?.errors?.['required']">
+                Purpose of Loan is required.
+              </span>
+              <span *ngIf="loanForm.get('purposeOfLoan')?.errors?.['pattern']">
+                Purpose of Loan can only contain letters and spaces.
+              </span>
+            </span>
+          </div>
+        </div> -->
+        <!-- <div class="col-md-4 form-group">
+          <label for="DloanAmount">Loan Amount Required (Rs.) <span class="text-danger">*</span></label>
+          <input type="number" id="DloanAmount" formControlName="DloanAmount" class="form-control"
+            placeholder="Enter the Loan Amount" />\
+          <div class="error-message">
+            <span *ngIf="loanForm.get('DloanAmount')?.invalid && 
+        (loanForm.get('DloanAmount')?.touched || loanForm.get('DloanAmount')?.dirty)">
+              <span *ngIf="loanForm.get('DloanAmount')?.errors?.['required']">
+                Loan Amount is required.
+              </span>
+              <span *ngIf="loanForm.get('DloanAmount')?.errors?.['min']">
+                Loan Amount must be at least 1.
+              </span>
+            </span>
+          </div>
+        </div> -->
+
+        <div class="col-md-4 form-group">
+          <label for="DloanAmount" class="capitalize-all">Loan Amount Required (Rs.) <span
+              class="text-danger">*</span></label>
+          <input type="text" id="DloanAmount" formControlName="DloanAmount" class="form-control"
+            (input)="formatCommas('DloanAmount')" [placeholder]="'Enter the Loan Amount' | titlecase" />
+          <!-- Error message with fixed height -->
+          <div class="error-message">
+            <span *ngIf="loanForm.get('DloanAmount')?.invalid && 
+              (loanForm.get('DloanAmount')?.touched || loanForm.get('DloanAmount')?.dirty)">
+              <span *ngIf="loanForm.get('DloanAmount')?.errors?.['pattern']" class="capitalize-all">
+                Only numbers and commas are allowed.
+              </span>
+              <span *ngIf="loanForm.get('DloanAmount')?.errors?.['min']" class="capitalize-all">
+                Loan Amount must be at least 1.
+              </span>
+              <span *ngIf="loanForm.get('DloanAmount')?.errors?.['required']" class="capitalize-all">
+                Loan Amount is required.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <!-- <div class="col-md-4 form-group">
+          <label for="loanTenure">Tenure (Months) <span class="text-danger">*</span></label>
+          <input type="number" id="loanTenure" formControlName="loanTenure" class="form-control"
+            placeholder="Enter Tenure in Months" />
+          <div class="error-message">
+            <span *ngIf="loanForm.get('loanTenure')?.invalid && 
+        (loanForm.get('loanTenure')?.touched || loanForm.get('loanTenure')?.dirty)">
+              <span *ngIf="loanForm.get('loanTenure')?.errors?.['required']">
+                Loan Tenure is required.
+              </span>
+              <span *ngIf="loanForm.get('loanTenure')?.errors?.['min']">
+                Tenure must be at least 1 month.
+              </span>
+            </span>
+          </div>
+        </div> -->
+
+        <!-- <div class="col-md-4 form-group">
+          <label for="loanTenure" class="capitalize-all">Tenure (Months) <span class="text-danger">*</span></label>
+          <input type="text" id="loanTenure" formControlName="loanTenure" class="form-control"
+            [placeholder]="'Enter Tenure in Months' | titlecase" />
+     
+          <div class="error-message">
+            <span *ngIf="loanForm.get('loanTenure')?.invalid && 
+                (loanForm.get('loanTenure')?.touched || loanForm.get('loanTenure')?.dirty)">
+              <span *ngIf="loanForm.get('loanTenure')?.errors?.['required']" class="capitalize-all">
+                Loan Tenure is required.
+              </span>
+              <span *ngIf="loanForm.get('loanTenure')?.errors?.['pattern']" class="capitalize-all">
+                Only numbers are allowed.
+              </span>
+              <span *ngIf="loanForm.get('loanTenure')?.errors?.['min']" class="capitalize-all">
+                Tenure must be at least 1 month.
+              </span>
+            </span>
+          </div>
+        </div> -->
+
+        <div class="col-md-4 form-group">
+          <label for="loanTenure" class="capitalize-all"> Tenure (Months) <span class="text-danger">*</span></label>
+          <input type="text" id="loanTenure" formControlName="loanTenure" class="form-control"
+            [placeholder]="'Enter Tenure in Months' | titlecase" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('loanTenure')?.invalid &&(loanForm.get('loanTenure')?.touched || loanForm.get('loanTenure')?.dirty)">
+              <span *ngIf="loanForm.get('loanTenure')?.errors?.['required']" class="capitalize-all">
+                Loan Tenure is required.
+              </span>
+              <span *ngIf="loanForm.get('loanTenure')?.errors?.['pattern']" class="capitalize-all">
+                Only numbers are allowed.
+              </span>
+              <span *ngIf="loanForm.get('loanTenure')?.errors?.['min']" class="capitalize-all">
+                Tenure must be at least 1 month.
+              </span>
+              <span *ngIf="loanForm.get('loanTenure')?.errors?.['max']" class="capitalize-all">
+                Tenure cannot exceed 100 months.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Repayment Mode -->
+        <div class="col-md-4 form-group">
+          <label for="repaymentMode" class="capitalize-all">Repayment Mode <span class="text-danger">*</span></label>
+          <select id="repaymentMode" formControlName="repaymentMode" class="form-control">
+            <option value="" class="capitalize-all">Select Repayment Mode</option>
+            <option value="ACH (Automated Clearing House)">ACH (Automated Clearing House)</option>
+            <option value="ECS (Electronic Clearance Service)">ECS (Electronic Clearance Service)</option>
+            <option value="PDC (Post Dated Check)">PDC (Post Dated Check)</option>
+          </select>
+          <i class="fa fa-chevron-down select-icon"></i>
+          <div class="error-message">
+            <span *ngIf="loanForm.get('repaymentMode')?.invalid && 
+        (loanForm.get('repaymentMode')?.touched || loanForm.get('repaymentMode')?.dirty)">
+              <span *ngIf="loanForm.get('repaymentMode')?.errors?.['required']" class="capitalize-all">
+                Repayment Mode is required.
+              </span>
+            </span>
+          </div>
+        </div>
+
+      </div>
+      <!-- References Section -->
+      <p class="para">References</p>
+      <!-- Add Reference Section with Icon and Text -->
+      <div class="row">
+        <div class="col-md-12 d-flex justify-content-end align-items-center">
+          <span class="add-reference-text mr-2" (click)="addReference()">Add Reference</span>
+          <i class="fa fa-plus add-reference-icon" (click)="addReference()"></i>
+        </div>
+        <!-- Form Array for References -->
+        <div formArrayName="references">
+          <div *ngFor="let reference of references.controls; let i = index" [formGroupName]="i"
+            class="reference-section">
+            <!-- Remove Reference Icon -->
+            <div class="row">
+              <div class="col-md-12 d-flex justify-content-end">
+                <i *ngIf="i > 0" class="fas fa-times remove-reference-icon" (click)="removeReference(i)"></i>
+              </div>
+            </div>
+            <!-- Reference Details -->
+            <div class="row">
+              <!-- <div class="col-md-4 form-group">
+                <label for="fullName-{{ i }}" class="capitalize-all">Full Name <span
+                    class="text-danger">*</span></label>
+                <input type="text" id="fullName-{{ i }}" formControlName="fullName" class="form-control"
+                  [placeholder]="'Enter Full Name' | titlecase" appTitleCase />
+                <div class="error-message">
+                  <span *ngIf="
+                    reference.get('fullName')?.invalid &&
+                    (reference.get('fullName')?.touched || reference.get('fullName')?.dirty)
+                  ">
+                    <span *ngIf="reference.get('fullName')?.errors?.['pattern']" class="capitalize-all">
+                      Full Name can only contain letters and spaces.
+                    </span>
+                    <span *ngIf="reference.get('fullName')?.errors?.['required']" class="capitalize-all">
+                      Full Name is required.
+                    </span>
+                  </span>
+                </div>
+              </div> -->
+
+<div class="col-md-4 form-group">
+  <label for="fullName-{{ i }}" class="capitalize-all">
+    Full Name <span class="text-danger">*</span>
+  </label>
+  <input
+    type="text"
+    id="fullName-{{ i }}"
+    formControlName="fullName"
+    class="form-control"
+    [placeholder]="'Enter Full Name' | titlecase"
+    appTitleCase
+  />
+  <div class="error-message">
+    <span
+      *ngIf="reference.get('fullName')?.invalid &&
+              (reference.get('fullName')?.touched || reference.get('fullName')?.dirty)">
+      <span *ngIf="reference.get('fullName')?.errors?.['required']" class="capitalize-all">
+        Full Name is required.
+      </span>
+      <span *ngIf="reference.get('fullName')?.errors?.['pattern']" class="capitalize-all">
+        Only letters and spaces allowed.
+      </span>
+    </span>
+  </div>
+</div>
+
+
+              <!-- <div class="col-md-4 form-group">
+                <label for="knownForYears-{{ i }}" class="capitalize-all">Known for Years <span
+                    class="text-danger">*</span></label>
+                <input type="text" id="knownForYears-{{ i }}" formControlName="knownForYears" class="form-control"
+                  [placeholder]="'Enter Known Years' | titlecase" />
+                <div class="error-message">
+                  <span *ngIf="
+                    reference.get('knownForYears')?.invalid &&
+                    (reference.get('knownForYears')?.touched || reference.get('knownForYears')?.dirty)
+                  ">
+                    <span *ngIf="reference.get('knownForYears')?.errors?.['pattern']" class="capitalize-all">
+                      Only numbers are allowed.
+                    </span>
+                    <span *ngIf="reference.get('knownForYears')?.errors?.['min']" class="capitalize-all">
+                      Known Years must be at least 1.
+                    </span>
+                    <span *ngIf="reference.get('knownForYears')?.errors?.['required']" class="capitalize-all">
+                      Known Years is required.
+                    </span>
+                  </span>
+                </div>
+              </div> -->
+<div class="col-md-4 form-group">
+  <label for="knownForYears-{{ i }}" class="capitalize-all">
+    Known for Years <span class="text-danger">*</span>
+  </label>
+  <input type="text" id="knownForYears-{{ i }}" formControlName="knownForYears" class="form-control" [placeholder]="'Enter Known Years' | titlecase"/>
+  <div class="error-message">
+    <span *ngIf="reference.get('knownForYears')?.invalid && (reference.get('knownForYears')?.touched || reference.get('knownForYears')?.dirty)">
+      <span *ngIf="reference.get('knownForYears')?.errors?.['required']" class="capitalize-all">Known Years is required.</span>
+      <span *ngIf="reference.get('knownForYears')?.errors?.['pattern']" class="capitalize-all">Only numbers are allowed.</span>
+      <span *ngIf="reference.get('knownForYears')?.errors?.['min']" class="capitalize-all">Known Years must be at least 1.</span>
+      <span *ngIf="reference.get('knownForYears')?.errors?.['max']" class="capitalize-all"> Known Years must not exceed 100.</span>
+    </span>
+  </div>
+</div>
+
+              <!-- <div class="col-md-4 form-group">
+                <label for="relation-{{ i }}">Relationship <span class="text-danger">*</span></label>
+                <input type="text" id="relation-{{ i }}" formControlName="relation" class="form-control"
+                  placeholder="Enter Relationship" />
+                <div class="error-message">
+                  <span *ngIf="
+                    reference.get('relation')?.invalid &&
+                    (reference.get('relation')?.touched || reference.get('relation')?.dirty)
+                  ">
+                    <span *ngIf="reference.get('relation')?.errors?.['pattern']">
+                      Relationship can only contain letters and spaces.
+                    </span>
+                    <span *ngIf="reference.get('relation')?.errors?.['required']">
+                      Relationship is required.
+                    </span>
+                  </span>
+                </div>
+              </div> -->
+
+              <div class="col-md-4 form-group">
+                <label for="relation-{{ i }}" class="capitalize-all">Relationship <span
+                    class="text-danger">*</span></label>
+                <select id="relation-{{ i }}" formControlName="relation" class="form-control">
+                  <option value="" disabled selected>Select Relationship</option>
+                  <option value="Parent">Parent</option>
+                  <option value="Sibling">Sibling</option>
+                  <option value="Relative">Relative</option>
+                  <option value="Spouse">Spouse</option>
+                  <option value="Friend">Friend</option>
+                  <option value="Colleague">Colleague</option>
+                  <option value="Other">Other</option>
+                </select>
+                <i class="fa fa-chevron-down select-icon"></i>
+                <div class="error-message">
+                  <span *ngIf="
+                      reference.get('relation')?.invalid &&
+                      (reference.get('relation')?.touched || reference.get('relation')?.dirty)">
+                    <span *ngIf="reference.get('relation')?.errors?.['required']" class="capitalize-all">
+                      Relationship is required.
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <!-- <div class="col-md-4 form-group">
+                <label for="pincode-{{ i }}">Pincode <span class="text-danger">*</span></label>
+                <input type="number" id="pincode-{{ i }}" formControlName="pincode" class="form-control"
+                  placeholder="Enter Pincode" />
+                <div class="error-message">
+                  <span *ngIf="
+                    reference.get('pincode')?.invalid &&
+                    (reference.get('pincode')?.touched || reference.get('pincode')?.dirty)
+                  ">
+                    <span *ngIf="reference.get('pincode')?.errors?.['pattern']">
+                      Pincode must be a valid 6-digit number.
+                    </span>
+                    <span *ngIf="reference.get('pincode')?.errors?.['required']">
+                      Pincode is required.
+                    </span>
+                  </span>
+                </div>
+              </div> -->
+
+
+              <!-- <div class="col-md-4 form-group">
+                <label for="mobile-{{ i }}" class="capitalize-all">Mobile Number <span class="text-danger">*</span></label>
+                <input type="text" id="mobile-{{ i }}" formControlName="mobile" class="form-control"
+                  placeholder="Enter Mobile Number" />
+                <div class="error-message">
+                  <span *ngIf="
+                    reference.get('mobile')?.invalid && 
+                    (reference.get('mobile')?.touched || reference.get('mobile')?.dirty)
+                  ">
+                    <span *ngIf="reference.get('mobile')?.errors?.['pattern']" class="capitalize-all">
+                      Mobile Number must be 10 digits number.
+                    </span>
+                    <span *ngIf="reference.get('mobile')?.errors?.['required']" class="capitalize-all">
+                      Mobile Number is required.
+                    </span>
+                  </span>
+                </div>
+              </div> -->
+
+
+              <div class="col-md-4 form-group mobile-wrapper">
+                <label for="mobile-{{ i }}" class="capitalize-all">
+                  Mobile Number <span class="text-danger">*</span>
+                </label>
+                <div class="input-group">
+                  <span class="input-group-text country-code">+91</span>
+                  <input type="text" id="mobile-{{ i }}" formControlName="mobile" class="form-control mobile-input"
+                    [placeholder]="'Enter Mobile Number' | titlecase" />
+                </div>
+                <div class="error-message">
+                  <span *ngIf="
+                    reference.get('mobile')?.invalid &&
+                    (reference.get('mobile')?.touched || reference.get('mobile')?.dirty)
+                  ">
+                    <span *ngIf="reference.get('mobile')?.errors?.['pattern']" class="capitalize-all">
+                      Mobile Number must be 10 digits number.
+                    </span>
+                    <span *ngIf="reference.get('mobile')?.errors?.['required']" class="capitalize-all">
+                      Mobile Number is required.
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+            </div>
+            <hr />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="form-navigation">
+      <button type="button" class="previous-btn" (click)="prevPage()" *ngIf="!(currentPage === 1)">
+        Previous
+      </button>
+      <button type="button" class="next-btn" (click)="nextPage()" *ngIf="currentPage < totalPages">
+        Save & Continue
+      </button>
+      <!-- <button type="submit" class="btn btn-success" *ngIf="currentPage === totalPages" [disabled]="loanForm.invalid"> -->
+      <button type="submit" class="btn btn-success submit-btn" *ngIf="currentPage === totalPages"
+        [disabled]="isSubmitting">
+        Submit
+      </button>
+      <div *ngIf="isSubmitting" class="spinner-container">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

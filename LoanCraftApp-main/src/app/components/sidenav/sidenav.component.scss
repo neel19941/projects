@@ -1,0 +1,20 @@
+/* Sidenav Styles */
+.sidenav {
+    width: 250px;
+    min-height: 100vh;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  /* Hide sidenav for smaller screens */
+  @media (max-width: 768px) {
+    .sidenav {
+      transform: translateX(-100%);
+      position: absolute;
+      z-index: 1040;
+    }
+  
+    .sidenav.show {
+      transform: translateX(0);
+    }
+  }
+  

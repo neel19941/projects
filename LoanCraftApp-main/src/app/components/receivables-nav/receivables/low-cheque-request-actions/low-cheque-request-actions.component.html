@@ -1,0 +1,44 @@
+<div class="modal-overlay">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h5 class="modal-title">{{ title }}</h5>
+            <button type="button" class="btn-close" (click)="close()"></button>
+        </div>
+        <div class="modal-body">
+
+            <form [formGroup]="chequeDepositRequestForm" class="payment-form">
+                <div class="row">
+                    
+                    <!-- Remarks -->
+                    <div class="col-md-12 col-12 mb-3">
+                        <label for="remarks" class="form-label">Remarks <span class="text-danger">*</span></label>
+                        <input type="text" id="remarks" formControlName="remarks" class="form-control"
+                            placeholder="Enter remarks" />
+
+                        <div class="text-danger mt-1" *ngIf="chequeDepositRequestForm.get('remarks')?.invalid && 
+           (chequeDepositRequestForm.get('remarks')?.dirty || chequeDepositRequestForm.get('remarks')?.touched)">
+
+                            <div *ngIf="chequeDepositRequestForm.get('remarks')?.errors?.['required']">
+                                Remarks are required.
+                            </div>
+
+                            <div *ngIf="chequeDepositRequestForm.get('remarks')?.errors?.['pattern']">
+                                Only alphabets and spaces are allowed.
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <button type="button" class="btn btn-secondary"
+                        (click)="lowChequeRequestActions('false')">Reject</button>
+                    <button type="button" class="btn btn-primary"
+                        (click)="lowChequeRequestActions('true')">Accept</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

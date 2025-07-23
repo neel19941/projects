@@ -1,0 +1,114 @@
+/* General Modal Styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    z-index: 1050;
+    overflow-y: auto;
+    text-transform: capitalize;
+  }
+    .delete-icon {
+    font-size: 1.5rem;
+    color: #dc3545;
+  }
+  .modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 450px;
+    width: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    font-family: Arial, sans-serif;
+    max-height: 90vh;
+    overflow: hidden;
+  }
+  
+  /* Modal Body Styling */
+  .modal-body {
+    margin-top: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 10px;
+  }
+  
+  /* Record Card Styling */
+  .record-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: #f9f9f9;
+  }
+  
+  .record-card:hover {
+    background: #e0e0e0;
+  }
+  
+  .edit-icon {
+    font-size: 1.5rem;
+    color: #007bff;
+  }
+  
+  /* Custom scrollbar */
+  .modal-body::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .modal-body::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+  }
+  
+  .modal-body::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  
+  /* Header Styling */
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  .modal-title {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #333;
+  }
+  
+  /* Close Button Styling */
+  .btn-close {
+    font-size: 1.2rem;
+    color: #888;
+    transition: all 0.3s;
+  }
+  
+  .btn-close:hover {
+    color: #333;
+  }
+  
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .modal-content {
+      padding: 15px;
+      max-width: 95%;
+    }
+  
+    .modal-header .modal-title {
+      font-size: 1rem;
+    }
+  }

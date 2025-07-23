@@ -1,0 +1,78 @@
+.container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+
+  h2 {
+    text-align: center; /* Centers text horizontally */
+    font-size: 22px;    /* Adjust font size as needed */
+    font-weight: 600;   /* Boldness of the text */
+    color: #333;        /* Dark gray color for better visibility */
+    margin-bottom: 15px; /* Space below the heading */
+  }
+  
+
+  .record-card {
+    border: 1px solid #ccc; // Border for sections
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+
+      h5 {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin: 0;
+
+        .edit-icon {
+          color: #28a745; // Green color for edit icon
+          font-size: 18px;
+          margin-left: 10px; // Space after heading
+          cursor: pointer;
+          transition: all 0.2s ease-in-out;
+
+          &:hover {
+            color: #218838; // Darker green on hover
+            transform: scale(1.1);
+          }
+        }
+      }
+    }
+
+    hr {
+      margin: 0 0 10px 0; // Spacing for horizontal line
+      border: none;
+      border-top: 1px solid #ccc; // Light gray horizontal line
+    }
+
+    .profile-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      line-height: 1.4;
+
+      .label {
+        font-weight: 500;
+        color: #444;
+        width: 35%;
+      }
+
+      .value {
+        font-weight: 400;
+        color: #555;
+        flex: 1;
+        word-wrap: break-word;
+      }
+    }
+  }
+}

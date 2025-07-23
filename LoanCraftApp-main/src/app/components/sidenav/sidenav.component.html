@@ -1,0 +1,36 @@
+<button
+  class="btn btn-primary d-md-none mb-2"
+  (click)="toggleSidenav()"
+>
+  Toggle Menu
+</button>
+
+<div class="d-flex">
+  <!-- Sidenav -->
+  <nav
+    class="sidenav bg-light flex-shrink-0 p-3"
+    [class.show]="isSidenavVisible"
+  >
+    <h5 class="mb-3">Menu</h5>
+    <ul class="nav nav-pills flex-column">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Settings</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Logout</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="content flex-grow-1 p-3">
+    <ng-content></ng-content>
+  </div>
+</div>
+

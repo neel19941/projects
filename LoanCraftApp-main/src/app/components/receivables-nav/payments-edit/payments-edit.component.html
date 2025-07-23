@@ -1,0 +1,143 @@
+<div class="modal-overlay">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h5 class="modal-title">{{title}}</h5>
+        <button type="button" class="btn-close" (click)="close()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="paymentApplicationForm" class="container">
+          <div class="row">
+            <div class="col-md-12 form-group position-relative">
+                <label>Due Amount <span class="text-danger">*</span></label>
+                <input type="text" formControlName="dueAmount" class="form-control readable-content" [placeholder]="'Enter Disbursed Amount' | titlecase" [readonly]="!readableContent"/>
+                <div class="error-message">
+                  <span
+                    *ngIf="paymentApplicationForm.get('dueAmount')?.invalid && (paymentApplicationForm.get('dueAmount')?.touched || paymentApplicationForm.get('dueAmount')?.dirty)">
+                    <span *ngIf="paymentApplicationForm.get('dueAmount')?.errors?.['required']">Disbursed Amount is
+                      required.</span>
+                    <span *ngIf="paymentApplicationForm.get('dueAmount')?.errors?.['pattern']">Only numbers and a single decimal point are 
+                      allowed
+                    </span>
+                    <span *ngIf="paymentApplicationForm.get('dueAmount')?.errors?.['min']">Amount must be 0 or greater.
+                      </span>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-12 form-group">
+                <label>Due Date<span class="text-danger">*</span></label>
+                <input type="date" formControlName="dueDate" class="form-control readable-content" [readonly]="!readableContent"/>
+                <div class="error-message">
+                  <span
+                    *ngIf="paymentApplicationForm.get('dueDate')?.invalid && paymentApplicationForm.get('dueDate')?.touched">
+                    <span *ngIf="paymentApplicationForm.get('dueDate')?.errors?.['required']">EMI End Date is
+                      required.</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+    
+            <div class="row">
+              <div class="col-md-12 form-group">
+                <label> Pay <span class="text-danger">*</span></label>
+                <input type="text" formControlName="amountPaid" class="form-control" (input)="formatAmountSanctioned('amountPaid')" [placeholder]="'Enter amount paid' | titlecase" />
+                <div class="error-message">
+                  <span
+                    *ngIf="paymentApplicationForm.get('amountPaid')?.invalid && (paymentApplicationForm.get('amountPaid')?.touched || paymentApplicationForm.get('amountPaid')?.dirty)">
+                    <span *ngIf="paymentApplicationForm.get('amountPaid')?.errors?.['required']"> Amount Paid is required.
+                    </span>
+                    <span *ngIf="paymentApplicationForm.get('amountPaid')?.errors?.['pattern']"> Only numeric values are
+                      allowed. </span>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-12 form-group">
+                <label>Interest Amount (%) <span class="text-danger">*</span></label>
+                <input type="text" formControlName="interestAmount" class="form-control"
+                [placeholder]="'Enter interest rate (%)'| titlecase" />
+                <div class="error-message">
+                  <span
+                    *ngIf="paymentApplicationForm.get('interestAmount')?.invalid && (paymentApplicationForm.get('interestAmount')?.touched || paymentApplicationForm.get('interestAmount')?.dirty)">
+                    <span *ngIf="paymentApplicationForm.get('interestAmount')?.errors?.['required']">
+                      Interest Rate is required.
+                    </span>
+                    <span *ngIf="paymentApplicationForm.get('interestAmount')?.errors?.['pattern']">
+                      Only numbers are allowed.
+                    </span>
+                    <span *ngIf="paymentApplicationForm.get('interestAmount')?.errors?.['min']">
+                      Interest Rate (%) must be at least 1.
+                    </span>
+                  </span>
+                </div>
+              </div>
+              
+              <!-- <div class="col-md-6 form-group">
+                <label> Amount Status <span class="text-danger">*</span></label>
+                <input type="text" formControlName="amountStatus" class="form-control" placeholder="Enter remarks" />
+                <div class="error-message">
+                  <span
+                    *ngIf="paymentApplicationForm.get('amountStatus')?.invalid && (paymentApplicationForm.get('amountStatus')?.touched || paymentApplicationForm.get('amountStatus')?.dirty)">
+                    <span *ngIf="paymentApplicationForm.get('amountStatus')?.errors?.['required']"> Remarks are required.
+                    </span>
+                    <span *ngIf="paymentApplicationForm.get('amountStatus')?.errors?.['pattern']"> Only alphabets and spaces
+                      are allowed.</span>
+                  </span>
+                </div>
+              </div> -->
+
+            </div>
+            <div class="row">
+              <div class="col-md-12 form-group position-relative">
+                <label>Payment Mode <span class="text-danger">*</span></label>
+                <div class="select-wrapper">
+                  <select formControlName="paymentMode" class="form-control">
+                    <option value="" disabled selected>Select Payment Mode</option>
+                    <option *ngFor="let mode of paymentModes" [value]="mode">{{ mode }}</option>
+                  </select>
+                  <i class="fa fa-chevron-down select-icon"></i>
+                </div>
+                <div class="error-message">
+                  <span
+                    *ngIf="paymentApplicationForm.get('paymentMode')?.invalid && (paymentApplicationForm.get('paymentMode')?.touched || paymentApplicationForm.get('paymentMode')?.dirty)">
+                    <span *ngIf="paymentApplicationForm.get('paymentMode')?.errors?.['required']">
+                      Payment Mode is required.
+                    </span>
+                  </span>
+                </div>
+              </div>  
+              <div class="col-md-12 form-group">
+                <label>Remarks</label>
+                <input type="text" formControlName="remarks" class="form-control" [placeholder]="'Enter remarks'| titlecase" appTitleCase/>
+                <div class="error-message">
+                  <span *ngIf="paymentApplicationForm.get('remarks')?.invalid && (paymentApplicationForm.get('remarks')?.touched || paymentApplicationForm.get('remarks')?.dirty)">
+                    <span *ngIf="paymentApplicationForm.get('remarks')?.errors?.['pattern']">
+                      Only alphabets and spaces are allowed.
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-12 form-group">
+                <label>Check Bounce 
+                  <!-- <span class="text-danger">*</span> -->
+                </label>
+                <input type="text" formControlName="checkBounce" class="form-control" [placeholder]="'Enter check bounce amount' | titlecase" />
+                <div class="error-message">
+                  <span
+                    *ngIf="paymentApplicationForm.get('checkBounce')?.invalid && (paymentApplicationForm.get('checkBounce')?.touched || paymentApplicationForm.get('checkBounce')?.dirty)">
+                    <span *ngIf="paymentApplicationForm.get('checkBounce')?.errors?.['required']"> Check Bounce amount is required. </span>
+                    <span *ngIf="paymentApplicationForm.get('checkBounce')?.errors?.['pattern']"> Only numeric values (including decimals) are allowed. </span>
+                  </span>
+                </div>
+              </div>
+            
+              </div>
+            <div class="form-group mt-3 d-flex justify-content-end">
+                <button type="button" class="btn btn-secondary custom-btn me-2" (click)="close()">Cancel</button>
+                <button *ngIf="!isEditMode" type="button" class="btn btn-primary custom-btn"
+                  (click)="sendData()">Create</button>
+                <button *ngIf="isEditMode" type="button" class="btn btn-primary custom-btn"
+                  (click)="updateData()">Update</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>

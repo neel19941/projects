@@ -1,0 +1,94 @@
+.container-box {
+    display: flex;
+    height: calc(100vh - 60px); // Subtracting navbar height (adjust as needed)
+    gap: 20px;
+    padding: 20px;
+    text-transform: capitalize;
+    .nav-box {
+      width: 250px;
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      height: 100%; // Ensure it takes full available height
+    
+      .nav-link {
+        color: #0611aa;
+        font-weight: 500;
+        padding: 10px;
+        display: block;
+        border-radius: 5px;
+        transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+  
+        &:hover {
+          background: #dde7ff;
+          color: #0611aa;
+        }
+  
+        &.active {
+          background: #0611aa;
+          color: white;
+          font-weight: bold;
+        }
+      }
+    }
+    .content-scroll {
+        flex-grow: 1;
+        overflow-y: auto; /* Keep scrolling enabled */
+        padding-right: 10px;
+        position: relative; /* Ensure it does not affect sticky positioning */
+      
+        &::-webkit-scrollbar {
+          width: 6px;
+        }
+      
+        &::-webkit-scrollbar-thumb {
+          background: #d1d1d1;
+          border-radius: 4px;
+        }
+      
+        &::-webkit-scrollbar-thumb:hover {
+          background: #b0b0b0;
+        }
+      
+        &::-webkit-scrollbar-track {
+          background: #f5f5f5;
+        }
+      }
+      .content-box {
+        flex-grow: 1;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: visible; /* ✅ Allow sticky elements to work */
+      }
+      
+    }
+    
+    // Responsive Design
+    @media (max-width: 768px) {
+      .container-box {
+        flex-direction: column;
+        height: auto;
+    
+        .nav-box {
+          width: 100%;
+          text-align: center;
+          height: auto;
+        }
+    
+        .content-box {
+          width: 100%;
+          height: calc(100vh - 100px);
+        }
+      }
+    }
+    
+    
+    

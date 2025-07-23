@@ -1,0 +1,79 @@
+<div class="container-fluid">
+  <div class="row header-bar">
+    <div class="col-12 col-md-6">
+      <h4 class="header-title">Low Cheque Deposit Requests</h4>
+    </div>
+
+    <div class="col-12 col-md-6 text-md-end">
+      <div class="search-container">
+        <!-- <span class="add-icon" (click)="openEmiPopup('add')">
+                  <i class="fas fa-plus"></i>
+              </span> -->
+        <input type="text" class="search-input" placeholder="Search" (keyup)="onSearch($event)" />
+      </div>
+    </div>
+
+  </div>
+  <!-- Table -->
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-sm">
+          
+          <thead class="table-custom-header">
+            <tr>
+              <th scope="col">S.No</th>
+              <th scope="col" (click)="onSort('firstName')">Cheque Holder Name <span class="sort-icon"
+                  [ngClass]="getSortIcon('firstName')"></span> </th>
+              <th scope="col" (click)="onSort('requestedByName')">Requested By <span class="sort-icon"
+                  [ngClass]="getSortIcon('requestedByName')"></span> </th>
+              <th scope="col" (click)="onSort('approvedByName')">Approved By <span class="sort-icon"
+                  [ngClass]="getSortIcon('approvedByName')"></span> </th>
+              <th scope="col" (click)="onSort('receivableAmount')">Receivable Amount <span class="sort-icon"
+                  [ngClass]="getSortIcon('receivableAmount')"></span></th>
+              <th scope="col" (click)="onSort('requestedAmount')">Requested Amount <span class="sort-icon"
+                  [ngClass]="getSortIcon('requestedAmount')"></span></th>
+              <th scope="col" (click)="onSort('remarks')"> Remarks <span class="sort-icon"
+                  [ngClass]="getSortIcon('remarks')"></span></th>
+              <th scope="col" (click)="onSort('status')"> Status <span class="sort-icon"
+                  [ngClass]="getSortIcon('status')"></span></th>
+              <th scope="col" *ngIf="privilegeServ.hasPrivilege('REQUEST_ACTIONS')">Actions</th>
+            </tr>
+            
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let due of currentDues; let i = index">
+              <td>{{ generateSerialNumber(i) }}</td>
+              <td>{{ due.fullName || 'N/A' }}</td>
+              <td>{{ due.requestedByName || 'N/A' }}</td>
+              <td>{{ due.approvedByName || 'N/A' }}</td>
+              <td>{{ formatIndianCurrency(due.receivableAmount) }}</td>
+              <td>{{ formatIndianCurrency(due.requestedAmount) }}</td>
+               <td>{{ due.remarks }}</td>
+              <td>{{ due.status }}</td>
+              <td *ngIf="privilegeServ.hasPrivilege('REQUEST_ACTIONS')" class="text-center align-middle">
+                <i class="fas fa-pen action-icon text-primary" title="Approve or Reject Request"
+                  (click)="openChequeDepositRequest(due)">
+                </i>
+              </td>
+            </tr>
+            <tr *ngIf="currentDues.length === 0">
+              <td colspan="9" class="text-center">No Low Cheque Deposit Requests Found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Pagination Controls -->
+      <div class="pagination-controls">
+        <button (click)="goToFirstPage()" [disabled]="currentPageIndex === 0">|< </button>
+            <button (click)="goToPreviousPage()" [disabled]="currentPageIndex === 0">
+              < </button>
+                <span>Page {{ totalPages > 0 ? currentPageIndex + 1 : 0 }} of {{ totalPages }}</span>
+                <button (click)="goToNextPage()" [disabled]="currentPageIndex >= totalPages - 1">></button>
+                <button (click)="goToLastPage()" [disabled]="currentPageIndex >= totalPages - 1">>|</button>
+      </div>
+
+    </div>
+    <app-low-cheque-request-actions *ngIf="showChequeDepositRequests" [chequeId]="chequeId" [remarks]="remarks"
+      (closeModal)="closeChequeDepositRequest()"></app-low-cheque-request-actions>

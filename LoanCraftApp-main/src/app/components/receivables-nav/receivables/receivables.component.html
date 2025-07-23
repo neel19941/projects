@@ -1,0 +1,254 @@
+<div class="container-fluid" *ngIf="privilegeServ.hasPrivilege('RECEIVABLE')">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="search-container">
+        <div class="dropdown-wrapper">
+          <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()" (focus)="isDropdownOpen = true"
+            [placeholder]="'Search by name, loan number, or mobile...' | titlecase" class="search-input" />
+          <span class="dropdown-arrow" [class.open]="isDropdownOpen" (click)="toggleDropdown()"></span>
+        </div>
+
+        <div *ngIf="isDropdownOpen" class="dropdown">
+          <div *ngFor="let item of filteredList" (click)="selectItem(item)" class="dropdown-item">
+            {{ item.fullName | capitalize}}{{ item.loanAccountNumber ? ' - ' + item.loanAccountNumber : '' }}
+          </div>
+          <div *ngIf="filteredList.length === 0" class="no-results">
+            No matching records found
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="EmiData" class="combined-section mx-auto">
+      <h5 class="section-title text-center mb-4">EMI Summary</h5>
+
+      <div class="calculation-section mb-4">
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <p><strong>Loan Account:</strong> {{ loanAccNumber }}</p>
+          </div>
+          <div class="col-md-6 col-12">
+            <p><strong>Due Date:</strong> {{ EmiData.dueDate }}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <p><strong>Loan Amount:</strong> ₹{{ formatIndianCurrency(EmiData.loanAmount) || 0 }}</p>
+          </div>
+          <div class="col-md-6 col-12">
+            <p><strong>Last Paid Date : </strong> {{ EmiData.lastPaydate }}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <p class="text-penalty"><strong>Total Penalty:</strong> ₹{{ formatIndianCurrency(EmiData.totalPenalty) ||
+              0}}</p>
+          </div>
+          <div class="col-md-6 col-12">
+            <p><strong>Number Of EMIs Due : </strong> {{ EmiData.numberOfEmisDue || 0 }}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <p><strong>Total Outstanding:</strong> ₹{{ formatIndianCurrency(EmiData.outstanding) || 0 }}</p>
+          </div>
+          <div class="col-md-6 col-12">
+            <p class="text-penalty"><strong>EMI Due Amount:</strong> ₹{{ formatIndianCurrency(EmiData.emiDueAmount) ||
+              0}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-12"></div>
+          <div class="col-md-6 col-12">
+            <p class="text-danger"><strong>Receivable Amount:</strong> ₹{{ formatIndianCurrency(EmiData.totalDue) || 0
+              }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="text-end mt-3">
+        <button class="btn btn-link more-details-btn" (click)="openEmiPopup()">
+          <i class="bi bi-info-circle-fill"></i> More EMI Details
+        </button>
+      </div>
+
+      <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment-form">
+        <div class="row">
+          <!-- Payment Mode -->
+          <div class="col-md-6 col-12 mb-3">
+            <label for="paymentMode" class="form-label">Payment Mode<span class="text-danger">*</span></label>
+            <select id="paymentMode" class="form-select" formControlName="paymentMode"
+              [ngClass]="{ 'is-invalid': paymentForm.get('paymentMode')?.invalid && paymentForm.get('paymentMode')?.touched }">
+              <option value="" disabled>Select Mode</option>
+              <option value="UPI">UPI</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+              <option value="Cheque">Cheque</option>
+            </select>
+            <div class="invalid-feedback">Payment Mode is required</div>
+          </div>
+
+          <!-- Amount Paid -->
+          <!-- <div class="col-md-6 col-12 mb-3">
+            <label for="amountPaid" class="form-label">Received Amount<span class="text-danger">*</span></label>
+            <input type="text" id="amountPaid" formControlName="amountPaid" class="form-control"
+              (input)="formatAmountSanctioned('amountPaid')"
+              [ngClass]="{ 'is-invalid': paymentForm.get('amountPaid')?.invalid && paymentForm.get('amountPaid')?.touched }" />
+            <div class="invalid-feedback">Amount Paid is required and must be digits only</div>
+          </div> -->
+
+          <div class="col-md-6 col-12 mb-3">
+            <label for="amountPaid" class="form-label">
+              Received Amount<span class="text-danger">*</span>
+            </label>
+            <input type="text" id="amountPaid" formControlName="amountPaid" class="form-control"
+              (input)="formatAmountSanctioned('amountPaid')"
+              [ngClass]="{'is-invalid': paymentForm.get('amountPaid')?.invalid && paymentForm.get('amountPaid')?.touched }" />
+            <div class="invalid-feedback" *ngIf="paymentForm.get('amountPaid')?.hasError('required')">
+              Amount Paid is required
+            </div>
+            <div class="invalid-feedback" *ngIf="paymentForm.get('amountPaid')?.hasError('max')">
+              Maximum allowed is ₹1,00,00,000
+            </div>
+          </div>
+
+          <!-- Transaction ID -->
+          <div class="col-md-6 col-12 mb-3">
+            <label for="transactionId" class="form-label">Txn No.<span class="text-danger">*</span></label>
+            <input type="text" id="transactionId" formControlName="transactionId" class="form-control"
+              [ngClass]="{ 'is-invalid': paymentForm.get('transactionId')?.invalid && paymentForm.get('transactionId')?.touched }" />
+            <div class="invalid-feedback">Transaction ID is required</div>
+          </div>
+
+          <!-- Receipt Date -->
+          <div class="col-md-6 col-12 mb-3">
+            <label for="receiptDate" class="form-label">Receipt Date<span class="text-danger">*</span></label>
+            <div class="input-group">
+              <input class="form-control" id="receiptDate" placeholder="YYYY-MM-DD" name="receiptDate"
+                formControlName="receiptDate" ngbDatepicker [minDate]="minDate" [maxDate]="maxDate"
+                #receiptDatePicker="ngbDatepicker" (click)="receiptDatePicker.toggle()"
+                (dateSelect)="onReceiptDateChange()"
+                [ngClass]="{ 'is-invalid': paymentForm.get('receiptDate')?.invalid && paymentForm.get('receiptDate')?.touched }" />
+              <button class="btn btn-outline-secondary calendar-button" type="button"
+                [ngClass]="{ 'is-invalid': paymentForm.get('receiptDate')?.invalid && paymentForm.get('receiptDate')?.touched }"
+                (click)="receiptDatePicker.toggle()">
+                <i class="bi bi-calendar-date"></i>
+              </button>
+            </div>
+            <div class="text-danger mt-1"
+              *ngIf="paymentForm.get('receiptDate')?.invalid && paymentForm.get('receiptDate')?.touched">
+              Receipt Date is required
+            </div>
+          </div>
+
+          <!-- <div class="col-md-6 col-12 mb-3">
+            <label for="otherChargesType" class="form-label">Other Charges Type</label>
+            <select id="otherChargesType" class="form-select" formControlName="otherChargesType">
+              <option value="" disabled selected>Select Type</option>
+              <option value="Visiting Charge">Visiting Charge</option>
+              <option value="Legal Charge">Legal Charge</option>
+              <option value="Penal Charge">Penal Charge</option>
+              <option value="Late Payment">Late Payment</option>
+            </select>
+            <div class="invalid-feedback d-block" *ngIf="paymentForm.errors?.['otherChargesMismatch']">
+              Please fill both 'Other Charges Type' and 'Other Charges' together.
+            </div>
+          </div>
+
+
+          <div class="col-md-6 col-12 mb-3">
+            <label for="otherCharges" class="form-label">Other Charges</label>
+            <input type="text" id="otherCharges" formControlName="otherCharges" class="form-control"
+              (input)="formatAmountSanctioned('otherCharges')"
+              [ngClass]="{ 'is-invalid': paymentForm.get('otherCharges')?.errors?.['pattern'] && paymentForm.get('otherCharges')?.touched}" />
+            <div class="invalid-feedback">
+              Enter a valid amount (e.g., 1000, 1,000.00)
+            </div>
+          </div> -->
+
+          <!-- Other Charges Type -->
+          <div class="col-md-6 col-12 mb-3">
+            <label for="otherChargesType" class="form-label">Other Charges Type</label>
+            <select id="otherChargesType" class="form-select" formControlName="otherChargesType"
+              [ngClass]="{ 'is-invalid': paymentForm.errors?.['otherChargesMismatch'] &&  (paymentForm.get('otherCharges')?.touched || paymentForm.get('otherChargesType')?.touched) }">
+              <option value="" disabled>Select Type</option>
+              <option value="Visiting Charge">Visiting Charge</option>
+              <option value="Legal Charge">Legal Charge</option>
+              <option value="Penal Charge">Penal Charge</option>
+              <option value="Late Payment">Late Payment</option>
+            </select>
+            <!-- Cross-field error message -->
+            <div class="invalid-feedback d-block"
+              *ngIf="paymentForm.errors?.['otherChargesMismatch'] &&  (paymentForm.get('otherCharges')?.touched || paymentForm.get('otherChargesType')?.touched)">
+              Please fill both "Other Charges Type" and "Other Charges", or leave both empty.
+            </div>
+          </div>
+
+          <!-- Other Charges -->
+          <div class="col-md-6 col-12 mb-3">
+            <label for="otherCharges" class="form-label">Other Charges</label>
+            <input type="text" id="otherCharges" formControlName="otherCharges" class="form-control"
+              (input)="formatAmountSanctioned('otherCharges')"
+              [ngClass]="{'is-invalid': (paymentForm.get('otherCharges')?.errors?.['pattern'] && paymentForm.get('otherCharges')?.touched) ||  (paymentForm.errors?.['otherChargesMismatch'] && paymentForm.get('otherCharges')?.touched)}" />
+            <!-- Pattern error -->
+            <div class="invalid-feedback"
+              *ngIf="paymentForm.get('otherCharges')?.errors?.['pattern'] && paymentForm.get('otherCharges')?.touched">
+              Enter a valid amount (e.g., 1000, 1,000.00) </div>
+            <!-- Cross-field error message (optional: if you want it here too) -->
+            <div class="invalid-feedback d-block"
+              *ngIf="paymentForm.errors?.['otherChargesMismatch'] && paymentForm.get('otherCharges')?.touched">
+              Please fill both "Other Charges Type" and "Other Charges", or leave both empty.
+            </div>
+          </div>
+
+
+          <!-- Other Charges -->
+          <!-- <div class="col-md-6 col-12 mb-3">
+            <label for="otherCharges" class="form-label">Other Charges (optional)</label>
+            <input type="text" id="otherCharges" formControlName="otherCharges" class="form-control"
+              (input)="formatAmountSanctioned('otherCharges')"
+              [ngClass]="{ 'is-invalid': paymentForm.get('otherCharges')?.errors?.['pattern'] && paymentForm.get('otherCharges')?.touched }" />
+            <div class="invalid-feedback"
+              *ngIf="paymentForm.get('otherCharges')?.errors?.['pattern'] && paymentForm.get('otherCharges')?.touched">
+              Enter a valid amount (e.g., 1000, 1,000.00) or leave it blank
+            </div>
+          </div> -->
+
+
+          <!-- Description -->
+          <div class="col-md-6 col-12 mb-3">
+            <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
+            <textarea id="description" formControlName="description" class="form-control" rows="3"
+              placeholder="Enter description"
+              [ngClass]="{ 'is-invalid': paymentForm.get('description')?.invalid && paymentForm.get('description')?.touched }"> </textarea>
+            <div class="invalid-feedback">
+              Description is required
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="col-12 text-end" *ngIf="privilegeServ.hasPrivilege('RECEIVABLE_ACTIONS')">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<app-detailed-emi-info *ngIf="showEmiDetailedInfoComponent" [disbursedId]="disbursedId" [emiDueInfo]="emiDueDetails"
+  (closeModal)="closeEmiPopup()"></app-detailed-emi-info>
+<app-payments-edit *ngIf="showPaymentEditComponent" [PaymentId]="paymentId" [action]="action"
+  (closeModal)="closeReviewPopup()"></app-payments-edit>
+<app-receivable-confirmation *ngIf="showConfirmDialog" [message]="confirmMessage"
+  [receivedamount]="sharedReceivedAmount" (confirm)="proceedConfirmation($event)"></app-receivable-confirmation>
+
+<!-- Reference Number -->
+<!-- <div class="col-md-6 col-12 mb-3">
+      <label for="referenceNumber" class="form-label">Reference Number</label>
+      <input type="text" id="referenceNumber" formControlName="referenceNumber" class="form-control"
+        [ngClass]="{ 'is-invalid': paymentForm.get('referenceNumber')?.invalid && paymentForm.get('referenceNumber')?.touched }" />
+      <div class="invalid-feedback">Reference Number is required</div>
+    </div> -->

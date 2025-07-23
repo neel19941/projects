@@ -1,0 +1,278 @@
+<div class="modal-overlay">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ title }}</h5>
+      <button type="button" class="btn-close" (click)="close()"></button>
+    </div>
+    <div class="modal-body">
+      <div *ngIf="isLoading" class="text-center">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading && reviewData" class="container">
+        <div class="border p-4 mb-2">
+          <div class="row">
+            <div class="col-md-6 field-name">Application Reference ID :</div>
+            <div class="col-md-6 field-value">{{ reviewData.applicationReferenceId }}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Employment Type:</div>
+            <div class="col-md-6 field-value">{{ reviewData.employmentType | capitalize}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Years in Employment:</div>
+            <div class="col-md-6 field-value">{{ reviewData.yearsinEmployment}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Company Name:</div>
+            <div class="col-md-6 field-value">{{ reviewData.companyName | capitalize}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Company Address:</div>
+            <div class="col-md-6 field-value">{{ reviewData.companyAddress | capitalize}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Pincode:</div>
+            <div class="col-md-6 field-value">{{ reviewData.pinCode}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Salary:</div>
+            <div class="col-md-6 field-value">{{ formatIndianCurrency(reviewData.salary)}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Loan Amount:</div>
+            <div class="col-md-6">{{ formatIndianCurrency(reviewData.loanAmount)}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Repayment Mode:</div>
+            <div class="col-md-6 field-value">{{ reviewData.repaymentMode}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Loan Tenure:</div>
+            <div class="col-md-6 field-value">{{ reviewData.loanTenure}}</div>
+          </div>
+        </div>
+
+        <div *ngIf="reviewData.customers" class="border p-4 mb-2">
+          <h5>Customer Details</h5>
+          <div class="row">
+            <div class="col-md-6 field-name">Name:</div>
+            <div class="col-md-6 field-value">{{ (reviewData.customers.firstName + " " + reviewData.customers.lastName)
+              | capitalize }}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Gender:</div>
+            <div class="col-md-6 field-value">{{ reviewData.customers.gender | capitalize }}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Father's/Spouse's Name:</div>
+            <div class="col-md-6 field-value">{{ reviewData.customers.fathersOrSpousesName | capitalize}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Email:</div>
+            <div class="col-md-6 field-value lowerCase">{{ reviewData.customers.email}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Mobile Number:</div>
+            <div class="col-md-6 field-value">{{reviewData.customers.mobileNumber}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Date of Birth:</div>
+            <div class="col-md-6 field-value">{{reviewData.customers.dob}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Highest Qualification:</div>
+            <div class="col-md-6 field-value">{{reviewData.customers.highestQualification | capitalize}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Account Number:</div>
+            <div class="col-md-6 field-value">{{reviewData.customers.accountNumber}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Aadhaar Number:</div>
+            <div class="col-md-6 field-value">{{reviewData.customers.adhaarNumber}}</div>
+          </div>
+        </div>
+        <div *ngIf="reviewData.customers?.permanentAddress" class="border p-4 mb-2">
+          <h5>Permanent Address</h5>
+          <div class="row">
+            <div class="col-md-6 field-name">Address:</div>
+            <div class="col-md-6 field-value">{{reviewData.customers.permanentAddress.address | capitalize}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">City:</div>
+            <div class="col-md-6 field-value">{{ reviewData.customers.permanentAddress.city | capitalize}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Location:</div>
+            <div class="col-md-6 field-value">{{ reviewData.customers.permanentAddress.location | capitalize}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Landmark:</div>
+            <div class="col-md-6 field-value">{{ reviewData.customers.permanentAddress.landmark | capitalize}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Stayed Of Years:</div>
+            <div class="col-md-6 field-value">{{reviewData.customers.permanentAddress.stayedOfYears }}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Pincode:</div>
+            <div class="col-md-6 field-value">{{ reviewData.customers.permanentAddress.pincode }}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">State:</div>
+            <div class="col-md-6 field-value">{{ reviewData.customers.permanentAddress.state.state | capitalize}}</div>
+          </div>
+        </div>
+        <div *ngIf="reviewData.customers?.currentAddress" class="border p-4 mb-2">
+          <h5>Current Address</h5>
+          <div class="row">
+            <div class="col-md-6 field-name">Address:</div>
+            <div class="col-md-6 field-value">{{reviewData.customers.currentAddress.address | capitalize}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">City:</div>
+            <div class="col-md-6 field-value">{{ reviewData.customers.currentAddress.city | capitalize }}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Location:</div>
+            <div class="col-md-6 field-value">{{ reviewData.customers.currentAddress.location | capitalize }}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Landmark:</div>
+            <div class="col-md-6 field-value">{{ reviewData.customers.currentAddress.landmark | capitalize }}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Stayed Of Years:</div>
+            <div class="col-md-6 field-value">{{reviewData.customers.currentAddress.stayedOfYears }}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Pincode:</div>
+            <div class="col-md-6 field-value">{{ reviewData.customers.currentAddress.pincode }}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">State:</div>
+            <div class="col-md-6 field-value">{{ reviewData.customers.currentAddress.state.state | capitalize }}</div>
+          </div>
+        </div>
+        <div *ngIf="reviewData.identityProof" class="border p-4 mb-2">
+          <h5>Identity Proof</h5>
+          <div class="row">
+            <div class="col-md-6 field-name">Proof Type:</div>
+            <div class="col-md-6 field-value">{{reviewData.identityProof.proof | capitalize}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Number:</div>
+            <div class="col-md-6 field-value">{{ reviewData.identityProof.number }}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 field-name">Issue Date</div>
+            <div class="col-md-6 field-value">{{ reviewData.identityProof.issueDate | date: 'dd-MM-yyyy' }}</div>
+          </div>
+          <div class="row" *ngIf="reviewData.identityProof.expDate">
+            <div class="col-md-6 field-name">Expiry Date</div>
+            <div class="col-md-6 field-value">{{ reviewData.identityProof.expDate | date: 'dd-MM-yyyy' }}</div>
+          </div>
+        </div>
+        <div *ngIf="reviewData.reference && reviewData.reference.length">
+          <h5>References</h5>
+          <div *ngFor="let ref of reviewData.reference" class="border p-4 mb-2">
+            <div class="row">
+              <div class="col-md-6 field-name">Full Name:</div>
+              <div class="col-md-6 field-value">{{ref.fullName | capitalize }}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 field-name">Relationship:</div>
+              <div class="col-md-6 field-value">{{ref.relationship | capitalize}}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 field-name">Known For Years:</div>
+              <div class="col-md-6 field-value">{{ref.knownForYears }}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 field-name">Mobile Number:</div>
+              <div class="col-md-6 field-value">{{ref.mobilenumber}}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CBIL Score Section -->
+        <div  *ngIf="applicantStatus?.toLowerCase() !== 'approved' && applicantStatus?.toLowerCase() !== 'rejected' && reviewData?.status?.toLowerCase() !== 'reviewed'" class="border p-4 mb-2">
+          <h5>CIBIL Score <span class="text-danger">*</span></h5>
+          <div class="row">
+            <div class="col-md-12 mb-3">
+              <!-- <label for="cbilScore" class="form-label">CBIL Score</label> -->
+              <input type="number" class="form-control" id="cbilScore" [(ngModel)]="cbilScore"
+                (ngModelChange)="checkCbilProvided()" [placeholder]="'Enter CIBIL Score' | titlecase" min="100" max="1000"/>
+            </div>
+          </div>
+        </div>
+
+
+        <div  *ngIf="applicantStatus?.toLowerCase() !== 'approved' && applicantStatus?.toLowerCase() !== 'rejected' && reviewData?.status?.toLowerCase() !== 'reviewed'" class="border p-4 mb-2">
+          <h5>Remarks & Feedback</h5>
+          <div class="row">
+            <!-- <div class="col-md-3 field-name">Remark:</div> -->
+            <div class="col-md-12">
+              <textarea [(ngModel)]="remarks" class="form-control" rows="3" [placeholder]="'Enter remarks' | titlecase " appTitleCase></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div *ngIf="applicantStatus" class="status-message"
+        [ngClass]="{
+          'approved': applicantStatus.toLowerCase() === 'approved',
+          'rejected': applicantStatus.toLowerCase() === 'rejected'
+        }">
+        
+        <i *ngIf="applicantStatus.toLowerCase() === 'approved'" class="bi bi-check-circle-fill"></i>
+        <span *ngIf="applicantStatus.toLowerCase() === 'approved'">Application Has Been Approved.</span>
+      
+        <i *ngIf="applicantStatus.toLowerCase() === 'rejected'" class="bi bi-x-circle-fill"></i>
+        <span *ngIf="applicantStatus.toLowerCase() === 'rejected'">Application Has Been Rejected.</span>
+      </div> -->
+      
+<!-- Approved or Rejected Status -->
+<div *ngIf="applicantStatus" class="status-message"
+     [ngClass]="{
+       'approved': applicantStatus.toLowerCase() === 'approved',
+       'rejected': applicantStatus.toLowerCase() === 'rejected'
+     }">
+
+  <!-- Approved -->
+  <i *ngIf="applicantStatus.toLowerCase() === 'approved'" class="bi bi-check-circle-fill"></i>
+  <span *ngIf="applicantStatus.toLowerCase() === 'approved'">Application Has Been Approved.</span>
+
+  <!-- Rejected -->
+  <i *ngIf="applicantStatus.toLowerCase() === 'rejected'" class="bi bi-x-circle-fill"></i>
+  <span *ngIf="applicantStatus.toLowerCase() === 'rejected'">Application Has Been Rejected.</span>
+</div>
+
+<!-- Reviewed Status (when applicantStatus is not present) -->
+<div *ngIf="!applicantStatus && reviewData?.status?.toLowerCase() === 'reviewed'" class="status-message reviewed">
+  <i class="bi bi-check2-circle"></i>
+  <span>Application Has Already Been Reviewed.</span>
+</div>
+
+ 
+
+
+        <!-- Checkbox and Buttons (Hide if applicantStatus is set) -->
+        <div  *ngIf="applicantStatus?.toLowerCase() !== 'approved' && applicantStatus?.toLowerCase() !== 'rejected' && reviewData?.status?.toLowerCase() !== 'reviewed'">
+          <div class="checkbox-container">
+            <input type="checkbox" id="reviewedCheckbox" [(ngModel)]="isReviewed">
+            <label for="reviewedCheckbox">I Have Reviewed All The Details</label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="applicantStatus?.toLowerCase() !== 'approved' && applicantStatus?.toLowerCase() !== 'rejected' && reviewData?.status?.toLowerCase() !== 'reviewed'" class="modal-footer d-flex justify-content-end">
+      <button type="button" class="custom-btn reject-btn" [disabled]="!isReviewed || !isCbilProvided" (click)="reject()">Reject</button>
+      <button type="button" class="custom-btn approve-btn" [disabled]="!isReviewed || !isCbilProvided" (click)="Reviewed()">Reviewed</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,209 @@
+/* General Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px; /* Add padding to handle small screens */
+  z-index: 1050;
+  overflow-y: auto;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 700px;
+  width: 100%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  font-family: Arial, sans-serif;
+  max-height: 90vh; /* Restrict the modal height to 90% of the viewport height */
+  overflow-y: auto; /* Enable vertical scroll */
+}
+.mobile-wrapper {
+  .input-group {
+    display: flex;
+
+    .country-code {
+      background-color: #e9ecef;
+      // border: 1px solid rgb(29, 29, 29);
+      border-right: none;
+      border-radius: 15px 0 0 15px;
+      padding: 7px 15px;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .mobile-input {
+      // border: 1px solid rgb(29, 29, 29);
+      // border-left: none;
+      // border-radius: 0 4px 4px 0;
+      padding: 7px 20px;
+      font-size: 1rem;
+      flex: 1;
+      background-color: #ffffff;
+      width: 100%;
+
+      &:focus {
+        outline: none;
+        box-shadow: none;
+      }
+    }
+  }
+}
+/* Header and Body */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+
+  .modal-title {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #333;
+  }
+
+  .btn-close {
+    font-size: 1.2rem;
+    color: #888;
+    transition: all 0.3s;
+
+    &:hover {
+      color: #333;
+    }
+  }
+}
+
+.modal-body {
+  margin-top: 20px;
+}
+
+/* Form Label Styling */
+label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+
+  .text-danger {
+    font-size: 1.2rem;
+    margin-left: 2px;
+  }
+}
+
+/* Input Fields and Select */
+.form-control,
+select {
+  border: 1px solid #ccc;
+  border-radius: 18px;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+
+  &:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  }
+}
+
+.select-wrapper {
+  position: relative;
+
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 30px;
+  }
+
+  i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    pointer-events: none;
+  }
+}
+
+/* Error Messages */
+.error-message {
+  height: 1.2rem;
+  font-size: 0.85rem;
+  color: #e63946;
+  margin-top: 3px;
+}
+.input-group-text{
+  border-radius: 0 18px 18px 0;
+}
+/* Buttons */
+.custom-btn {
+  border-radius: 25px;
+  padding: 8px 60px;
+  font-weight: 600;
+  font-size: 1rem;
+
+  /* Optional transition for hover effect */
+  transition: all 0.3s ease;
+
+  &.btn-secondary {
+    background-color: white;
+    color: rgb(6, 17, 170);
+    border: 2px solid rgb(6, 17, 170);
+
+    &:hover {
+      background-color: rgb(6, 17, 170);
+      color: white;
+    }
+  }
+
+  &.btn-primary {
+    background-color:rgb(6, 17, 170);
+    border: none;
+
+    &:hover {
+      background-color: rgb(4, 11, 119);
+    }
+  }
+}
+// Style for dropdown arrow
+.position-relative .dropdown-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #555;
+}
+
+/* Spacing */
+.row {
+  margin-bottom: 15px;
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    padding: 15px; /* Reduce padding */
+    max-width: 95%; /* Adjust width for smaller screens */
+  }
+
+  .modal-header .modal-title {
+    font-size: 1rem; /* Adjust title size */
+  }
+
+  .custom-btn {
+    padding: 8px 20px; /* Reduce button padding */
+    font-size: 0.9rem; /* Adjust button font size */
+  }
+}

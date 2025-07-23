@@ -1,0 +1,269 @@
+{
+  "users": [
+    {
+      "id": "3a91",
+      "loanId": 0,
+      "title": "mr",
+      "fullname": "sricharan",
+      "fatherName": "Bikshapathi",
+      "dateOfBirth": "2024-11-02",
+      "gender": "male",
+      "maritalStatus": "single",
+      "mailId": "sricharan@narveetech.com",
+      "higherQualification": "Btech",
+      "noOfDependents": 2,
+      "category": "obc",
+      "religion": "hindu",
+      "panCardNumber": "SSAAA4564A",
+      "aadharNumber": 877876876878,
+      "passportNumber": "A1234567",
+      "voterIdNumber": "ABCD123456",
+      "drivingLicenseNumber": "DL02ABC1234",
+      "gstNumber": "27ABCDE1234F1Z5",
+      "mobileNumber": 9768688768,
+      "currentAddress": {
+        "address": "H",
+        "city": "hyd",
+        "state": "ts",
+        "location": "hyd",
+        "landmark": "hyd",
+        "stayedOfYears": 2,
+        "pincode": 657754
+      },
+      "permanentAddress": {
+        "address": "H",
+        "city": "hyd",
+        "state": "ts",
+        "location": "hyd",
+        "landmark": "hyd",
+        "stayedOfYears": 2,
+        "pincode": 657754
+      },
+      "bankingDetails": {
+        "accountHolder": "",
+        "branchName": "",
+        "accountNo": "",
+        "salary": "",
+        "dateOfOpening": "",
+        "applicant": ""
+      },
+      "incomeDetails": {
+        "applicantIncome": "",
+        "otherIncome1": "",
+        "otherIncome2": "",
+        "otherIncome3": "",
+        "totalIncome": "",
+        "expenditureRent": "",
+        "expenditureLoan": "",
+        "education": "",
+        "others": "",
+        "expenditureTotal": "",
+        "netIncome": ""
+      },
+      "applicant": [
+        {
+          "applicantId": 1,
+          "proof": "Address Proof",
+          "document": "",
+          "number": "",
+          "issueDate": "",
+          "expDate": ""
+        },
+        {
+          "applicantId": 2,
+          "proof": "Age Proof",
+          "document": "",
+          "number": "",
+          "issueDate": "",
+          "expDate": ""
+        },
+        {
+          "applicantId": 3,
+          "proof": "ID Proof",
+          "document": "",
+          "number": "",
+          "issueDate": "",
+          "expDate": ""
+        },
+        {
+          "applicantId": 4,
+          "proof": "Signature Proof",
+          "document": "",
+          "number": "",
+          "issueDate": "",
+          "expDate": ""
+        },
+        {
+          "applicantId": 5,
+          "proof": "Others",
+          "document": "",
+          "number": "",
+          "issueDate": "",
+          "expDate": ""
+        }
+      ],
+      "propertyDetails": [
+        {
+          "ownerName": "",
+          "propertyAddress": "",
+          "plotArea": "",
+          "builtUpArea": "",
+          "buildingAge": ""
+        }
+      ],
+      "existingLoanDetails": [
+        {
+          "nameOfInstitution": "",
+          "purposeOfLoan": "",
+          "loanAmount": "",
+          "tenureOfLoan": "",
+          "monthlyInstallment": "",
+          "currentOutstanding": "",
+          "balanceTenure": ""
+        }
+      ],
+      "references": [
+        {
+          "fullName": "",
+          "knownForYears": "",
+          "relationship": "",
+          "pincode": "",
+          "mobilenumber": ""
+        }
+      ]
+    },
+    {
+      "id": "9fac",
+      "loanId": 0,
+      "title": "mr",
+      "fullname": "sricharan",
+      "fatherName": "Bikshapathi",
+      "dateOfBirth": "2024-11-02",
+      "gender": "male",
+      "maritalStatus": "single",
+      "mailId": "sricharan@narveetech.com",
+      "higherQualification": "Btech",
+      "noOfDependents": 2,
+      "category": "obc",
+      "religion": "hindu",
+      "panCardNumber": "SSAAA4564A",
+      "aadharNumber": 877876876878,
+      "passportNumber": "A1234567",
+      "voterIdNumber": "ABCD123456",
+      "drivingLicenseNumber": "DL02ABC1234",
+      "gstNumber": "27ABCDE1234F1Z5",
+      "mobileNumber": 9768688768,
+      "currentAddress": {
+        "address": "H",
+        "city": "hyd",
+        "state": "ts",
+        "location": "hyd",
+        "landmark": "hyd",
+        "stayedOfYears": 2,
+        "pincode": 657754
+      },
+      "permanentAddress": {
+        "address": "H",
+        "city": "hyd",
+        "state": "ts",
+        "location": "hyd",
+        "landmark": "hyd",
+        "stayedOfYears": 2,
+        "pincode": 657754
+      },
+      "bankingDetails": {
+        "accountHolder": "",
+        "branchName": "",
+        "accountNo": "",
+        "salary": "",
+        "dateOfOpening": "",
+        "applicant": ""
+      },
+      "incomeDetails": {
+        "applicantIncome": "",
+        "otherIncome1": "",
+        "otherIncome2": "",
+        "otherIncome3": "",
+        "totalIncome": "",
+        "expenditureRent": "",
+        "expenditureLoan": "",
+        "education": "",
+        "others": "",
+        "expenditureTotal": "",
+        "netIncome": ""
+      },
+      "applicant": [
+        {
+          "applicantId": 1,
+          "proof": "Address Proof",
+          "document": "",
+          "number": "",
+          "issueDate": "",
+          "expDate": ""
+        },
+        {
+          "applicantId": 2,
+          "proof": "Age Proof",
+          "document": "",
+          "number": "",
+          "issueDate": "",
+          "expDate": ""
+        },
+        {
+          "applicantId": 3,
+          "proof": "ID Proof",
+          "document": "",
+          "number": "",
+          "issueDate": "",
+          "expDate": ""
+        },
+        {
+          "applicantId": 4,
+          "proof": "Signature Proof",
+          "document": "",
+          "number": "",
+          "issueDate": "",
+          "expDate": ""
+        },
+        {
+          "applicantId": 5,
+          "proof": "Others",
+          "document": "",
+          "number": "",
+          "issueDate": "",
+          "expDate": ""
+        }
+      ],
+      "propertyDetails": [
+        {
+          "ownerName": "",
+          "propertyAddress": "",
+          "plotArea": "",
+          "builtUpArea": "",
+          "buildingAge": ""
+        }
+      ],
+      "existingLoanDetails": [
+        {
+          "nameOfInstitution": "",
+          "purposeOfLoan": "",
+          "loanAmount": "",
+          "tenureOfLoan": "",
+          "monthlyInstallment": "",
+          "currentOutstanding": "",
+          "balanceTenure": ""
+        }
+      ],
+      "references": [
+        {
+          "fullName": "",
+          "knownForYears": "",
+          "relationship": "",
+          "pincode": "",
+          "mobilenumber": ""
+        }
+      ]
+    }
+  ],
+  "products": []
+}

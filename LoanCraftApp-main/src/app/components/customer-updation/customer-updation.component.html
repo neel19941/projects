@@ -1,0 +1,43 @@
+<!-- Main Popup for Customer Updation -->
+<div class="modal-overlay" *ngIf="showMainPopup">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Customer Information</h5>
+        <button type="button" class="btn-close" (click)="close()"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Options to Update Different Sections -->
+        <div class="record-card" *ngIf="privilegeServ.hasPrivilege('EDIT_CUSTOMER_INFO')" (click)="openPersonalModal()">
+          <h6>Personal Information Update</h6>
+          <i class="fas fa-edit edit-icon"></i>
+        </div>
+  
+        <div class="record-card" *ngIf="privilegeServ.hasPrivilege('EDIT_CUSTOMER_INFO')" (click)="openContactPopup()">
+          <h6>Contact Information Update</h6>
+          <i class="fas fa-edit edit-icon"></i>
+        </div>
+  
+        <div class="record-card" *ngIf="privilegeServ.hasPrivilege('EDIT_CUSTOMER_INFO')" (click)="openAddressPopup()">
+          <h6>Address Information Update</h6>
+          <i class="fas fa-edit edit-icon"></i>
+        </div>
+
+        <div class="record-card" *ngIf="privilegeServ.hasPrivilege('EDIT_CUSTOMER_INFO')" (click)="openAllCustomerDocsModal()">
+          <h6>all Customer Documents</h6>
+          <i class="fas fa-edit edit-icon"></i>
+        </div>
+        
+        <div class="record-card" *ngIf="privilegeServ.hasPrivilege('DELETE_CUSTOMER_INFO')" (click)="openDeleteConfirmation()">
+          <h6>Delete</h6>
+          <i class="fas fa-trash delete-icon"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Sub-Popups for Each Section -->
+  <app-personal-info *ngIf="showPersonalModal" [Restricted]="Restrict" (closeModal)="closePersonalModal()"></app-personal-info>
+  <app-contact-info *ngIf="showContactModal" (closeModal)="closeContactPopup()"></app-contact-info>
+  <app-address-info *ngIf="showAddressModal" (closeModal)="closeAddressPopup()"></app-address-info>
+  <app-confirm-modal *ngIf="showConfirmDialog" [message]="confirmMessage" (confirm)="handleDeleteConfirmation($event)"></app-confirm-modal>
+  <app-all-customer-documents *ngIf="showAllCustomerDocsModal" (closeModal)="closeCustomerDocsPopup()"></app-all-customer-documents>

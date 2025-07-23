@@ -1,0 +1,124 @@
+<div class="modal-overlay" (click)="close()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h5 class="modal-title">Upload Missing Documents</h5>
+            <button type="button" class="btn-close" (click)="close()"></button>
+        </div>
+
+        <div class="modal-body">
+            <form [formGroup]="missDocsForm" (ngSubmit)="sendData()" class="container">
+                <!-- 1. Bank Statement Upload -->
+                <div class="col-md-12 form-group">
+                    <label for="bankStatement" class="form-label capitalize-all">Bank Statements</label>
+                    <div class="position-relative">
+                        <input type="file" id="bankStatement" class="d-none" multiple
+                            (change)="onBankStatementSelected($event)" accept=".jpg,.jpeg,.png,.pdf" />
+                        <div class="file-upload-btn" (click)="triggerBankStatementUpload()">
+                            <span class="file-name">
+                                {{ selectedBankStatementFileNames || 'Choose Files' }}
+                            </span>
+                            <i class="bi bi-upload ms-2"></i>
+                        </div>
+                    </div>
+
+                    <div class="file-feedback">
+
+                        <ng-container *ngIf="bankStatementFileErrors.length">
+                            <small class="text-danger d-block" *ngFor="let err of bankStatementFileErrors">{{ err }}</small>
+                        </ng-container>
+                    </div>
+                    <div class="file-names" *ngIf="bankStatementFiles.length > 0 && !bankStatementFileErrors.length">
+                        <small *ngFor="let file of bankStatementFiles">{{ file.name }}</small>
+                    </div>
+                </div>
+
+                <!-- 2. Aadhar Card Upload -->
+                <div class="col-md-12 form-group">
+                    <label for="aadharCard" class="form-label capitalize-all">Aadhar Card</label>
+                    <div class="position-relative">
+                        <input type="file" id="aadharCard" class="d-none" (change)="onAadharCardSelected($event)"
+                            accept=".jpg,.jpeg,.png,.pdf" />
+                        <div class="file-upload-btn" (click)="triggerAadharCardUpload()">
+                            <span class="file-name">{{ aadharCardFile?.name || 'Choose File' }}</span>
+                            <i class="bi bi-upload ms-2"></i>
+                        </div>
+                    </div>
+                    <div class="file-feedback">
+                        <small class="text-danger" *ngIf="aadharCardError">{{ aadharCardError }}</small>
+                    
+                    </div>
+                    <div class="file-names" *ngIf="aadharCardFile && !aadharCardError">
+                        <small>{{ aadharCardFile.name }}</small>
+                    </div>
+                </div>
+
+                <!-- 3. PAN Card Upload -->
+                <div class="col-md-12 form-group">
+                    <label for="panCard" class="form-label capitalize-all">PAN Card</label>
+                    <div class="position-relative">
+                        <input type="file" id="panCard" class="d-none" (change)="onPanCardSelected($event)"
+                            accept=".jpg,.jpeg,.png,.pdf" />
+                        <div class="file-upload-btn" (click)="triggerPanCardUpload()">
+                            <span class="file-name">{{ panCardFile?.name || 'Choose File' }}</span>
+                            <i class="bi bi-upload ms-2"></i>
+                        </div>
+                    </div>
+                    <div class="file-feedback">
+                        <small class="text-danger" *ngIf="panCardError">{{ panCardError }}</small>
+                    </div>
+                    <div class="file-names" *ngIf="panCardFile && !panCardError">
+                        <small>{{ panCardFile.name }}</small>
+                    </div>
+                </div>
+
+                <!-- 4. Payslip Upload -->
+                <div class="col-md-12 form-group">
+                    <label for="payslip" class="form-label capitalize-all">Payslips</label>
+                    <div class="position-relative">
+                        <input type="file" id="payslip" class="d-none" multiple (change)="onPayslipSelected($event)"
+                            accept=".jpg,.jpeg,.png,.pdf" />
+                        <div class="file-upload-btn" (click)="triggerPayslipUpload()">
+                            <span class="file-name">
+                                {{ selectedPayslipFileNames || 'Choose Files' }}
+                            </span>
+                            <i class="bi bi-upload ms-2"></i>
+                        </div>
+                    </div>
+                    <div class="file-feedback">
+                        <ng-container *ngIf="payslipFileErrors.length">
+                            <small class="text-danger d-block" *ngFor="let err of payslipFileErrors">{{ err }}</small>
+                        </ng-container>
+                    </div>
+                    <div class="file-names" *ngIf="payslipFiles.length > 0 && !payslipFileErrors.length">
+                        <small *ngFor="let file of payslipFiles">{{ file.name }}</small>
+                    </div>
+                </div>
+
+                <!-- 5. Other Documents Upload -->
+                <div class="col-md-12 form-group">
+                    <label for="otherDocuments" class="form-label capitalize-all">Others</label>
+                    <div class="position-relative">
+                        <input type="file" id="otherDocuments" class="d-none" multiple
+                            (change)="onOthersSelected($event)" accept=".jpg,.jpeg,.png,.pdf" />
+                        <div class="file-upload-btn" (click)="triggerOthersUpload()">
+                            <span class="file-name">
+                                {{ selectedOtherFileNames || 'Choose Files' }}
+                            </span>
+                            <i class="bi bi-upload ms-2"></i>
+                        </div>
+                    </div>
+                    <div class="file-feedback">
+                        <ng-container *ngIf="otherFileErrors.length">
+                            <small class="text-danger d-block" *ngFor="let err of otherFileErrors">{{ err }}</small>
+                        </ng-container>
+                    </div>
+                    <div class="file-names" *ngIf="otherFiles.length > 0 && !otherFileErrors.length">
+                        <small *ngFor="let file of otherFiles">{{ file.name }}</small>
+                    </div>
+                 
+                </div>
+                <button type="submit" class="btn-submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,117 @@
+/* General Modal Styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    z-index: 1050;
+    text-transform: capitalize;
+  }
+  
+  /* Modal Box */
+  .modal-content {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Modal Header */
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  /* Modal Title */
+  .modal-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  /* Close Button */
+  .btn-close {
+    font-size: 1.2rem;
+    color: #fff;  /* White 'X' */
+    border: none;
+    border-radius: 50%; /* Circular button */
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .btn-close:hover {
+    color : #555; /* Darker gray on hover */
+  }
+  
+  
+  /* Modal Body */
+  .modal-body {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1rem;
+    color: #444;
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  
+  /* Buttons */
+  .custom-btn {
+    border-radius: 25px;
+    padding: 8px 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .btn-gray {
+    background-color: #f8f9fa;
+    color: #333;
+    border: 2px solid #ccc;
+  }
+  
+  .btn-gray:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .btn-blue {
+    background-color: rgb(6, 17, 170);
+    color: white;
+  }
+  
+  .btn-blue:hover {
+    background-color: rgb(6, 17, 170);
+  }
+  
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .modal-content {
+      max-width: 90%;
+      padding: 20px;
+    }
+  }
+  

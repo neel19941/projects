@@ -1,0 +1,1909 @@
+<!-- Notification Container (Hidden by default) -->
+
+<!-- <div id="customSnackbar" class="custom-snackbar" role="alert">
+  <span id="notificationMessage"></span>
+</div> -->
+
+<div id="customSnackbar" class="custom-snackbar" role="alert">
+  <i id="notificationIcon" class=""></i>
+  <span id="notificationMessage"></span>
+</div>
+
+<div class="loan-container" id="loan-container">
+  <form [formGroup]="loanForm" (ngSubmit)="sendData()" class="container">
+    <div class="section" *ngIf="currentPage === 1">
+      <!--title and full name -->
+      <h3>Personal Details</h3>
+      <div class="row">
+        <!-- Title -->
+        <div class="col-md-6 form-group">
+          <label> Title <span class="text-danger">*</span></label>
+          <div>
+            <label><input type="radio" formControlName="title" value="mr" /> Mr</label>
+            <label><input type="radio" formControlName="title" value="mrs" /> Mrs</label>
+            <label><input type="radio" formControlName="title" value="ms" /> Ms</label>
+          </div>
+          <!-- Error message with fixed height -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('title')?.invalid && (loanForm.get('title')?.touched || loanForm.get('title')?.dirty)">
+              Title is required.</span>
+          </div>
+        </div>
+        <!-- Full Name -->
+        <div class="col-md-6 form-group">
+          <label for="fullname">Full Name <span class="text-danger">*</span></label>
+          <input type="text" id="fullname" formControlName="fullname" class="form-control"
+            placeholder="Enter your full name" />
+          <!-- Error message with fixed height -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('fullname')?.invalid && (loanForm.get('fullname')?.touched || loanForm.get('fullname')?.dirty)">
+              <span *ngIf="loanForm.get('fullname')?.errors?.['pattern']">Full Name can only contain letters and
+                spaces</span>
+              <span
+                *ngIf="!loanForm.get('fullname')?.errors?.['pattern'] && loanForm.get('fullname')?.errors?.['minlength']">Full
+                Name must be at least 3 characters.</span>
+              <span *ngIf="loanForm.get('fullname')?.errors?.['required']">Full Name is required.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <!-- Father's/Spouse Name and Date of Birth -->
+      <div class="row">
+        <!-- Father's/Spouse's Name -->
+        <div class="col-md-6 form-group">
+          <label for="fathersOrSpousesName"> Father's/Spouse's Name <span class="text-danger">*</span></label>
+          <input type="text" id="fathersOrSpousesName" formControlName="fathersOrSpousesName" class="form-control"
+            placeholder="Enter Father's/Spouse's Name" />
+          <!-- Error message with fixed height -->
+          <div class="error-message">
+            <span *ngIf="
+                loanForm.get('fathersOrSpousesName')?.invalid &&
+                (loanForm.get('fathersOrSpousesName')?.touched || loanForm.get('fathersOrSpousesName')?.dirty)
+              ">
+              <!-- Prioritize pattern error over minlength -->
+              <span *ngIf="loanForm.get('fathersOrSpousesName')?.errors?.['pattern']">
+                Father's/Spouse's Name can only contain letters and spces</span>
+              <span *ngIf="!loanForm.get('fathersOrSpousesName')?.errors?.['pattern'] &&
+                loanForm.get('fathersOrSpousesName')?.errors?.['minlength']">
+                Name must be at least 3 characters.
+              </span>
+              <span *ngIf="!loanForm.get('fathersOrSpousesName')?.errors?.['pattern'] &&
+                !loanForm.get('fathersOrSpousesName')?.errors?.['minlength'] &&
+                loanForm.get('fathersOrSpousesName')?.errors?.['required']">
+                Father's/Spouse's Name is required.
+              </span>
+            </span>
+          </div>
+        </div>
+        <!-- Date of Birth -->
+        <div class="col-md-6 form-group">
+          <label for="dob">
+            Date of Birth <span class="text-danger">*</span>
+          </label>
+          <input type="date" id="dob" formControlName="dob" class="form-control" />
+          <!-- Error message with fixed height -->
+          <div class="error-message">
+            <span *ngIf="
+                loanForm.get('dob')?.invalid &&
+                (loanForm.get('dob')?.touched || loanForm.get('dob')?.dirty)
+              ">
+              <span *ngIf="loanForm.get('dob')?.errors?.['required']">
+                Date of Birth is required.
+              </span>
+              <span *ngIf="!loanForm.get('dob')?.errors?.['required'] && loanForm.get('dob')?.errors?.['pattern']">
+                Invalid date format.
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <!-- Gender and Marital Status -->
+      <div class="row">
+        <!-- Gender -->
+        <div class="col-md-6 form-group">
+          <label>Gender <span class="text-danger">*</span></label>
+          <div>
+            <label><input type="radio" formControlName="gender" value="male" /> Male</label>
+            <label><input type="radio" formControlName="gender" value="female" /> Female</label>
+            <label><input type="radio" formControlName="gender" value="transgender" /> Transgender</label>
+          </div>
+          <!-- Error message with fixed height -->
+          <div class="error-message">
+            <span *ngIf="
+          loanForm.get('gender')?.invalid &&
+          (loanForm.get('gender')?.touched || loanForm.get('gender')?.dirty)
+        ">
+              <span *ngIf="loanForm.get('gender')?.errors?.['required']">
+                Gender is required.
+              </span>
+            </span>
+          </div>
+        </div>
+        <!-- Marital Status -->
+        <div class="col-md-6 form-group">
+          <label>Marital Status <span class="text-danger">*</span></label>
+          <div>
+            <label><input type="radio" formControlName="maritalStatus" value="married" /> Married</label>
+            <label><input type="radio" formControlName="maritalStatus" value="single" /> Single</label>
+            <label><input type="radio" formControlName="maritalStatus" value="divorce" /> Divorce</label>
+          </div>
+          <!-- Error message with fixed height -->
+          <div class="error-message">
+            <span *ngIf="
+          loanForm.get('maritalStatus')?.invalid &&
+          (loanForm.get('maritalStatus')?.touched || loanForm.get('maritalStatus')?.dirty)
+        ">
+              <span *ngIf="loanForm.get('maritalStatus')?.errors?.['required']">
+                Marital Status is required.
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <!-- Email and Highest Qualification -->
+      <div class="row">
+        <!-- Email ID -->
+        <div class="col-md-6 form-group">
+          <label for="email">Email ID <span class="text-danger">*</span></label>
+          <input type="email" id="email" formControlName="email" class="form-control" placeholder="Enter your email" />
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('email')?.invalid && (loanForm.get('email')?.touched || loanForm.get('email')?.dirty)">
+              <span *ngIf="loanForm.get('email')?.errors?.['required']">Email ID is required.</span>
+              <span *ngIf="loanForm.get('email')?.errors?.['invalidEmail']">Please enter a valid email ID</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Highest Qualification -->
+        <div class="col-md-6 form-group">
+          <label for="highestQualification">Highest Qualification <span class="text-danger">*</span></label>
+          <input type="text" id="highestQualification" formControlName="highestQualification" class="form-control"
+            placeholder="Enter your highest qualification" />
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('highestQualification')?.invalid && (loanForm.get('highestQualification')?.touched || loanForm.get('highestQualification')?.dirty)">
+              <span *ngIf="loanForm.get('highestQualification')?.errors?.['required']">Highest Qualification is
+                required.</span>
+              <span *ngIf="loanForm.get('highestQualification')?.errors?.['pattern']">
+                Highest Qualification can only contain letters and spaces.
+              </span>
+            </span>
+          </div>
+        </div>
+      </div> 
+      <!-- Category and Religion -->
+      <div class="row">
+        <!-- Category -->
+        <div class="col-md-6 form-group">
+          <label for="category">Category <span class="text-danger">*</span></label>
+          <select id="category" formControlName="category" class="form-control">
+            <option value="" disabled>Select Category</option>
+            <option value="sc">SC</option>
+            <option value="st">ST</option>
+            <option value="obc">OBC</option>
+            <option value="minority">Minority</option>
+            <option value="general">General</option>
+          </select>
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('category')?.invalid && (loanForm.get('category')?.touched || loanForm.get('category')?.dirty)">
+              <span *ngIf="loanForm.get('category')?.errors?.['required']">Category is required.</span>
+            </span>
+          </div>
+        </div>
+        <!-- Religion -->
+        <div class="col-md-6 form-group">
+          <label for="religion">Religion <span class="text-danger">*</span></label>
+          <select id="religion" formControlName="religion" class="form-control">
+            <option value="" disabled>Select Religion</option>
+            <option value="hindu">Hindu</option>
+            <option value="muslim">Muslim</option>
+            <option value="christian">Christian</option>
+            <option value="others">Others</option>
+          </select>
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('religion')?.invalid && (loanForm.get('religion')?.touched || loanForm.get('religion')?.dirty)">
+              <span *ngIf="loanForm.get('religion')?.errors?.['required']">Religion is required.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <!-- Mobile Number and Aadhaar Number -->
+      <div class="row">
+        <!-- Dependents -->
+        <!-- <div class="col-md-6 form-group">
+          <label for="dependents">Dependents <span class="text-danger">*</span></label>
+          <input type="number" id="dependents" formControlName="dependents" class="form-control" />
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('dependents')?.invalid && (loanForm.get('dependents')?.touched || loanForm.get('dependents')?.dirty)">
+              <span *ngIf="loanForm.get('dependents')?.errors?.['required']">Dependents is required.</span>
+            </span>
+          </div>
+        </div> -->
+
+        <!-- Mobile Number -->
+        <div class="col-md-6 form-group">
+          <label for="mobileNumber">Mobile Number <span class="text-danger">*</span></label>
+          <input type="number" id="mobileNumber" formControlName="mobileNumber" class="form-control" />
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('mobileNumber')?.invalid && (loanForm.get('mobileNumber')?.touched || loanForm.get('mobileNumber')?.dirty)">
+              <span *ngIf="loanForm.get('mobileNumber')?.errors?.['required']">Mobile Number is required.</span>
+              <span *ngIf="loanForm.get('mobileNumber')?.errors?.['pattern']">Please enter a valid mobile number.</span>
+            </span>
+          </div>
+        </div>
+        <!-- Aadhaar Number -->
+        <div class="col-md-6 form-group">
+          <label for="adhaarNumber">Aadhaar Number <span class="text-danger">*</span></label>
+          <input type="number" id="adhaarNumber" formControlName="adhaarNumber" class="form-control"
+            (blur)="checkDuplicateAadhaar()" />
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('adhaarNumber')?.invalid && (loanForm.get('adhaarNumber')?.touched || loanForm.get('adhaarNumber')?.dirty)">
+              <span *ngIf="loanForm.get('adhaarNumber')?.errors?.['required']">Aadhaar Number is required.</span>
+              <span *ngIf="loanForm.get('adhaarNumber')?.errors?.['pattern']">Aadhaar Number should be a valid 12-digit
+                number.</span>
+              <span *ngIf="loanForm.get('adhaarNumber')?.errors?.['duplicate']">
+                This Aadhaar number already exists.
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <!-- PAN Card and passport-->
+      <div class="row">
+        <!-- PAN Card -->
+        <div class="col-md-6 form-group">
+          <label for="panCard">PAN Card <span class="text-danger">*</span></label>
+          <input type="text" id="panCard" formControlName="panCard" class="form-control" />
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('panCard')?.invalid && (loanForm.get('panCard')?.touched || loanForm.get('panCard')?.dirty)">
+              <span *ngIf="loanForm.get('panCard')?.errors?.['required']">PAN Card is required.</span>
+              <span *ngIf="loanForm.get('panCard')?.errors?.['pattern']">Please enter a valid PAN Card number (e.g.,
+                AAAAA1234A).</span>
+            </span>
+          </div>
+        </div>
+        <!-- Passport Number -->
+        <div class="col-md-6 form-group">
+          <label for="passportNumber">Passport Number <span class="text-danger">*</span></label>
+          <input type="text" id="passportNumber" formControlName="passportNumber" class="form-control" />
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('passportNumber')?.invalid && (loanForm.get('passportNumber')?.touched || loanForm.get('passportNumber')?.dirty)">
+              <span *ngIf="loanForm.get('passportNumber')?.errors?.['required']">Passport Number is required.</span>
+              <span *ngIf="loanForm.get('passportNumber')?.errors?.['pattern']">Invalid Passport Number format. Example:
+                A1234567</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Voter ID -->
+        <div class="col-md-6 form-group">
+          <label for="voterId">Voter ID <span class="text-danger">*</span></label>
+          <input type="text" id="voterId" formControlName="voterId" class="form-control" />
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('voterId')?.invalid && (loanForm.get('voterId')?.touched || loanForm.get('voterId')?.dirty)">
+              <span *ngIf="loanForm.get('voterId')?.errors?.['required']">Voter ID is required.</span>
+              <span *ngIf="loanForm.get('voterId')?.errors?.['pattern']">Invalid Voter ID format. Example:
+                ABCD123456</span>
+            </span>
+          </div>
+        </div>
+        <!-- Driving License -->
+        <div class="col-md-6 form-group">
+          <label for="drivingLicense">Driving License <span class="text-danger">*</span></label>
+          <input type="text" id="drivingLicense" formControlName="drivingLicense" class="form-control" />
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('drivingLicense')?.invalid && (loanForm.get('drivingLicense')?.touched || loanForm.get('drivingLicense')?.dirty)">
+              <span *ngIf="loanForm.get('drivingLicense')?.errors?.['required']">Driving License is required.</span>
+              <span *ngIf="loanForm.get('drivingLicense')?.errors?.['pattern']">Invalid Driving License format. Example:
+                DL02ABC1234</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- GST Number -->
+        <div class="col-md-6 form-group">
+          <label for="gstNumber">GST Number</label>
+          <input type="text" id="gstNumber" formControlName="gstNumber" class="form-control" />
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('gstNumber')?.invalid && (loanForm.get('gstNumber')?.touched || loanForm.get('gstNumber')?.dirty)">
+              <span *ngIf="loanForm.get('gstNumber')?.errors?.['required']">GST Number is required.</span>
+              <span *ngIf="loanForm.get('gstNumber')?.errors?.['pattern']">Invalid GST Number format. Example:
+                27ABCDE1234F1Z5</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seventh row with Address Section -->
+      <p class="address-part">Current Address</p>
+      <div class="row">
+        <!-- Address -->
+        <div class="col-md-6 form-group">
+          <label for="tempaddress">Address <span class="text-danger">*</span></label>
+          <textarea id="tempaddress" formControlName="tempaddress" class="form-control" rows="3"></textarea>
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('tempaddress')?.invalid && (loanForm.get('tempaddress')?.touched || loanForm.get('tempaddress')?.dirty)">
+              <span *ngIf="loanForm.get('tempaddress')?.errors?.['required']">Address is required.</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- City -->
+        <div class="col-md-6 form-group">
+          <label for="tempcity">City <span class="text-danger">*</span></label>
+          <input type="text" id="tempcity" formControlName="tempcity" class="form-control" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('tempcity')?.invalid && (loanForm.get('tempcity')?.touched || loanForm.get('tempcity')?.dirty)">
+              <span *ngIf="loanForm.get('tempcity')?.errors?.['required']">City is required.</span>
+              <span *ngIf="loanForm.get('tempcity')?.errors?.['pattern']">City can only contain letters and
+                spaces.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- State -->
+        <div class="col-md-6 form-group">
+          <label for="tempstate">State <span class="text-danger">*</span></label>
+          <input type="text" id="tempstate" formControlName="tempstate" class="form-control" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('tempstate')?.invalid && (loanForm.get('tempstate')?.touched || loanForm.get('tempstate')?.dirty)">
+              <span *ngIf="loanForm.get('tempstate')?.errors?.['required']">State is required.</span>
+              <span *ngIf="loanForm.get('tempstate')?.errors?.['pattern']">State can only contain letters and
+                spaces.</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div class="col-md-6 form-group">
+          <label for="templocation">Location <span class="text-danger">*</span></label>
+          <input type="text" id="templocation" formControlName="templocation" class="form-control" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('templocation')?.invalid && (loanForm.get('templocation')?.touched || loanForm.get('templocation')?.dirty)">
+              <span *ngIf="loanForm.get('templocation')?.errors?.['required']">Location is required.</span>
+              <span *ngIf="loanForm.get('templocation')?.errors?.['pattern']">Location can only contain letters and
+                spaces.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Landmark -->
+        <div class="col-md-6 form-group">
+          <label for="templandmark">Landmark <span class="text-danger">*</span></label>
+          <input type="text" id="templandmark" formControlName="templandmark" class="form-control" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('templandmark')?.invalid && (loanForm.get('templandmark')?.touched || loanForm.get('templandmark')?.dirty)">
+              <span *ngIf="loanForm.get('templandmark')?.errors?.['required']">Landmark is required.</span>
+              <span *ngIf="loanForm.get('templandmark')?.errors?.['pattern']">Landmark can only contain letters,
+                numbers, and spaces.</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Years Stayed -->
+        <div class="col-md-6 form-group">
+          <label for="tempstayedOfYears">Years Stayed <span class="text-danger">*</span></label>
+          <input type="number" id="tempstayedOfYears" formControlName="tempstayedOfYears" class="form-control" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('tempstayedOfYears')?.invalid && (loanForm.get('tempstayedOfYears')?.touched || loanForm.get('tempstayedOfYears')?.dirty)">
+              <span *ngIf="loanForm.get('tempstayedOfYears')?.errors?.['required']">Years Stayed is required.</span>
+              <span *ngIf="loanForm.get('tempstayedOfYears')?.errors?.['min']">Years must be a positive number.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Pincode -->
+        <div class="col-md-6 form-group">
+          <label for="temppincode">Pincode <span class="text-danger">*</span></label>
+          <input type="number" id="temppincode" formControlName="temppincode" class="form-control" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('temppincode')?.invalid && (loanForm.get('temppincode')?.touched || loanForm.get('temppincode')?.dirty)">
+              <span *ngIf="loanForm.get('temppincode')?.errors?.['required']">Pincode is required.</span>
+              <span *ngIf="loanForm.get('temppincode')?.errors?.['pattern']">Pincode must be a 6-digit number.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Permanent Address Section -->
+      <p class="address-part">Permanent Address</p>
+      <div class="row">
+        <div class="col-md-12 form-group">
+
+          <div>
+            <input type="checkbox" id="sameAsCurrent" formControlName="sameAsCurrent"
+              (change)="onSameAsCurrentChange()" />
+            <label for="sameAsCurrent">Same as current address</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Permanent Address -->
+        <div class="col-md-6 form-group">
+          <label for="permanentAddress">Address <span class="text-danger">*</span></label>
+          <textarea id="permanentAddress" formControlName="permanentAddress" class="form-control" rows="3"
+            [readonly]="isPermanentAddressSame"></textarea>
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf=" loanForm.get('permanentAddress')?.invalid &&(loanForm.get('permanentAddress')?.touched || loanForm.get('permanentAddress')?.dirty) ">
+              <span *ngIf="loanForm.get('permanentAddress')?.errors?.['required']">Address is required.</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Permanent City -->
+        <div class="col-md-6 form-group">
+          <label for="permanentCity">City <span class="text-danger">*</span></label>
+          <input type="text" id="permanentCity" formControlName="permanentCity" class="form-control"
+            [readonly]="isPermanentAddressSame" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('permanentCity')?.invalid && (loanForm.get('permanentCity')?.touched || loanForm.get('permanentCity')?.dirty) ">
+              <span *ngIf="loanForm.get('permanentCity')?.errors?.['required']">City is required.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Permanent State -->
+        <div class="col-md-6 form-group">
+          <label for="permanentState">State <span class="text-danger">*</span></label>
+          <input type="text" id="permanentState" formControlName="permanentState" class="form-control"
+            [readonly]="isPermanentAddressSame" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf=" loanForm.get('permanentState')?.invalid &&(loanForm.get('permanentState')?.touched || loanForm.get('permanentState')?.dirty) ">
+              <span *ngIf="loanForm.get('permanentState')?.errors?.['required']">State is required.</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Permanent Location -->
+        <div class="col-md-6 form-group">
+          <label for="permanentLocation">Location <span class="text-danger">*</span></label>
+          <input type="text" id="permanentLocation" formControlName="permanentLocation" class="form-control"
+            [readonly]="isPermanentAddressSame" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf=" loanForm.get('permanentLocation')?.invalid && (loanForm.get('permanentLocation')?.touched || loanForm.get('permanentLocation')?.dirty)">
+              <span *ngIf="loanForm.get('permanentLocation')?.errors?.['required']">Location is required.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <!-- Landmark -->
+        <div class="col-md-6 form-group">
+          <label for="permanentLandmark">Landmark <span class="text-danger">*</span></label>
+          <input type="text" id="permanentLandmark" formControlName="permanentLandmark" class="form-control"
+            [readonly]="isPermanentAddressSame" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('permanentLandmark')?.invalid && (loanForm.get('permanentLandmark')?.touched || loanForm.get('permanentLandmark')?.dirty)">
+              <span *ngIf="loanForm.get('permanentLandmark')?.errors?.['required']">Landmark is required.</span>
+              <span *ngIf="loanForm.get('permanentLandmark')?.errors?.['pattern']">
+                Landmark can only contain letters, numbers, and spaces.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Years Stayed -->
+        <div class="col-md-6 form-group">
+          <label for="permanentStayedOfYears">Years Stayed <span class="text-danger">*</span></label>
+          <input type="number" id="permanentStayedOfYears" formControlName="permanentStayedOfYears" class="form-control"
+            [readonly]="isPermanentAddressSame" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('permanentStayedOfYears')?.invalid && (loanForm.get('permanentStayedOfYears')?.touched || loanForm.get('permanentStayedOfYears')?.dirty)">
+              <span *ngIf="loanForm.get('permanentStayedOfYears')?.errors?.['required']">Years Stayed is
+                required.</span>
+              <span *ngIf="loanForm.get('permanentStayedOfYears')?.errors?.['min']">Years must be a positive
+                number.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Pincode -->
+        <div class="col-md-6 form-group">
+          <label for="permanentPincode">Pincode <span class="text-danger">*</span></label>
+          <input type="number" id="permanentPincode" formControlName="permanentPincode" class="form-control"
+            [readonly]="isPermanentAddressSame" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('permanentPincode')?.invalid && (loanForm.get('permanentPincode')?.touched || loanForm.get('permanentPincode')?.dirty)">
+              <span *ngIf="loanForm.get('permanentPincode')?.errors?.['required']">Pincode is required.</span>
+              <span *ngIf="loanForm.get('permanentPincode')?.errors?.['pattern']">Pincode must be a 6-digit
+                number.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="section" *ngIf="currentPage === 2">
+      <h3>Business /Employement Details </h3>
+      <!-- Employment Type and Salary -->
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label for="empemploymentType">Business / Employment Type<span class="text-danger">*</span></label>
+          <input type="text" id="empemploymentType" formControlName="empemploymentType" class="form-control"
+            autocomplete="off" />
+          <!-- Employment Type validation -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('empemploymentType')?.invalid && (loanForm.get('empemploymentType')?.touched || loanForm.get('empemploymentType')?.dirty)">
+              <span *ngIf="loanForm.get('empemploymentType')?.errors?.['required']">Employment Type is required.</span>
+              <span *ngIf="loanForm.get('empemploymentType')?.errors?.['pattern']">Employment Type must be
+                letters</span>
+              <span
+                *ngIf="!loanForm.get('empemploymentType')?.errors?.['pattern'] && loanForm.get('empemploymentType')?.errors?.['minlength']">Employment
+                Type must be at least 3 characters.</span>
+            </span>
+          </div>
+
+        </div>
+
+        <div class="col-md-6 form-group">
+          <label for="empsalary">Salary <span class="text-danger">*</span></label>
+          <input type="number" id="empsalary" formControlName="empsalary" class="form-control" />
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('empsalary')?.invalid && (loanForm.get('empsalary')?.touched || loanForm.get('empsalary')?.dirty)">
+              <span *ngIf="loanForm.get('empsalary')?.errors?.['required']">Employee salary is required.</span>
+              <span *ngIf="loanForm.get('empsalary')?.errors?.['min']">Employee salary must be a positive number.</span>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Years in Employment and Company Name -->
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label for="empyearsinEmployment">Years in curent company <span class="text-danger">*</span></label>
+          <input type="number" id="empyearsinEmployment" formControlName="empyearsinEmployment" class="form-control" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('empyearsinEmployment')?.invalid && (loanForm.get('empyearsinEmployment')?.touched || loanForm.get('empyearsinEmployment')?.dirty)">
+              <span *ngIf="loanForm.get('empyearsinEmployment')?.errors?.['required']">Years in employment is
+                required.</span>
+              <span *ngIf="loanForm.get('empyearsinEmployment')?.errors?.['min']">Years must be a positive
+                number.</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-6 form-group">
+          <label for="empcompanyName">Company Name <span class="text-danger">*</span></label>
+          <input type="text" id="empcompanyName" formControlName="empcompanyName" class="form-control" />
+          <!-- Employment Type validation -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('empcompanyName')?.invalid && (loanForm.get('empcompanyName')?.touched || loanForm.get('empcompanyName')?.dirty)">
+              <span *ngIf="loanForm.get('empcompanyName')?.errors?.['required']">Company Name is required.</span>
+              <span *ngIf="loanForm.get('empcompanyName')?.errors?.['pattern']">Company Name must be letters</span>
+              <span
+                *ngIf="!loanForm.get('empcompanyName')?.errors?.['pattern'] && loanForm.get('empcompanyName')?.errors?.['minlength']">Company
+                Name must be at least 3 characters.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Company Address and Pincode -->
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label for="empcompanyAdrees">Business / Office Address <span class="text-danger">*</span></label>
+          <textarea id="empcompanyAdrees" formControlName="empcompanyAdrees" class="form-control" rows="3"
+            autofilll="no"></textarea>
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('empcompanyAdrees')?.invalid && (loanForm.get('empcompanyAdrees')?.touched || loanForm.get('empcompanyAdrees')?.dirty)">
+              <span *ngIf="loanForm.get('empcompanyAdrees')?.errors?.['required']">Address is required.</span>
+              <span *ngIf="loanForm.get('empcompanyAdrees')?.errors?.['pattern']">Address shourld not lead 10 max</span>
+              <span
+                *ngIf="!loanForm.get('empcompanyAdrees')?.errors?.['pattern'] && loanForm.get('empcompanyAdrees')?.errors?.['maxLength']">Address
+                must be max 10 characters.</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-6 form-group">
+          <label for="emppincode">Pincode <span class="text-danger">*</span></label>
+          <input type="number" id="emppincode" formControlName="emppincode" class="form-control" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('emppincode')?.invalid && (loanForm.get('emppincode')?.touched || loanForm.get('emppincode')?.dirty)">
+              <span *ngIf="loanForm.get('emppincode')?.errors?.['required']">Pincode is required.</span>
+              <span *ngIf="loanForm.get('emppincode')?.errors?.['pattern']">Pincode must be a 6-digit number.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- GST Details -->
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label for="empgstDetails">GST Details <span class="text-danger">*</span></label>
+          <input type="text" id="empgstDetails" formControlName="empgstDetails" class="form-control" />
+        </div>
+        <div class="error-message">
+          <span
+            *ngIf="loanForm.get('empgstDetails')?.invalid && (loanForm.get('empgstDetails')?.touched || loanForm.get('empgstDetails')?.dirty)">
+            <span *ngIf="loanForm.get('empgstDetails')?.errors?.['required']">GST Number is required.</span>
+            <span *ngIf="loanForm.get('empgstDetails')?.errors?.['pattern']">Invalid GST Number format. Example:
+              27ABCDE1234F1Z5</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Account Holder and Branch Name -->
+      <h3>Banking & KYC Details</h3>
+
+      <div class="row">
+        <!-- Account Holder -->
+        <div class="col-md-6 form-group">
+          <label for="baccountHolder">Account Holder <span class="text-danger">*</span></label>
+          <input type="text" id="baccountHolder" formControlName="baccountHolder" class="form-control"
+            placeholder="Enter Account Holder Name" />
+          <div class="error-message">
+            <span *ngIf="
+                loanForm.get('baccountHolder')?.invalid &&
+                (loanForm.get('baccountHolder')?.touched || loanForm.get('baccountHolder')?.dirty)
+              ">
+              <!-- Prioritize pattern error over minlength -->
+              <span *ngIf="loanForm.get('baccountHolder')?.errors?.['pattern']">
+                Account Holder Name can only contain letters and spaces.
+              </span>
+              <span *ngIf="!loanForm.get('baccountHolder')?.errors?.['pattern'] &&
+                loanForm.get('baccountHolder')?.errors?.['minlength']">
+                Name must be at least 3 characters long.
+              </span>
+              <span *ngIf="!loanForm.get('baccountHolder')?.errors?.['pattern'] &&
+                !loanForm.get('baccountHolder')?.errors?.['minlength'] &&
+                loanForm.get('baccountHolder')?.errors?.['required']">
+                Account Holder Name is required.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Account Number -->
+        <div class="col-md-6 form-group">
+          <label for="baccountNo">Account Number <span class="text-danger">*</span></label>
+          <input type="text" id="baccountNo" formControlName="baccountNo" class="form-control"
+            placeholder="Enter Account Number" />
+          <div class="error-message">
+            <span *ngIf="
+              loanForm.get('baccountNo')?.invalid &&
+              (loanForm.get('baccountNo')?.touched || loanForm.get('baccountNo')?.dirty)
+            ">
+              <!-- Prioritize pattern error over minlength -->
+              <span *ngIf="loanForm.get('baccountNo')?.errors?.['pattern']">
+                Account Number can only contain numeric values.
+              </span>
+              <span
+                *ngIf="!loanForm.get('baccountNo')?.errors?.['pattern'] && loanForm.get('baccountNo')?.errors?.['minlength']">
+                Account Number must be at least 10 digits long.
+              </span>
+              <span
+                *ngIf="!loanForm.get('baccountNo')?.errors?.['pattern'] && !loanForm.get('baccountNo')?.errors?.['minlength'] && loanForm.get('baccountNo')?.errors?.['maxlength']">
+                Account Number cannot exceed 16 digits.
+              </span>
+              <span
+                *ngIf="!loanForm.get('baccountNo')?.errors?.['pattern'] && !loanForm.get('baccountNo')?.errors?.['minlength'] && !loanForm.get('baccountNo')?.errors?.['maxlength'] && loanForm.get('baccountNo')?.errors?.['required']">
+                Account Number is required.
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Branch Name -->
+        <div class="col-md-6 form-group">
+          <label for="bbranchName">Branch Name <span class="text-danger">*</span></label>
+          <input type="text" id="bbranchName" formControlName="bbranchName" class="form-control"
+            placeholder="Enter Branch Name" />
+          <div class="error-message">
+            <span *ngIf="
+                loanForm.get('bbranchName')?.invalid &&
+                (loanForm.get('bbranchName')?.touched || loanForm.get('bbranchName')?.dirty)
+              ">
+              <span *ngIf="loanForm.get('bbranchName')?.errors?.['required']">Branch Name is required.</span>
+              <span *ngIf="loanForm.get('bbranchName')?.errors?.['pattern']">Branch Name can only contain
+                letters.</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Account Type -->
+        <div class="col-md-6 form-group">
+          <label for="BAcctype">Account Type <span class="text-danger">*</span></label>
+          <select id="BAcctype" formControlName="BAcctype" class="form-control">
+            <option value="" disabled>-- Select Account Type --</option>
+            <option value="current">Current</option>
+            <option value="savings">Savings</option>
+            <option value="salary">Salary</option>
+          </select>
+          <div class="error-message">
+            <span *ngIf="
+                loanForm.get('BAcctype')?.invalid &&
+                (loanForm.get('BAcctype')?.touched || loanForm.get('BAcctype')?.dirty)
+              ">
+              <span *ngIf="loanForm.get('BAcctype')?.errors?.['required']">Account Type is required.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Date of Opening -->
+        <div class="col-md-6 form-group">
+          <label for="bdateOfOpening">Date of Opening <span class="text-danger">*</span></label>
+          <input type="date" id="bdateOfOpening" formControlName="bdateOfOpening" class="form-control" />
+          <div class="error-message">
+            <span *ngIf="
+                loanForm.get('bdateOfOpening')?.invalid &&
+                (loanForm.get('bdateOfOpening')?.touched || loanForm.get('bdateOfOpening')?.dirty)
+              ">
+              <span *ngIf="loanForm.get('bdateOfOpening')?.errors?.['required']">Date of Opening is required.</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- IFSC Code -->
+        <div class="col-md-6 form-group">
+          <label for="ifsccode">IFSC Code <span class="text-danger">*</span></label>
+          <input type="text" id="ifsccode" formControlName="ifsccode" class="form-control"
+            placeholder="Enter IFSC Code" />
+          <div class="error-message">
+            <span *ngIf="
+                loanForm.get('ifsccode')?.invalid &&
+                (loanForm.get('ifsccode')?.touched || loanForm.get('ifsccode')?.dirty)
+              ">
+              <span *ngIf="loanForm.get('ifsccode')?.errors?.['required']">IFSC Code is required.</span>
+              <span *ngIf="loanForm.get('ifsccode')?.errors?.['pattern']">
+                IFSC Code must be in a valid format (e.g., ABCD0123456).
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Applicant prrof section rows -->
+      <h3>Applicant Proof</h3>
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <p class="applicant-proof">Address Proof</p>
+          <div class="row">
+            <!-- Document Type Dropdown -->
+            <div class="col-md-6 form-group">
+              <label for="applicantAddressDocumentProof">Document Type <span class="text-danger">*</span></label>
+              <select id="applicantAddressDocumentProof" formControlName="applicantAddressDocumentProof"
+                class="form-control">
+                <option value="">-- Select Document Type --</option>
+                <option value="Aadhar">Aadhar</option>
+                <option value="PAN">PAN</option>
+                <option value="Voter ID">Voter ID</option>
+                <option value="Driving License">Driving License</option>
+                <option value="Passport">Passport</option>
+              </select>
+              <div class="error-message">
+                <span
+                  *ngIf="loanForm.get('applicantAddressDocumentProof')?.invalid && (loanForm.get('applicantAddressDocumentProof')?.touched || loanForm.get('applicantAddressDocumentProof')?.dirty)">
+                  <span *ngIf="loanForm.get('applicantAddressDocumentProof')?.errors?.['required']">
+                    Document type is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Number Field -->
+            <div class="col-md-6 form-group">
+              <label for="applicantAddressNumberProof">Number <span class="text-danger">*</span></label>
+              <input type="text" id="applicantAddressNumberProof" formControlName="applicantAddressNumberProof"
+                class="form-control" />
+              <div class="error-message">
+                <span
+                  *ngIf="loanForm.get('applicantAddressNumberProof')?.invalid && (loanForm.get('applicantAddressNumberProof')?.touched || loanForm.get('applicantAddressNumberProof')?.dirty)">
+                  <!-- Dynamic Error Messages -->
+                  <span
+                    *ngIf="loanForm.get('applicantAddressDocumentProof')?.value === 'Aadhar' && loanForm.get('applicantAddressNumberProof')?.errors?.['pattern']">
+                    Aadhar must be a 12-digit number.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantAddressDocumentProof')?.value === 'PAN' && loanForm.get('applicantAddressNumberProof')?.errors?.['pattern']">
+                    PAN must follow the format ABCDE1234F.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantAddressDocumentProof')?.value === 'Voter ID' && loanForm.get('applicantAddressNumberProof')?.errors?.['pattern']">
+                    Voter ID must follow the format ABC1234567.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantAddressDocumentProof')?.value === 'Driving License' && loanForm.get('applicantAddressNumberProof')?.errors?.['pattern']">
+                    Driving License must follow the format DL01ABC1234.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantAddressDocumentProof')?.value === 'Passport' && loanForm.get('applicantAddressNumberProof')?.errors?.['pattern']">
+                    Passport must follow the format A1234567.
+                  </span>
+                  <span *ngIf="loanForm.get('applicantAddressNumberProof')?.errors?.['required']">
+                    Number is required for the selected document type.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="applicantAddressIssueDateProof">Issue Date</label>
+              <input type="date" id="applicantAddressIssueDateProof" formControlName="applicantAddressIssueDateProof"
+                class="form-control" />
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="applicantAddressExpDateProof">Expired Date</label>
+              <input type="date" id="applicantAddressExpDateProof" formControlName="applicantAddressExpDateProof"
+                class="form-control" />
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 form-group">
+          <p class="applicant-proof">Age Proof</p>
+          <div class="row">
+            <!-- Document Type Dropdown -->
+            <div class="col-md-6 form-group">
+              <label for="applicantAgeDocumentProof">Document Type <span class="text-danger">*</span></label>
+              <select id="applicantAgeDocumentProof" formControlName="applicantAgeDocumentProof" class="form-control">
+                <option value="">-- Select Document Type --</option>
+                <option value="Aadhar">Aadhar</option>
+                <option value="PAN">PAN</option>
+                <option value="Voter ID">Voter ID</option>
+                <option value="Driving License">Driving License</option>
+                <option value="Passport">Passport</option>
+              </select>
+              <div class="error-message">
+                <span
+                  *ngIf="loanForm.get('applicantAgeDocumentProof')?.invalid && (loanForm.get('applicantAgeDocumentProof')?.touched || loanForm.get('applicantAgeDocumentProof')?.dirty)">
+                  <span *ngIf="loanForm.get('applicantAgeDocumentProof')?.errors?.['required']">
+                    Document type is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Number Field -->
+            <div class="col-md-6 form-group">
+              <label for="applicantAgeNumberProof">Number <span class="text-danger">*</span></label>
+              <input type="text" id="applicantAgeNumberProof" formControlName="applicantAgeNumberProof"
+                class="form-control" />
+              <div class="error-message">
+                <span
+                  *ngIf="loanForm.get('applicantAgeNumberProof')?.invalid && (loanForm.get('applicantAgeNumberProof')?.touched || loanForm.get('applicantAgeNumberProof')?.dirty)">
+                  <!-- Dynamic Error Messages -->
+                  <span
+                    *ngIf="loanForm.get('applicantAgeDocumentProof')?.value === 'Aadhar' && loanForm.get('applicantAgeNumberProof')?.errors?.['pattern']">
+                    Aadhar must be a 12-digit number.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantAgeDocumentProof')?.value === 'PAN' && loanForm.get('applicantAgeNumberProof')?.errors?.['pattern']">
+                    PAN must follow the format ABCDE1234F.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantAgeDocumentProof')?.value === 'Voter ID' && loanForm.get('applicantAgeNumberProof')?.errors?.['pattern']">
+                    Voter ID must follow the format ABC1234567.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantAgeDocumentProof')?.value === 'Driving License' && loanForm.get('applicantAgeNumberProof')?.errors?.['pattern']">
+                    Driving License must follow the format DL01ABC1234.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantAgeDocumentProof')?.value === 'Passport' && loanForm.get('applicantAgeNumberProof')?.errors?.['pattern']">
+                    Passport must follow the format A1234567.
+                  </span>
+                  <span *ngIf="loanForm.get('applicantAgeNumberProof')?.errors?.['required']">
+                    Number is required for the selected document type.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- Issue Date -->
+            <div class="col-md-6 form-group">
+              <label for="applicantAgeIssueDateProof">Issue Date</label>
+              <input type="date" id="applicantAgeIssueDateProof" formControlName="applicantAgeIssueDateProof"
+                class="form-control" />
+            </div>
+
+            <!-- Expired Date -->
+            <div class="col-md-6 form-group">
+              <label for="applicantAgeExpDateProof">Expired Date</label>
+              <input type="date" id="applicantAgeExpDateProof" formControlName="applicantAgeExpDateProof"
+                class="form-control" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <p class="applicant-proof">ID Proof</p>
+          <div class="row">
+            <!-- Document Type Dropdown -->
+            <div class="col-md-6 form-group">
+              <label for="applicantIdDocumentProof">Document Type <span class="text-danger">*</span></label>
+              <select id="applicantIdDocumentProof" formControlName="applicantIdDocumentProof" class="form-control">
+                <option value="">-- Select Document Type --</option>
+                <option value="Aadhar">Aadhar</option>
+                <option value="PAN">PAN</option>
+                <option value="Voter ID">Voter ID</option>
+                <option value="Driving License">Driving License</option>
+                <option value="Passport">Passport</option>
+              </select>
+              <div class="error-message">
+                <span
+                  *ngIf="loanForm.get('applicantIdDocumentProof')?.invalid && (loanForm.get('applicantIdDocumentProof')?.touched || loanForm.get('applicantIdDocumentProof')?.dirty)">
+                  <span *ngIf="loanForm.get('applicantIdDocumentProof')?.errors?.['required']">
+                    Document type is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Number Field -->
+            <div class="col-md-6 form-group">
+              <label for="applicantIdNumberProof">Number <span class="text-danger">*</span></label>
+              <input type="text" id="applicantIdNumberProof" formControlName="applicantIdNumberProof"
+                class="form-control" />
+              <div class="error-message">
+                <span
+                  *ngIf="loanForm.get('applicantIdNumberProof')?.invalid && (loanForm.get('applicantIdNumberProof')?.touched || loanForm.get('applicantIdNumberProof')?.dirty)">
+                  <!-- Dynamic Error Messages -->
+                  <span
+                    *ngIf="loanForm.get('applicantIdDocumentProof')?.value === 'Aadhar' && loanForm.get('applicantIdNumberProof')?.errors?.['pattern']">
+                    Aadhar must be a 12-digit number.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantIdDocumentProof')?.value === 'PAN' && loanForm.get('applicantIdNumberProof')?.errors?.['pattern']">
+                    PAN must follow the format ABCDE1234F.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantIdDocumentProof')?.value === 'Voter ID' && loanForm.get('applicantIdNumberProof')?.errors?.['pattern']">
+                    Voter ID must follow the format ABC1234567.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantIdDocumentProof')?.value === 'Driving License' && loanForm.get('applicantIdNumberProof')?.errors?.['pattern']">
+                    Driving License must follow the format DL01ABC1234.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantIdDocumentProof')?.value === 'Passport' && loanForm.get('applicantIdNumberProof')?.errors?.['pattern']">
+                    Passport must follow the format A1234567.
+                  </span>
+                  <span *ngIf="loanForm.get('applicantIdNumberProof')?.errors?.['required']">
+                    Number is required for the selected document type.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- Issue Date -->
+            <div class="col-md-6 form-group">
+              <label for="applicantIdIssueDateProof">Issue Date</label>
+              <input type="date" id="applicantIdIssueDateProof" formControlName="applicantIdIssueDateProof"
+                class="form-control" />
+            </div>
+
+            <!-- Expired Date -->
+            <div class="col-md-6 form-group">
+              <label for="applicantIdExpDateProof">Expired Date</label>
+              <input type="date" id="applicantIdExpDateProof" formControlName="applicantIdExpDateProof"
+                class="form-control" />
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-6 form-group">
+          <p class="applicant-proof">Signature Proof</p>
+          <div class="row">
+            <!-- Document Type Dropdown -->
+            <div class="col-md-6 form-group">
+              <label for="applicantSignatureDocumentProof">Document Type <span class="text-danger">*</span></label>
+              <select id="applicantSignatureDocumentProof" formControlName="applicantSignatureDocumentProof"
+                class="form-control">
+                <option value="">-- Select Document Type --</option>
+                <option value="Aadhar">Aadhar</option>
+                <option value="PAN">PAN</option>
+                <option value="Voter ID">Voter ID</option>
+                <option value="Driving License">Driving License</option>
+                <option value="Passport">Passport</option>
+              </select>
+              <div class="error-message">
+                <span
+                  *ngIf="loanForm.get('applicantSignatureDocumentProof')?.invalid && (loanForm.get('applicantSignatureDocumentProof')?.touched || loanForm.get('applicantSignatureDocumentProof')?.dirty)">
+                  <span *ngIf="loanForm.get('applicantSignatureDocumentProof')?.errors?.['required']">
+                    Document type is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Number Field -->
+            <div class="col-md-6 form-group">
+              <label for="applicantSignatureNumberProof">Number <span class="text-danger">*</span></label>
+              <input type="text" id="applicantSignatureNumberProof" formControlName="applicantSignatureNumberProof"
+                class="form-control" />
+              <div class="error-message">
+                <span
+                  *ngIf="loanForm.get('applicantSignatureNumberProof')?.invalid && (loanForm.get('applicantSignatureNumberProof')?.touched || loanForm.get('applicantSignatureNumberProof')?.dirty)">
+                  <!-- Dynamic Error Messages -->
+                  <span
+                    *ngIf="loanForm.get('applicantSignatureDocumentProof')?.value === 'Aadhar' && loanForm.get('applicantSignatureNumberProof')?.errors?.['pattern']">
+                    Aadhar must be a 12-digit number.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantSignatureDocumentProof')?.value === 'PAN' && loanForm.get('applicantSignatureNumberProof')?.errors?.['pattern']">
+                    PAN must follow the format ABCDE1234F.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantSignatureDocumentProof')?.value === 'Voter ID' && loanForm.get('applicantSignatureNumberProof')?.errors?.['pattern']">
+                    Voter ID must follow the format ABC1234567.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantSignatureDocumentProof')?.value === 'Driving License' && loanForm.get('applicantSignatureNumberProof')?.errors?.['pattern']">
+                    Driving License must follow the format DL01ABC1234.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantSignatureDocumentProof')?.value === 'Passport' && loanForm.get('applicantSignatureNumberProof')?.errors?.['pattern']">
+                    Passport must follow the format A1234567.
+                  </span>
+                  <span *ngIf="loanForm.get('applicantSignatureNumberProof')?.errors?.['required']">
+                    Number is required for the selected document type.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- Issue Date -->
+            <div class="col-md-6 form-group">
+              <label for="applicantSignatureIssueDateProof">Issue Date</label>
+              <input type="date" id="applicantSignatureIssueDateProof"
+                formControlName="applicantSignatureIssueDateProof" class="form-control" />
+            </div>
+
+            <!-- Expired Date -->
+            <div class="col-md-6 form-group">
+              <label for="applicantSignatureExpDateProof">Expired Date</label>
+              <input type="date" id="applicantSignatureExpDateProof" formControlName="applicantSignatureExpDateProof"
+                class="form-control" />
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- <div class="row">
+        <div class="col-md-6 form-group">
+          <p class="applicant-proof">Others</p>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="applicantOthersDocumentProof">Document Type <span class="text-danger">*</span></label>
+              <select id="applicantOthersDocumentProof" formControlName="applicantOthersDocumentProof"
+                class="form-control">
+                <option value="">-- Select Document Type --</option>
+                <option value="Aadhar">Aadhar</option>
+                <option value="PAN">PAN</option>
+                <option value="Voter ID">Voter ID</option>
+                <option value="Passport">Passport</option>
+                <option value="Driving License">Driving License</option>
+              </select>
+              <div class="error-message">
+                <span
+                  *ngIf="loanForm.get('applicantOthersDocumentProof')?.invalid && (loanForm.get('applicantOthersDocumentProof')?.touched || loanForm.get('applicantOthersDocumentProof')?.dirty)">
+                  <span *ngIf="loanForm.get('applicantOthersDocumentProof')?.errors?.['required']">
+                    Document type is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-6 form-group">
+              <label for="applicantOthersNumberProof">Number <span class="text-danger">*</span></label>
+              <input type="text" id="applicantOthersNumberProof" formControlName="applicantOthersNumberProof"
+                class="form-control" />
+              <div class="error-message">
+                <span
+                  *ngIf="loanForm.get('applicantOthersNumberProof')?.invalid && (loanForm.get('applicantOthersNumberProof')?.touched || loanForm.get('applicantOthersNumberProof')?.dirty)">
+                
+                  <span
+                    *ngIf="loanForm.get('applicantOthersDocumentProof')?.value === 'Aadhar' && loanForm.get('applicantOthersNumberProof')?.errors?.['pattern']">
+                    Aadhar must be a 12-digit number.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantOthersDocumentProof')?.value === 'PAN' && loanForm.get('applicantOthersNumberProof')?.errors?.['pattern']">
+                    PAN must follow the format ABCDE1234F.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantOthersDocumentProof')?.value === 'Voter ID' && loanForm.get('applicantOthersNumberProof')?.errors?.['pattern']">
+                    Voter ID must follow the format ABC1234567.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantOthersDocumentProof')?.value === 'Driving License' && loanForm.get('applicantOthersNumberProof')?.errors?.['pattern']">
+                    Driving License must follow the format DL01ABC1234.
+                  </span>
+                  <span
+                    *ngIf="loanForm.get('applicantOthersDocumentProof')?.value === 'Passport' && loanForm.get('applicantOthersNumberProof')?.errors?.['pattern']">
+                    Passport must follow the format A1234567.
+                  </span>
+                  <span *ngIf="loanForm.get('applicantOthersNumberProof')?.errors?.['required']">
+                    Number is required for the selected document type.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="applicantOthersIssueDateProof">Issue Date</label>
+              <input type="date" id="applicantOthersIssueDateProof" formControlName="applicantOthersIssueDateProof"
+                class="form-control" />
+            </div>
+
+            <div class="col-md-6 form-group">
+              <label for="applicantOthersExpDateProof">Expired Date</label>
+              <input type="date" id="applicantOthersExpDateProof" formControlName="applicantOthersExpDateProof"
+                class="form-control" />
+            </div>
+          </div>
+
+        </div>
+      </div> -->
+
+      <h3>Property Details</h3>
+      <!-- Add Property Section with Icon and Text -->
+      <div class="row">
+        <div class="col-md-12 d-flex justify-content-end align-items-center">
+          <span class="add-property-text mr-2" (click)="addProperty()">Add Property</span>
+          <i class="fa fa-plus add-property-icon" (click)="addProperty()"></i>
+        </div>
+      </div>
+
+      <div formArrayName="properties">
+        <div *ngFor="let property of properties.controls; let i = index" [formGroupName]="i" class="property-section">
+          <!-- Remove Property Icon -->
+          <div class="row">
+            <div class="col-md-12 d-flex justify-content-end">
+              <i *ngIf="i > 0" class="fas fa-times remove-property-icon" (click)="removeProperty(i)"></i>
+            </div>
+          </div>
+
+          <!-- Property Owner's Name -->
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="propertyOwnerName-{{ i }}">Property Owner(s) Name <span class="text-danger">*</span></label>
+              <input type="text" id="propertyOwnerName-{{ i }}" formControlName="propertyOwnerName" class="form-control"
+                placeholder="Enter Property Owner's Name" />
+              <div class="error-message">
+                <span *ngIf="
+                    property.get('propertyOwnerName')?.invalid &&
+                    (property.get('propertyOwnerName')?.touched || property.get('propertyOwnerName')?.dirty)
+                  ">
+                  <span *ngIf="property.get('propertyOwnerName')?.errors?.['pattern']">
+                    Property Owner's Name can only contain letters and spaces.
+                  </span>
+                  <span *ngIf="property.get('propertyOwnerName')?.errors?.['required']">
+                    Property Owner's Name is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-6 form-group">
+              <label for="propertyLandAddress-{{ i }}">Property/Land Address <span class="text-danger">*</span></label>
+              <textarea id="propertyLandAddress-{{ i }}" formControlName="propertyLandAddress" class="form-control"
+                rows="3" placeholder="Enter Property Address"></textarea>
+              <div class="error-message">
+                <span *ngIf="
+                    property.get('propertyLandAddress')?.invalid &&
+                    (property.get('propertyLandAddress')?.touched || property.get('propertyLandAddress')?.dirty)
+                  ">
+                  <span *ngIf="property.get('propertyLandAddress')?.errors?.['required']">
+                    Property Address is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Property Area -->
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="plotArea-{{ i }}">Plot Area <span class="text-danger">*</span></label>
+              <input type="text" id="plotArea-{{ i }}" formControlName="plotArea" class="form-control"
+                placeholder="Enter Plot Area (numeric or decimal)" />
+              <div class="error-message">
+                <span *ngIf="
+                    property.get('plotArea')?.invalid &&
+                    (property.get('plotArea')?.touched || property.get('plotArea')?.dirty)
+                  ">
+                  <span *ngIf="property.get('plotArea')?.errors?.['pattern']">
+                    Plot Area must be a valid number.
+                  </span>
+                  <span *ngIf="property.get('plotArea')?.errors?.['required']">
+                    Plot Area is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-6 form-group">
+              <label for="builtUpArea-{{ i }}">Built-Up Area (in sqft) <span class="text-danger">*</span></label>
+              <input type="text" id="builtUpArea-{{ i }}" formControlName="builtUpArea" class="form-control"
+                placeholder="Enter Built-Up Area" />
+              <div class="error-message">
+                <span *ngIf="
+                    property.get('builtUpArea')?.invalid &&
+                    (property.get('builtUpArea')?.touched || property.get('builtUpArea')?.dirty)
+                  ">
+                  <span *ngIf="property.get('builtUpArea')?.errors?.['pattern']">
+                    Built-Up Area must be a valid number.
+                  </span>
+                  <span *ngIf="property.get('builtUpArea')?.errors?.['required']">
+                    Built-Up Area is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Building Age -->
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="buildingAge-{{ i }}">Building Age (Years) <span class="text-danger">*</span></label>
+              <input type="number" id="buildingAge-{{ i }}" formControlName="buildingAge" class="form-control"
+                placeholder="Enter Building Age" />
+              <div class="error-message">
+                <span *ngIf="
+                    property.get('buildingAge')?.invalid &&
+                    (property.get('buildingAge')?.touched || property.get('buildingAge')?.dirty)
+                  ">
+                  <span *ngIf="property.get('buildingAge')?.errors?.['min']">
+                    Building Age cannot be negative.
+                  </span>
+                  <span *ngIf="property.get('buildingAge')?.errors?.['required']">
+                    Building Age is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+        </div>
+      </div>
+
+      <h3>Income Details (Per Month)</h3>
+      <!-- Income - Household Income Subheading -->
+      <h4>Household Income</h4>
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label for="incomeApplicant">Applicant <span class="text-danger">*</span></label>
+          <input type="number" id="incomeApplicant" formControlName="incomeApplicant" class="form-control"
+            (input)="calculateIncomeTotal()" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('incomeApplicant')?.invalid && (loanForm.get('incomeApplicant')?.touched || loanForm.get('incomeApplicant')?.dirty)">
+              <span *ngIf="loanForm.get('incomeApplicant')?.errors?.['required']">Income is required.</span>
+              <span *ngIf="loanForm.get('incomeApplicant')?.errors?.['min']">Income must be a positive
+                number.</span>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <label for="incomeOthers1">Others 1 <span class="text-danger">*</span></label>
+          <input type="number" id="incomeOthers1" formControlName="incomeOthers1" class="form-control"
+            (input)="calculateIncomeTotal()" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('incomeOthers1')?.invalid && (loanForm.get('incomeOthers1')?.touched || loanForm.get('incomeOthers1')?.dirty)">
+              <span *ngIf="loanForm.get('incomeOthers1')?.errors?.['required']">Others1 is required.</span>
+              <span *ngIf="loanForm.get('incomeOthers1')?.errors?.['min']">Others1 must be a positive
+                number.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label for="incomeOthers2">Others 2 <span class="text-danger">*</span></label>
+          <input type="number" id="incomeOthers2" formControlName="incomeOthers2" class="form-control"
+            (input)="calculateIncomeTotal()" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('incomeOthers2')?.invalid && (loanForm.get('incomeOthers2')?.touched || loanForm.get('incomeOthers2')?.dirty)">
+              <span *ngIf="loanForm.get('incomeOthers2')?.errors?.['required']">Others2 is required.</span>
+              <span *ngIf="loanForm.get('incomeOthers2')?.errors?.['min']">Others2 must be a positive
+                number.</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-6 form-group">
+          <label for="incomeOthers3">Others 3 <span class="text-danger">*</span></label>
+          <input type="number" id="incomeOthers3" formControlName="incomeOthers3" class="form-control"
+            (input)="calculateIncomeTotal()" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('incomeOthers3')?.invalid && (loanForm.get('incomeOthers3')?.touched || loanForm.get('incomeOthers3')?.dirty)">
+              <span *ngIf="loanForm.get('incomeOthers3')?.errors?.['required']">Others3 is required.</span>
+              <span *ngIf="loanForm.get('incomeOthers3')?.errors?.['min']">Others3 must be a positive
+                number.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Total Income -->
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <label for="incomeTotal">Total Income</label>
+          <input type="number" id="incomeTotal" formControlName="incomeTotal" class="form-control" [value]="incomeTotal"
+            readonly />
+        </div>
+      </div>
+
+      <!-- Household Expenditure Subheading -->
+      <h4>Household Expenditure</h4>
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label for="rent">Rent <span class="text-danger">*</span></label>
+          <input type="number" id="rent" formControlName="rent" class="form-control"
+            (input)="calculateExpenditureTotal()" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('rent')?.invalid && (loanForm.get('rent')?.touched || loanForm.get('rent')?.dirty)">
+              <span *ngIf="loanForm.get('rent')?.errors?.['required']">Rent Expenditure is required.</span>
+              <span *ngIf="loanForm.get('rent')?.errors?.['min']">Rent Expenditure must be a positive
+                number.</span>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <label for="loan">Loan <span class="text-danger">*</span></label>
+          <input type="number" id="loan" formControlName="loan" class="form-control"
+            (input)="calculateExpenditureTotal()" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('loan')?.invalid && (loanForm.get('loan')?.touched || loanForm.get('loan')?.dirty)">
+              <span *ngIf="loanForm.get('loan')?.errors?.['required']">Loan Expenditure is required.</span>
+              <span *ngIf="loanForm.get('loan')?.errors?.['min']">Loan Expenditure must be a positive
+                number.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label for="education">Education <span class="text-danger">*</span></label>
+          <input type="number" id="education" formControlName="education" class="form-control"
+            (input)="calculateExpenditureTotal()" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('education')?.invalid && (loanForm.get('education')?.touched || loanForm.get('education')?.dirty)">
+              <span *ngIf="loanForm.get('education')?.errors?.['required']">Education Expenditure is required.</span>
+              <span *ngIf="loanForm.get('education')?.errors?.['min']">Education Expenditure must be a positive
+                number.</span>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <label for="others">Others <span class="text-danger">*</span></label>
+          <input type="number" id="others" formControlName="others" class="form-control"
+            (input)="calculateExpenditureTotal()" />
+          <!-- Error message -->
+          <div class="error-message">
+            <span
+              *ngIf="loanForm.get('others')?.invalid && (loanForm.get('others')?.touched || loanForm.get('others')?.dirty)">
+              <span *ngIf="loanForm.get('others')?.errors?.['required']">Other Expenditure is required.</span>
+              <span *ngIf="loanForm.get('others')?.errors?.['min']">Other Expenditure must be a positive
+                number.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Total Expenditure -->
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <label for="expenditureTotal">Total Expenditure</label>
+          <input type="number" id="expenditureTotal" formControlName="expenditureTotal" class="form-control"
+            [value]="expenditureTotal" readonly />
+        </div>
+      </div>
+
+      <!-- Net Income -->
+      <h4>Net Income</h4>
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <label for="netIncome">Net Income (Income - Expenditure)</label>
+          <input type="number" id="netIncome" formControlName="netIncome" class="form-control" [value]="netIncome"
+            readonly />
+        </div>
+      </div>
+
+      <!-- Existing Loan Details -->
+      <h3>Existing Loan Details </h3>
+
+      <!-- Add Loan Section with Icon and Text -->
+      <div class="row">
+        <div class="col-md-12 d-flex justify-content-end align-items-center">
+          <span class="add-loan-text mr-2" (click)="addLoan()">Add Loan</span>
+          <i class="fa fa-plus add-loan-icon" (click)="addLoan()"></i>
+        </div>
+      </div>
+
+
+      <div formArrayName="loans">
+        <div *ngFor="let loan of loans.controls; let i = index" [formGroupName]="i" class="loan-section">
+          <!-- Remove Loan Icon -->
+          <div class="row">
+            <div class="col-md-12 d-flex justify-content-end">
+              <i *ngIf="i > 0" class="fas fa-times remove-loan-icon" (click)="removeLoan(i)"></i>
+            </div>
+          </div>
+
+          <!-- Loan Details -->
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="nameOfInstitution-{{ i }}">Name Of Institution <span class="text-danger">*</span></label>
+              <input type="text" id="nameOfInstitution-{{ i }}" formControlName="nameOfInstitution" class="form-control"
+                placeholder="Enter Name of Institution" />
+              <div class="error-message">
+                <span
+                  *ngIf="loan.get('nameOfInstitution')?.invalid && (loan.get('nameOfInstitution')?.touched || loan.get('nameOfInstitution')?.dirty)">
+                  <span *ngIf="loan.get('nameOfInstitution')?.errors?.['required']">Name of Institution is
+                    required.</span>
+                  <span *ngIf="loan.get('nameOfInstitution')?.errors?.['pattern']">Only letters and spaces are
+                    allowed.</span>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-6 form-group">
+              <label for="purposeOfLoan-{{ i }}">Purpose of Loan <span class="text-danger">*</span></label>
+              <input type="text" id="purposeOfLoan-{{ i }}" formControlName="purposeOfLoan" class="form-control"
+                placeholder="Enter Purpose of Loan" />
+              <div class="error-message">
+                <span
+                  *ngIf="loan.get('purposeOfLoan')?.invalid && (loan.get('purposeOfLoan')?.touched || loan.get('purposeOfLoan')?.dirty)">
+                  <span *ngIf="loan.get('purposeOfLoan')?.errors?.['required']">Purpose of Loan is required.</span>
+                  <span *ngIf="loan.get('purposeOfLoan')?.errors?.['pattern']">Only letters and spaces are
+                    allowed.</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="loanAmount-{{ i }}">Loan Amount <span class="text-danger">*</span></label>
+              <input type="number" id="loanAmount-{{ i }}" formControlName="loanAmount" class="form-control"
+                placeholder="Enter Loan Amount" />
+              <div class="error-message">
+                <span
+                  *ngIf="loan.get('loanAmount')?.invalid && (loan.get('loanAmount')?.touched || loan.get('loanAmount')?.dirty)">
+                  <span *ngIf="loan.get('loanAmount')?.errors?.['required']">Loan Amount is required.</span>
+                  <span *ngIf="loan.get('loanAmount')?.errors?.['min']">Loan Amount must be greater than 0.</span>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-6 form-group">
+              <label for="tenureOfLoan-{{ i }}">Tenure Of Loan (months) <span class="text-danger">*</span></label>
+              <input type="number" id="tenureOfLoan-{{ i }}" formControlName="tenureOfLoan" class="form-control"
+                placeholder="Enter Tenure in Months" />
+              <div class="error-message">
+                <span
+                  *ngIf="loan.get('tenureOfLoan')?.invalid && (loan.get('tenureOfLoan')?.touched || loan.get('tenureOfLoan')?.dirty)">
+                  <span *ngIf="loan.get('tenureOfLoan')?.errors?.['required']">Tenure of Loan is required.</span>
+                  <span *ngIf="loan.get('tenureOfLoan')?.errors?.['min']">Tenure must be at least 1 month.</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="monthlyInstallment-{{ i }}">Monthly Installment <span class="text-danger">*</span></label>
+              <input type="number" id="monthlyInstallment-{{ i }}" formControlName="monthlyInstallment"
+                class="form-control" placeholder="Enter Monthly Installment" />
+              <div class="error-message">
+                <span
+                  *ngIf="loan.get('monthlyInstallment')?.invalid && (loan.get('monthlyInstallment')?.touched || loan.get('monthlyInstallment')?.dirty)">
+                  <span *ngIf="loan.get('monthlyInstallment')?.errors?.['required']">Monthly Installment is
+                    required.</span>
+                  <span *ngIf="loan.get('monthlyInstallment')?.errors?.['min']">Must be greater than 0.</span>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-6 form-group">
+              <label for="currentOutstanding-{{ i }}">Current Outstanding <span class="text-danger">*</span></label>
+              <input type="number" id="currentOutstanding-{{ i }}" formControlName="currentOutstanding"
+                class="form-control" placeholder="Enter Current Outstanding" />
+              <div class="error-message">
+                <span
+                  *ngIf="loan.get('currentOutstanding')?.invalid && (loan.get('currentOutstanding')?.touched || loan.get('currentOutstanding')?.dirty)">
+                  <span *ngIf="loan.get('currentOutstanding')?.errors?.['required']">Current Outstanding is
+                    required.</span>
+                  <span *ngIf="loan.get('currentOutstanding')?.errors?.['min']">Cannot be negative.</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="balanceTenure-{{ i }}">Balance Tenure (months) <span class="text-danger">*</span></label>
+              <input type="number" id="balanceTenure-{{ i }}" formControlName="balanceTenure" class="form-control"
+                placeholder="Enter Balance Tenure in Months" />
+              <div class="error-message">
+                <span
+                  *ngIf="loan.get('balanceTenure')?.invalid && (loan.get('balanceTenure')?.touched || loan.get('balanceTenure')?.dirty)">
+                  <span *ngIf="loan.get('balanceTenure')?.errors?.['required']">Balance Tenure is required.</span>
+                  <span *ngIf="loan.get('balanceTenure')?.errors?.['min']">Balance Tenure must be at least 0
+                    months.</span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <hr />
+        </div>
+      </div>
+
+      <h3>Details of Loan Applied For</h3>
+
+      <!-- Purpose of Loan -->
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label for="purposeOfLoan">Purpose of Loan <span class="text-danger">*</span></label>
+          <input type="text" id="purposeOfLoan" formControlName="purposeOfLoan" class="form-control"
+            placeholder="Enter the Purpose of Loan" />
+          <!-- Error message with fixed height -->
+          <div class="error-message">
+            <span *ngIf="loanForm.get('purposeOfLoan')?.invalid && 
+        (loanForm.get('purposeOfLoan')?.touched || loanForm.get('purposeOfLoan')?.dirty)">
+              <span *ngIf="loanForm.get('purposeOfLoan')?.errors?.['required']">
+                Purpose of Loan is required.
+              </span>
+              <span *ngIf="loanForm.get('purposeOfLoan')?.errors?.['pattern']">
+                Purpose of Loan can only contain letters and spaces.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-6 form-group">
+          <label for="DloanAmount">Loan Amount Required (Rs.) <span class="text-danger">*</span></label>
+          <input type="number" id="DloanAmount" formControlName="DloanAmount" class="form-control"
+            placeholder="Enter the Loan Amount" />
+          <!-- Error message with fixed height -->
+          <div class="error-message">
+            <span *ngIf="loanForm.get('DloanAmount')?.invalid && 
+        (loanForm.get('DloanAmount')?.touched || loanForm.get('DloanAmount')?.dirty)">
+              <span *ngIf="loanForm.get('DloanAmount')?.errors?.['required']">
+                Loan Amount is required.
+              </span>
+              <span *ngIf="loanForm.get('DloanAmount')?.errors?.['min']">
+                Loan Amount must be at least 1.
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loan Amount and Tenure -->
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label for="loanTenure">Tenure (Months) <span class="text-danger">*</span></label>
+          <input type="number" id="loanTenure" formControlName="loanTenure" class="form-control"
+            placeholder="Enter Tenure in Months" />
+          <!-- Error message with fixed height -->
+          <div class="error-message">
+            <span *ngIf="loanForm.get('loanTenure')?.invalid && 
+        (loanForm.get('loanTenure')?.touched || loanForm.get('loanTenure')?.dirty)">
+              <span *ngIf="loanForm.get('loanTenure')?.errors?.['required']">
+                Loan Tenure is required.
+              </span>
+              <span *ngIf="loanForm.get('loanTenure')?.errors?.['min']">
+                Tenure must be at least 1 month.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Repayment Mode -->
+        <div class="col-md-6 form-group">
+          <label for="repaymentMode">Repayment Mode <span class="text-danger">*</span></label>
+          <select id="repaymentMode" formControlName="repaymentMode" class="form-control">
+            <option value="">Select Repayment Mode</option>
+            <option value="ACH">ACH</option>
+            <option value="ECS">ECS</option>
+            <option value="PDC">PDC</option>
+          </select>
+          <!-- Error message with fixed height -->
+          <div class="error-message">
+            <span *ngIf="loanForm.get('repaymentMode')?.invalid && 
+        (loanForm.get('repaymentMode')?.touched || loanForm.get('repaymentMode')?.dirty)">
+              <span *ngIf="loanForm.get('repaymentMode')?.errors?.['required']">
+                Repayment Mode is required.
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loan Taken Before? -->
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label>Have you taken a loan from Beacon earlier? <span class="text-danger">*</span></label>
+          <div>
+            <input type="radio" id="loanTakenYes" formControlName="loanTaken" value="yes"
+              (change)="showCustomerIdForYes()" /> Yes
+            <input type="radio" id="loanTakenNo" formControlName="loanTaken" value="no"
+              (change)="showCustomerIdForNo()" /> No
+          </div>
+          <!-- Error message with fixed height -->
+          <div class="error-message">
+            <span *ngIf="loanForm.get('loanTaken')?.invalid && 
+        (loanForm.get('loanTaken')?.touched || loanForm.get('loanTaken')?.dirty)">
+              <span *ngIf="loanForm.get('loanTaken')?.errors?.['required']">
+                Please select if you have taken a loan before.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Customer ID (only visible if 'Yes' is selected) -->
+        <div class="col-md-6 form-group" *ngIf="showCustomerIdField">
+          <label for="customerId">Customer ID</label>
+          <input type="text" id="customerId" formControlName="customerId" class="form-control"
+            placeholder="Enter your Customer ID" />
+          <!-- Error message with fixed height -->
+          <div class="error-message">
+            <span *ngIf="loanForm.get('customerId')?.invalid && 
+        (loanForm.get('customerId')?.touched || loanForm.get('customerId')?.dirty)">
+              <span *ngIf="loanForm.get('customerId')?.errors?.['required']">
+                Customer ID is required.
+              </span>
+              <span *ngIf="loanForm.get('customerId')?.errors?.['pattern']">
+                Customer ID must contain only numbers.
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- References Section -->
+      <h3>References</h3>
+
+      <!-- Add Reference Section with Icon and Text -->
+      <div class="row">
+        <div class="col-md-12 d-flex justify-content-end align-items-center">
+          <span class="add-reference-text mr-2" (click)="addReference()">Add Reference</span>
+          <i class="fa fa-plus add-reference-icon" (click)="addReference()"></i>
+        </div>
+      </div>
+
+      <!-- Form Array for References -->
+      <div formArrayName="references">
+        <div *ngFor="let reference of references.controls; let i = index" [formGroupName]="i" class="reference-section">
+          <!-- Remove Reference Icon -->
+          <div class="row">
+            <div class="col-md-12 d-flex justify-content-end">
+              <i *ngIf="i > 0" class="fas fa-times remove-reference-icon" (click)="removeReference(i)"></i>
+            </div>
+          </div>
+
+          <!-- Reference Details -->
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="fullName-{{ i }}">Full Name <span class="text-danger">*</span></label>
+              <input type="text" id="fullName-{{ i }}" formControlName="fullName" class="form-control"
+                placeholder="Enter Full Name" />
+              <div class="error-message">
+                <span *ngIf="
+                    reference.get('fullName')?.invalid &&
+                    (reference.get('fullName')?.touched || reference.get('fullName')?.dirty)
+                  ">
+                  <span *ngIf="reference.get('fullName')?.errors?.['pattern']">
+                    Full Name can only contain letters and spaces.
+                  </span>
+                  <span *ngIf="reference.get('fullName')?.errors?.['required']">
+                    Full Name is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-6 form-group">
+              <label for="knownForYears-{{ i }}">Known for Years <span class="text-danger">*</span></label>
+              <input type="number" id="knownForYears-{{ i }}" formControlName="knownForYears" class="form-control"
+                placeholder="Enter Known Years" />
+              <div class="error-message">
+                <span *ngIf="
+                    reference.get('knownForYears')?.invalid &&
+                    (reference.get('knownForYears')?.touched || reference.get('knownForYears')?.dirty)
+                  ">
+                  <span *ngIf="reference.get('knownForYears')?.errors?.['min']">
+                    Known Years must be at least 1.
+                  </span>
+                  <span *ngIf="reference.get('knownForYears')?.errors?.['required']">
+                    Known Years is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="relation-{{ i }}">Relationship <span class="text-danger">*</span></label>
+              <input type="text" id="relation-{{ i }}" formControlName="relation" class="form-control"
+                placeholder="Enter Relationship" />
+              <div class="error-message">
+                <span *ngIf="
+                    reference.get('relation')?.invalid &&
+                    (reference.get('relation')?.touched || reference.get('relation')?.dirty)
+                  ">
+                  <span *ngIf="reference.get('relation')?.errors?.['pattern']">
+                    Relationship can only contain letters and spaces.
+                  </span>
+                  <span *ngIf="reference.get('relation')?.errors?.['required']">
+                    Relationship is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-6 form-group">
+              <label for="pincode-{{ i }}">Pincode <span class="text-danger">*</span></label>
+              <input type="number" id="pincode-{{ i }}" formControlName="pincode" class="form-control"
+                placeholder="Enter Pincode" />
+              <div class="error-message">
+                <span *ngIf="
+                    reference.get('pincode')?.invalid &&
+                    (reference.get('pincode')?.touched || reference.get('pincode')?.dirty)
+                  ">
+                  <span *ngIf="reference.get('pincode')?.errors?.['pattern']">
+                    Pincode must be a valid 6-digit number.
+                  </span>
+                  <span *ngIf="reference.get('pincode')?.errors?.['required']">
+                    Pincode is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="mobile-{{ i }}">Mobile Number <span class="text-danger">*</span></label>
+              <input type="number" id="mobile-{{ i }}" formControlName="mobile" class="form-control"
+                placeholder="Enter Mobile Number" />
+              <div class="error-message">
+                <span *ngIf="
+                    reference.get('mobile')?.invalid &&
+                    (reference.get('mobile')?.touched || reference.get('mobile')?.dirty)
+                  ">
+                  <span *ngIf="reference.get('mobile')?.errors?.['pattern']">
+                    Mobile Number must be a valid 10-digit number.
+                  </span>
+                  <span *ngIf="reference.get('mobile')?.errors?.['required']">
+                    Mobile Number is required.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <hr />
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Navigation Buttons -->
+    <div class="form-navigation">
+      <button type="button" class="btn btn-secondary" (click)="prevPage()" *ngIf="!(currentPage === 1)">
+        Previous
+      </button>
+      <button type="button" class="btn btn-primary" (click)="nextPage()" *ngIf="currentPage < totalPages">
+        Next
+      </button>
+      <!-- <button type="submit" class="btn btn-success" *ngIf="currentPage === totalPages" [disabled]="loanForm.invalid"> -->
+      <button type="submit" class="btn btn-success" *ngIf="currentPage === totalPages" [disabled]="isSubmitting">
+        Submit
+      </button>
+      <div *ngIf="isSubmitting" class="spinner-container">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

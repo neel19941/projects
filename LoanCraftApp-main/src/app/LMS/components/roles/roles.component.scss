@@ -1,0 +1,101 @@
+// *{
+//     margin: 0;
+//     padding: 0;
+//     box-sizing: border-box;
+// }
+
+.btn-color{
+    border: 1px solid black;
+    border-radius: 24px;
+}
+
+.btn-color button:hover{
+background: rgb(149, 154, 197);
+border: 1px solid black;
+border-radius: 24px;
+transition: none;
+}
+
+.card-header{
+    background: rgb(157, 152, 170);
+}
+
+
+.custom-snackbar {
+    position: fixed;
+    top: 20px; /* Distance from the top */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f8d7da; /* Default background for errors */
+    color: #721c24; /* Default text color for errors */
+    padding: 15px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center; /* Aligns icon and text vertically */
+    gap: 10px; /* Space between icon and text */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0s linear 0.3s;
+    z-index: 9999; /* Ensures visibility above other elements */
+  }
+  
+  .custom-snackbar.show {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s;
+  }
+  
+  .custom-snackbar.success {
+    background-color: #d4edda; /* Bootstrap's alert-success color */
+    color: #155724;
+  }
+  
+  .custom-snackbar.error {
+    background-color: #f8d7da; /* Bootstrap's alert-danger color */
+    color: #721c24;
+  }
+  
+  .custom-snackbar i {
+    font-size: 1.2rem;
+  }
+  
+  /* Icons for success and error */
+  .custom-snackbar.success i {
+    color: #155724; /* Icon color for success */
+  }
+  
+  .custom-snackbar.error i {
+    color: #721c24; /* Icon color for error */
+  }
+  
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1050;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal.show {
+    display: flex;
+  }
+  
+  .modal-dialog {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 400px;
+  }
+  
+
+  .container{
+    
+  }

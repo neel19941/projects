@@ -1,0 +1,84 @@
+<!-- <app-plain-navigation></app-plain-navigation> -->
+<div class="container-fluid">
+  <!-- Header Bar -->
+  <div class="row header-bar">
+      <div class="col-12 col-md-6">
+          <h4 class="header-title">Roles Information</h4>
+      </div>
+      <div class="col-12 col-md-6 text-md-end">
+          <div class="search-container">
+              <span class="add-icon" (click)="openAddRole('add')" *ngIf="privilegeServ.hasPrivilege('ADD_ROLES')">
+                  <i class="fas fa-plus"></i>
+              </span>
+              <input 
+                  type="text" 
+                  class="search-input" 
+                  placeholder="Search"
+                  (keyup)="onSearch($event)"
+              />
+          </div>
+      </div>
+  </div>
+  
+  <!-- Table -->
+  <div class="row" *ngIf="privilegeServ.hasPrivilege('LIST_ROLES')">
+    <!-- <div class="row"> -->
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-sm">
+          <thead class="table-custom-header">
+            <tr>
+              <th scope="col">S.No</th>
+              <th scope="col" (mouseover)="hoverField = 'roleName'" (mouseleave)="hoverField = null" (click)="onSort('roleName')">
+                Role Name
+                <span class="sort-icon" [ngClass]="getSortIcon('roleName')"></span>
+              </th>
+              <th scope="col" (mouseover)="hoverField = 'createdDate'" (mouseleave)="hoverField = null" (click)="onSort('createdDate')">
+                Created Date
+                <span class="sort-icon" [ngClass]="getSortIcon('createdDate')"></span>
+              </th>
+              <!-- <th scope="col" (mouseover)="hoverField = 'updatedDate'" (mouseleave)="hoverField = null" (click)="onSort('updatedDate')">
+                Updated Date
+                <span class="sort-icon" [ngClass]="getSortIcon('updatedDate')"></span>
+              </th> -->
+              <th scope="col" (mouseover)="hoverField = 'description'" (mouseleave)="hoverField = null" (click)="onSort('description')">
+                Description
+                <span class="sort-icon" [ngClass]="getSortIcon('description')"></span>
+              </th>
+              <th scope="col" (mouseover)="hoverField = 'addedBy'" (mouseleave)="hoverField = null" (click)="onSort('addedBy')">
+                addedBy
+                <span class="sort-icon" [ngClass]="getSortIcon('addedBy')"></span>
+              </th>
+            </tr>
+          </thead>
+  
+          <tbody>
+            <tr *ngFor="let role of rolesInfo; let i = index">
+              <td>{{ generateSerialNumber(i) }}</td>
+              <td class="clickable-cell" (click)="openRoleModal(role.role_Id)">{{ role.role_Name | capitalize}}</td>
+              <td>{{ role.createddate }}</td>
+              <!-- <td>{{ role.updateddate }}</td> -->
+              <td>{{ role.description | capitalize}}</td>
+              <td>{{ role.addedby | capitalize}}</td>
+            </tr>
+            <tr *ngIf="rolesInfo.length === 0">
+              <td colspan="6" class="text-center">No Roles Information found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Pagination Controls -->
+  <div class="pagination-controls">
+      <button (click)="goToFirstPage()" [disabled]="currentPageIndex === 0">|<</button>
+      <button (click)="goToPreviousPage()" [disabled]="currentPageIndex === 0"><</button>
+      <!-- <span>Page {{ currentPageIndex + 1 }} of {{ totalPages }}</span> -->
+      <span>Page {{ totalPages > 0 ? currentPageIndex + 1 : 0 }} of {{ totalPages }}</span>
+      <button (click)="goToNextPage()" [disabled]="currentPageIndex >= totalPages - 1">></button>
+      <button (click)="goToLastPage()" [disabled]="currentPageIndex >= totalPages - 1">>|</button>
+  </div>
+</div>
+<app-add-role *ngIf="showAddRole" [target]="target" (closeModal)="closeAddRole()"></app-add-role>
+<app-role-actions *ngIf="showRoleModal" [roleId]="selectedRoleId"  (closeModal)="closeRoleModal()"></app-role-actions>

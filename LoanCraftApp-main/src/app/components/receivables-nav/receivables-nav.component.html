@@ -1,0 +1,39 @@
+<div class="container-box">
+    <!-- Left Panel with Links -->
+    <div class="nav-box">
+      <ul class="nav flex-column">
+
+        <li class="nav-item" *ngIf="privilegeServ.hasPrivilege('CURRENTDUES')">
+          <a class="nav-link" routerLink="current-dues" routerLinkActive="active">Current Month Dues</a>
+        </li>
+        <li class="nav-item" *ngIf="privilegeServ.hasPrivilege('CHEQUE_DEPOSIT')">
+          <a class="nav-link" routerLink="check-bounce-list" routerLinkActive="active">Cheque deposit</a>
+        </li>
+        <li class="nav-item" *ngIf="privilegeServ.hasPrivilege('RECEIVABLE')">
+          <a class="nav-link" routerLink="receviables" routerLinkActive="active">Receivables</a>
+        </li>
+         <li class="nav-item" *ngIf="privilegeServ.hasPrivilege('LOW_CHEQUE_REQUESTS')">
+          <a class="nav-link" routerLink="low-cheque-deposit" routerLinkActive="active">Low Cheque Deposit Requests</a>
+        </li>
+                 <li class="nav-item" *ngIf="privilegeServ.hasPrivilege('LOW_CHEQUE_REQUESTS')">
+          <a class="nav-link" routerLink="member-reports" routerLinkActive="active">Member Reports</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" routerLink="sanctioned-lists" routerLinkActive="active">Sanctioned</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="disbursed-list" routerLinkActive="active">Disbursed</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="rejected-list" routerLinkActive="active">Rejected</a>
+        </li> -->
+      </ul>
+    </div>
+  
+    <!-- Right Content Display -->
+    <div class="content-box">
+      <div class="content-scroll">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,187 @@
+/* General Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  z-index: 1050;
+  overflow-y: auto; /* Keep overflow-y for the modal */
+  text-transform: capitalize;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 700px;
+  width: 100%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  font-family: Arial, sans-serif;
+  max-height: 90vh;
+  overflow: hidden; /* Hide the default modal overflow */
+}
+
+/* Modal Body Styling */
+.modal-body {
+  margin-top: 20px;
+  max-height: 70vh; /* Limit the height to ensure scroll appears */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding-right: 10px; /* Prevent scrollbar overlap */
+}
+.mobile-wrapper {
+  .input-group {
+    display: flex;
+    .country-code {
+      background-color: #e9ecef;
+      // border: 1px solid rgb(29, 29, 29);
+      border-right: none;
+      border-radius: 15px 0 0 15px;
+      padding: 7px 15px;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+    }
+    .mobile-input {
+      // border: 1px solid rgb(29, 29, 29);
+      // border-left: none;
+      // border-radius: 0 4px 4px 0;
+      padding: 7px 20px;
+      font-size: 1rem;
+      flex: 1;
+      background-color: #ffffff;
+      width: 100%;
+
+      &:focus {
+        outline: none;
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+/* Custom scrollbar */
+.modal-body::-webkit-scrollbar {
+  width: 4px; /* Thin scrollbar width */
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5); /* Scrollbar color */
+  border-radius: 2px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* Header Styling */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.modal-title {
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+/* Close Button Styling */
+.btn-close {
+  font-size: 1.2rem;
+  color: #888;
+  transition: all 0.3s;
+}
+
+.btn-close:hover {
+  color: #333;
+}
+
+/* Form Labels */
+label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.text-danger {
+  font-size: 1rem;
+  color: #e63946;
+}
+
+/* Input Fields */
+.form-control {
+  border: 1px solid #ccc;
+  border-radius: 18px;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+/* Error Messages */
+.error-message {
+  font-size: 0.85rem;
+  color: #e63946;
+  margin-top: 5px;
+}
+
+/* Buttons */
+.custom-btn {
+  border-radius: 25px;
+  padding: 8px 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.custom-btn.btn-secondary {
+  background-color: #fff;
+  color: rgb(0, 75, 0);
+  border: 2px solid rgb(0, 75, 0);
+}
+
+.custom-btn.btn-secondary:hover {
+  background-color: rgb(0, 75, 0);
+  color: #fff;
+}
+
+.custom-btn.btn-primary {
+  background-color: rgb(0, 77, 0);
+  border: none;
+  color: white;
+}
+
+.custom-btn.btn-primary:hover {
+  background-color: rgb(1, 44, 1);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .modal-content {
+    padding: 15px;
+    max-width: 95%;
+  }
+
+  .modal-header .modal-title {
+    font-size: 1rem;
+  }
+
+  .custom-btn {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+  }
+}

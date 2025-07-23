@@ -1,0 +1,95 @@
+/* General Modal Styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    z-index: 1050;
+    text-transform: capitalize;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px !important; /* Ensure it's applied to all corners */
+    max-width: 1000px;
+    width: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    font-family: Arial, sans-serif;
+    max-height: 90vh;
+    overflow-y: auto; /* Allow scrolling if needed */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+  }
+  
+  /* Scrollbar Customization */
+  .modal-content::-webkit-scrollbar {
+    width: 2px; /* Make the scrollbar thinner */
+  }
+  
+  .modal-content::-webkit-scrollbar-track {
+    background-color: transparent; /* No track color */
+  }
+  
+  .modal-content::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3); /* Subtle thumb color */
+    border-radius: 10px; /* Rounded edges for the thumb */
+    visibility: visible; /* Ensure the thumb is visible when scrolling */
+  }
+  
+  /* Header Styling */
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  .modal-title {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #333;
+    text-align: center;
+  }
+  /* Table Styling */
+.modal-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.modal-body th,
+.modal-body td {
+  border: 1px solid #dee2e6;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Table Header */
+.modal-body th {
+  background-color: #0611aa; /* Your requested blue */
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Penalty Cell Highlighting */
+.modal-body .penalty-cell {
+  color: #dc3545;       /* Bootstrap danger red */
+  font-weight: 600;
+  background-color: #ffe6e6; /* Light red background */
+  border-left: 3px solid #dc3545;
+}
+.no-data-row {
+  background-color: #ffe6e6; /* Light red background */
+  color: #d9534f;            /* Bootstrap danger color */
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+}

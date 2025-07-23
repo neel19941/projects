@@ -1,0 +1,53 @@
+<div class="customer-login">
+  <div class="login-container" id="login-container">
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="container">
+      <div class="mb-0" style="text-align: center;">
+        <i class="bi bi-person-circle" style="font-size: 6rem; color: #0d6efd;"></i>
+      </div>
+      <h3>Customer Login</h3>
+      
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <input type="text" id="usernameOrMobile" formControlName="usernameOrMobile" class="form-control"
+            [placeholder]="'Enter your email or mobile number' | titlecase" />
+          <div class="error-message">
+            <span
+              *ngIf="loginForm.get('usernameOrMobile')?.invalid && (loginForm.get('usernameOrMobile')?.touched || loginForm.get('usernameOrMobile')?.dirty)">
+              <span *ngIf="loginForm.get('usernameOrMobile')?.errors?.['required']">Field is required.</span>
+              <span *ngIf="loginForm.get('usernameOrMobile')?.errors?.['invalidInput']">Enter a valid email or 10-digit
+                mobile number.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <div class="input-group">
+            <input type="password" [type]="isPasswordVisible ? 'text' : 'password'" id="password"
+              formControlName="password" class="form-control" [placeholder]="'Enter your password ' | titlecase" />
+            <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()">
+              <i [class]="isPasswordVisible ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+            </button>
+          </div>
+          <div class="error-message">
+            <span
+              *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)">
+              <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</span>
+            </span>
+          </div>
+        </div>
+        <div class="text-center mt-2">
+          <small class="not-a-user">
+           Don't have an account?
+            <a (click)="register()" class="register-link">Register</a>
+          </small>
+        </div>
+      </div>
+
+      <div class="text-center mt-3">
+        <button type="submit" class="btn btn-primary">Login</button>
+      </div>
+    </form>
+  </div>
+</div>

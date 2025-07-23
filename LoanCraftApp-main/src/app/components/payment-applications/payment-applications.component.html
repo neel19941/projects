@@ -1,0 +1,85 @@
+<!-- <app-plain-navigation></app-plain-navigation> -->
+<div class="container-fluid">
+    <!-- Header Bar -->
+    <div class="row header-bar">
+        <div class="col-12 col-md-6">
+            <h4 class="header-title">Payments </h4>
+        </div>
+        <div class="col-12 col-md-6 text-md-end">
+            <div class="search-container">
+                <span class="add-icon" (click)="openAddApplication('add')">
+                    <i class="fas fa-plus"></i>
+                </span>
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    placeholder="Search"
+                    (keyup)="onSearch($event)"
+                />
+            </div>
+        </div>
+    </div>
+  
+    <!-- Table -->
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead class="table-custom-header">
+              <tr>
+                <th scope="col" (mouseover)="hoverField = 'dueDate'" (mouseleave)="hoverField = null" (click)="onSort('dueDate')">
+                  Due Date
+                  <span class="sort-icon" [ngClass]="getSortIcon('dueDate')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'amountPaid'" (mouseleave)="hoverField = null" (click)="onSort('amountPaid')">
+                  Amount Paid
+                  <span class="sort-icon" [ngClass]="getSortIcon('amountPaid')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'dueAmount'" (mouseleave)="hoverField = null" (click)="onSort('dueAmount')">
+                  Due Amount
+                  <span class="sort-icon" [ngClass]="getSortIcon('dueAmount')"></span>
+                </th>
+                <th scope="col" (mouseover)="hoverField = 'amountStatus'" (mouseleave)="hoverField = null" (click)="onSort('amountStatus')">
+                  Amount Status
+                  <span class="sort-icon" [ngClass]="getSortIcon('amountStatus')"></span>
+                </th>
+                <th scope="col">Edit</th>
+              </tr>
+            </thead>
+            
+            <tbody>
+              <tr *ngFor="let application of applicationsInfo; let i = index">
+                <td>{{ application.dueDate | date: 'yyyy-MM-dd' }}</td>
+                <td>{{ application.amountPaid }}</td>
+                <td>{{ application.dueAmount | number: '1.2-2' }}</td>
+                <td>{{ application.amountStatus | titlecase }}</td>
+
+
+                <td class="text-center">
+                  <span class="sanction-icon" (click)="openPaymentPopup(application)">
+                    <i class="fas fa-pencil-alt"></i> <!-- Pencil edit icon -->
+                  </span>
+                </td>
+                
+              </tr>
+              <tr *ngIf="applicationsInfo.length === 0">
+                <td colspan="5" class="text-center">No Approved Applications found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Pagination Controls -->
+    <div class="pagination-controls">
+        <button (click)="goToFirstPage()" [disabled]="currentPageIndex === 0">|<</button>
+        <button (click)="goToPreviousPage()" [disabled]="currentPageIndex === 0"><</button>
+        <span>Page {{ currentPageIndex + 1 }} of {{ totalPages }}</span>
+        <button (click)="goToNextPage()" [disabled]="currentPageIndex >= totalPages - 1">></button>
+        <button (click)="goToLastPage()" [disabled]="currentPageIndex >= totalPages - 1">>|</button>
+    </div>
+  </div>
+  
+    <app-payments-edit *ngIf="showPaymentEditComponent" [PaymentId]="paymentId" [action]="action" (closeModal)="closeReviewPopup()"></app-payments-edit>
+

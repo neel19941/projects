@@ -1,0 +1,30 @@
+.navbar {
+    // background-color: #004d40; /* Dark green background */
+    // background-color: rgb(255, 136, 0);
+    background-color: rgb(6, 17, 170);
+  }
+  .navbar-brand, .nav-link {
+    color: #ffffff !important; /* White text */
+  }
+  .nav-link:hover {
+
+    // background-color: #00796b; /* Slightly lighter green on hover */
+    // background-color: rgb(255, 136, 0);
+    background-color: rgb(6, 17, 170);
+  }
+  .navbar-toggler-icon {
+    background-color: #ffffff; /* White hamburger icon */
+  }
+/* Custom CSS to align navbar items with margin-left: 50px by default */
+.custom-nav {
+    display: flex;
+    justify-content: flex-start; /* Align items to the left initially */
+    // margin-left: 50pc; /* Apply margin-left: 50px by default */
+  }
+  /* For smaller screens, change alignment and use margin-left: auto */
+  @media (max-width: 991px) {
+    .custom-nav {
+      justify-content: flex-end; /* Align items to the right */
+      margin-left: auto; /* Push items to the right using margin-left:auto */
+    }
+  }

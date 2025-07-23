@@ -1,0 +1,66 @@
+<!-- <app-plain-navigation></app-plain-navigation> -->
+<div class="employer-login">
+
+  <div class="login-container" id="login-container">
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="container">
+      <!-- Title -->
+      <div class="mb-0" style="text-align: center;">
+        <i class="bi bi-person-circle" style="font-size: 6rem; color: #0d6efd;"></i>
+      </div>
+      <h3>Narvee Login</h3>
+      <div class="row">
+        <!-- Email -->
+        <div class="col-md-12 form-group">
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control"
+            [placeholder]="'Email' | titlecase"
+          />
+          <div class="error-message">
+            <span
+              *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty)">
+              <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</span>
+              <span *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <!-- Password -->
+        <div class="col-md-12 form-group">
+          <div class="input-group">
+            <input
+              [type]="isPasswordVisible ? 'text' : 'password'"
+              id="password"
+              formControlName="password"
+              class="form-control"
+              [placeholder]="'Password' | titlecase"
+            />
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              (click)="togglePasswordVisibility()"
+            >
+              <i [class]="isPasswordVisible ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+            </button>
+          </div>
+          <div class="error-message">
+            <span
+              *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)">
+              <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-3">
+        <button type="submit" class="btn btn-primary">Login</button>
+      </div>
+    </form>
+  </div>
+  <!-- <div class="spacer"></div> -->
+
+</div>

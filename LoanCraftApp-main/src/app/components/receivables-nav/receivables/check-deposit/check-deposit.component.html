@@ -1,0 +1,221 @@
+<div class="modal-overlay" *ngIf="!showEmiDetailedInfoComponent && !showChequeDepositRequest">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ title }}</h5>
+      <button type="button" class="btn-close" (click)="close()"></button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Section 1: Select Loan -->
+      <div *ngIf="!isEditMode" class="select-loan-section mb-4">
+        <h5 class="section-heading">Select Loan</h5>
+        <div class="search-container">
+          <div class="dropdown-wrapper">
+            <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()" (focus)="isDropdownOpen = true"
+              [placeholder]="'Search by name, loan number, or mobile...' | titlecase" class="search-input" />
+            <span class="dropdown-arrow" [class.open]="isDropdownOpen" (click)="toggleDropdown()"></span>
+          </div>
+          <div *ngIf="isDropdownOpen" class="dropdown">
+            <div *ngFor="let item of filteredList" (click)="selectItem(item)" class="dropdown-item">
+              {{ item.fullName | capitalize }}
+              {{ item.loanAccountNumber ? ' - ' + item.loanAccountNumber : '' }}
+            </div>
+            <div *ngIf="filteredList.length === 0" class="no-results">No matching records found</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div *ngIf="!isEditMode && EmiData?.totalDue" class="container text-center mb-4">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-auto">
+            <label class="fw-semibold me-2">Receivable Amount:</label>
+            <span class="text-success fw-bold">₹ {{ formatIndianCurrency(EmiData?.totalDue) }}</span>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-link p-0 ps-2 align-middle" (click)="openEmiPopup()">
+              <i class="bi bi-info-circle-fill me-1"></i>More EMI Details
+            </button>
+          </div>
+        </div>
+      </div> -->
+
+      <div *ngIf="!isEditMode && EmiData?.totalDue" class="container text-center mb-4">
+        <div class="row justify-content-between align-items-center">
+          <!-- Left Side: Last Paid Date (small and aligned left) -->
+          <div class="col-auto text-start">
+            <div class="small">
+              <label class="mb-0 fw-semibold">Last Paid Date:</label>
+              <div class="text-muted">{{ EmiData?.lastPaidDate }}</div>
+            </div>
+          </div>
+
+          <!-- Right Side: Receivable Amount and More EMI Info -->
+          <div class="col-auto text-end">
+            <div>
+              <label class="fw-semibold me-2">Receivable Amount:</label>
+              <span class="text-success fw-bold">₹ {{ formatIndianCurrency(EmiData?.totalDue) }}</span>
+            </div>
+            <div>
+              <button class="btn btn-link p-0 ps-2 align-middle" (click)="openEmiPopup()">
+                <i class="bi bi-info-circle-fill me-1"></i>More EMI Details
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Section: Select EMI Month -->
+      <div *ngIf="!isEditMode && eachEmi?.length" class="select-loan-section mb-4">
+        <h5 class="section-heading">Select EMI Month</h5>
+        <div class="search-container">
+          <div class="dropdown-wrapper">
+            <input type="text" [(ngModel)]="searchEmiTerm" (input)="onEmiSearchChange()"
+              (focus)="isEmiDropdownOpen = true" placeholder="Search by EMI month..." class="search-input" />
+            <span class="dropdown-arrow" [class.open]="isEmiDropdownOpen" (click)="toggleEmiDropdown()"></span>
+          </div>
+          <div *ngIf="isEmiDropdownOpen" class="dropdown">
+            <div *ngFor="let item of filteredEmiList" (click)="selectEmiItem(item)" class="dropdown-item">
+              {{ item.emiMonth }}
+            </div>
+            <div *ngIf="filteredEmiList.length === 0" class="no-results">No matching EMI found</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Cheque Bounce Form -->
+      <form [formGroup]="checkBounceForm" class="payment-form custom-bounce-form">
+        <div class="row">
+          <!-- Cheque Number -->
+          <!-- <div *ngIf="!isEditMode" class="col-md-6 col-12 mb-3">
+            <label for="chequeNumber" class="form-label">Cheque Number</label>
+            <input type="text" id="chequeNumber" formControlName="chequeNumber" class="form-control"
+              [ngClass]="{ 'is-invalid': checkBounceForm.get('chequeNumber')?.invalid && (checkBounceForm.get('chequeNumber')?.touched || checkBounceForm.get('chequeNumber')?.dirty) }" />
+            <div class="invalid-feedback" *ngIf="checkBounceForm.get('chequeNumber')?.errors?.['required']"> Cheque
+              Number is required </div>
+            <div class="invalid-feedback" *ngIf="checkBounceForm.get('chequeNumber')?.errors?.['pattern']"> Only digits
+              are allowed</div>
+          </div> -->
+          <!-- Cheque Number -->
+          <div *ngIf="!isEditMode" class="col-md-6 col-12 mb-3">
+            <label for="chequeNumber" class="form-label">Cheque Number</label>
+            <input type="text" id="chequeNumber" formControlName="chequeNumber" maxlength="6" class="form-control"
+              [ngClass]="{'is-invalid':checkBounceForm.get('chequeNumber')?.invalid && (checkBounceForm.get('chequeNumber')?.touched ||
+          checkBounceForm.get('chequeNumber')?.dirty) }" />
+            <div class="invalid-feedback" *ngIf="checkBounceForm.get('chequeNumber')?.errors?.['required']">
+              Cheque Number is required
+            </div>
+            <div class="invalid-feedback" *ngIf="checkBounceForm.get('chequeNumber')?.errors?.['pattern']">
+              Cheque number must be exactly 6 digits
+            </div>
+          </div>
+
+          <!-- Posting Date -->
+          <div *ngIf="!isEditMode" class="col-md-6 col-12 mb-3">
+            <label for="postingDate" class="form-label">Posting Date</label>
+            <div class="input-group">
+              <input class="form-control" id="postingDate" placeholder="DD-MM-YYYY" name="postingDate"
+                formControlName="postingDate" ngbDatepicker [minDate]="minDate" [maxDate]="maxDate"
+                #postingDatePicker="ngbDatepicker" (click)="postingDatePicker.toggle()"
+                [ngClass]="{ 'is-invalid': checkBounceForm.get('postingDate')?.invalid && checkBounceForm.get('postingDate')?.touched }" />
+              <button class="btn btn-outline-secondary calendar-button" type="button"
+                [ngClass]="{ 'is-invalid': checkBounceForm.get('postingDate')?.invalid && checkBounceForm.get('postingDate')?.touched }"
+                (click)="postingDatePicker.toggle()">
+                <i class="bi bi-calendar-date"></i>
+              </button>
+            </div>
+            <div class="text-danger mt-1"
+              *ngIf="checkBounceForm.get('postingDate')?.invalid && checkBounceForm.get('postingDate')?.touched">
+              Posting Date is required
+            </div>
+          </div>
+
+          <div *ngIf="!isEditMode" class="col-md-6 col-12 mb-3">
+            <label for="amount" class="form-label">Amount</label>
+            <div class="input-group has-validation">
+              <input type="text" id="amount" formControlName="amount" class="form-control"
+                (input)="mergeInputmethods('amount' , EmiData?.totalDue)" (change)="onAmountChange(EmiData?.totalDue)"
+                [ngClass]="{'is-invalid': checkBounceForm.get('amount')?.invalid &&  (checkBounceForm.get('amount')?.touched || checkBounceForm.get('amount')?.dirty), 'no-rounded-end': isAmountLessThanReceivable && !showRequestButton }" />
+              <button type="button" class="btn btn-warning no-rounded-start"
+                *ngIf="isAmountLessThanReceivable && !showRequestButton" (click)="openChequeDepositRequest()">
+                Request
+              </button>
+            </div>
+
+            <div class="invalid-feedback d-block" *ngIf="checkBounceForm.get('amount')?.errors?.['required'] &&
+              (checkBounceForm.get('amount')?.touched || checkBounceForm.get('amount')?.dirty)">
+              Amount is required
+            </div>
+
+            <div class="invalid-feedback d-block" *ngIf="checkBounceForm.get('amount')?.errors?.['pattern'] &&
+              (checkBounceForm.get('amount')?.touched || checkBounceForm.get('amount')?.dirty)">
+              Enter a valid amount
+            </div>
+          </div>
+
+          <!-- Status Dropdown -->
+          <div *ngIf="isEditMode" class="col-md-6 col-12 mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select id="status" formControlName="status" class="form-select"
+              [ngClass]="{ 'is-invalid': checkBounceForm.get('status')?.invalid && checkBounceForm.get('status')?.touched }">
+              <option value="" disabled>Select a status</option>
+              <option *ngIf="checkBounceForm.value.status === 'Posted'" [value]="'Posted'" hidden>Select Status</option>
+              <option value="Cleared">Cleared</option>
+              <option value="Bounced">Bounced</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+            <div class="invalid-feedback">Status is required</div>
+          </div>
+
+          <!-- Reason -->
+          <!-- <div *ngIf="isEditMode" class="col-md-6 col-12 mb-3">
+            <label for="reason" class="form-label">Reason</label>
+            <select id="reason" formControlName="reason" class="form-select"
+              [ngClass]="{ 'is-invalid': checkBounceForm.get('reason')?.invalid && checkBounceForm.get('reason')?.touched }">
+              <option value="" disabled>Select a reason</option>
+              <option *ngFor="let reason of reasonOptions" [value]="reason.value">
+                {{ reason.label }}
+              </option>
+            </select>
+            <div class="invalid-feedback">Reason is required</div>
+          </div> -->
+
+          <!-- Reason -->
+<div *ngIf="isEditMode && showReasonField" class="col-md-6 col-12 mb-3">
+  <label for="reason" class="form-label">Reason</label>
+  <select id="reason" formControlName="reason" class="form-select"
+    [ngClass]="{ 'is-invalid': checkBounceForm.get('reason')?.invalid && checkBounceForm.get('reason')?.touched }">
+    <option value="" disabled>Select a reason</option>
+    <option *ngFor="let reason of reasonOptions" [value]="reason.value">
+      {{ reason.label }}
+    </option>
+  </select>
+  <div class="invalid-feedback">Reason is required</div>
+</div>
+
+          <!-- Remarks -->
+          <div *ngIf="!isEditMode" class="col-md-6 col-12 mb-3">
+            <label for="remarks" class="form-label">Remarks</label>
+            <textarea id="remarks" formControlName="remarks" class="form-control" rows="3"
+              placeholder="Enter remarks here"
+              [ngClass]="{ 'is-invalid': checkBounceForm.get('remarks')?.invalid && checkBounceForm.get('remarks')?.touched }"></textarea>
+            <div class="invalid-feedback">Remarks are required</div>
+          </div>
+        </div>
+
+        <div class="form-group mt-3 d-flex justify-content-end gap-3">
+          <button type="button" class="btn btn-cancel" (click)="close()">Cancel</button>
+          <button *ngIf="!isEditMode" type="button" class="custom-btn btn-submit" [disabled]="isSubmitButtonEnabled"
+            (click)="sendData()">Submit</button>
+          <button *ngIf="isEditMode" type="button" class="btn btn-submit" (click)="updateData()">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<app-cheque-deposit-request *ngIf="showChequeDepositRequest" [receivableAmount]="receivableAmount"
+  [requestedAmount]="requestedAmount" [repaymentId]="repayId"
+  (closeModal)="closeChequeDepositRequest()"></app-cheque-deposit-request>
+<app-detailed-emi-info *ngIf="showEmiDetailedInfoComponent" [disbursedId]="disbursedId" [emiDueInfo]="emiDueDetails"
+  (closeModal)="closeEmiPopup()"></app-detailed-emi-info>

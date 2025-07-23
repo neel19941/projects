@@ -1,0 +1,162 @@
+<div class="modal-overlay">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">Loan Disbursed Details</h5>
+      <button type="button" class="btn-close" (click)="close()"></button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Loan Calculation Summary Section -->
+      <div class="calculation-section border p-3 mb-3">
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <p><strong>Amount Sanctioned:</strong> ₹{{ formatIndianCurrency(amountSanctioned) || 0 }}</p>
+          </div>
+          <div class="col-md-6 col-12">
+            <p><strong>Processing Charge ({{ formatIndianCurrency(processingPercentage) }}%):</strong> ₹{{
+              formatIndianCurrency(processingCharge) || 0 }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <p><strong>Document Charge:</strong> ₹{{ formatIndianCurrency(documentCharge) || 0 }}</p>
+          </div>
+          <div class="col-md-6 col-12">
+            <p class="fw-bold text-success"><strong>Disbursed Amount:</strong> ₹{{
+              formatIndianCurrency(disbursedTotalAmount) || 0 }}</p>
+          </div>
+        </div>
+      </div>
+      <form [formGroup]="loanSanctionForm" (ngSubmit)="sendData()" class="container">
+        <div class="row">
+          <!-- <div class="col-md-6 form-group position-relative">
+              <label>Disbursed Amount <span class="text-danger">*</span></label>
+              <input type="text" formControlName="disbursedAmount" class="form-control" placeholder="Enter Disbursed Amount" />
+              <div class="error-message">
+                <span *ngIf="loanSanctionForm.get('disbursedAmount')?.invalid && (loanSanctionForm.get('disbursedAmount')?.touched || loanSanctionForm.get('disbursedAmount')?.dirty)"> 
+                  <span *ngIf="loanSanctionForm.get('disbursedAmount')?.errors?.['required']"> Disbursed Amount is required.</span>
+                  <span *ngIf="loanSanctionForm.get('disbursedAmount')?.errors?.['pattern']">  Only numbers are allowed.</span>
+                  <span *ngIf="loanSanctionForm.get('disbursedAmount')?.errors?.['min']"> Amount must be greater than 0.</span>
+                </span>
+              </div>
+            </div> -->
+          <div class="col-md-6 form-group">
+            <label>Date <span class="text-danger">*</span></label>
+            <input type="date" formControlName="date" class="form-control" />
+            <div class="error-message">
+              <span *ngIf="loanSanctionForm.get('date')?.invalid && loanSanctionForm.get('date')?.touched">
+                <span *ngIf="loanSanctionForm.get('date')?.errors?.['required']">EMI End Date is required.</span>
+              </span>
+            </div>
+          </div>
+          <div class="col-md-6 form-group position-relative">
+            <label>Account Number <span class="text-danger">*</span></label>
+            <input type="text" formControlName="accountNo" class="form-control"
+              [placeholder]="'Enter Account Number' | titlecase" />
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('accountNo')?.invalid && (loanSanctionForm.get('accountNo')?.touched || loanSanctionForm.get('accountNo')?.dirty)">
+
+                <span *ngIf="loanSanctionForm.get('accountNo')?.errors?.['required']">
+                  Account Number is required.
+                </span>
+
+                <span *ngIf="loanSanctionForm.get('accountNo')?.errors?.['pattern']">
+                  Account Number must be 9 to 18 digits.
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 form-group position-relative">
+            <label>IFSC Code <span class="text-danger">*</span></label>
+            <input type="text" formControlName="ifsc" class="form-control"
+              [placeholder]="'Enter IFSC Code' | titlecase" />
+
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('ifsc')?.invalid && (loanSanctionForm.get('ifsc')?.touched || loanSanctionForm.get('ifsc')?.dirty)">
+
+                <span *ngIf="loanSanctionForm.get('ifsc')?.errors?.['required']">
+                  IFSC Code is required.
+                </span>
+
+                <span *ngIf="loanSanctionForm.get('ifsc')?.errors?.['pattern']">
+                  IFSC Code must follow the format ABCD0123456
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <!-- <div class="col-md-6 form-group">
+              <label>Branch <span class="text-danger">*</span></label>
+              <input type="text" formControlName="branch" class="form-control" [placeholder]="'Enter branch name' | titlecase" appTitleCase/>
+              <div class="error-message">
+                <span *ngIf="loanSanctionForm.get('branch')?.invalid && (loanSanctionForm.get('branch')?.touched || loanSanctionForm.get('branch')?.dirty)">
+                  <span *ngIf="loanSanctionForm.get('branch')?.errors?.['required']"> Branch is required. </span>
+                  <span *ngIf="loanSanctionForm.get('branch')?.errors?.['pattern']"> Only alphabets and spaces are allowed.</span>
+                </span>
+              </div>
+            </div> -->
+
+          <div class="col-md-6 form-group">
+            <label>Branch <span class="text-danger">*</span></label>
+            <input type="text" formControlName="branch" class="form-control"
+              [placeholder]="'Enter branch name' | titlecase" appTitleCase />
+            <div class="error-message">
+              <span *ngIf="loanSanctionForm.get('branch')?.invalid &&
+                (loanSanctionForm.get('branch')?.touched || loanSanctionForm.get('branch')?.dirty)">
+                <span *ngIf="loanSanctionForm.get('branch')?.errors?.['required']">
+                  Branch is required.
+                </span>
+                <span *ngIf="loanSanctionForm.get('branch')?.errors?.['pattern']">
+                  Only alphabets and spaces are allowed.
+                </span>
+              </span>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <!-- <div class="col-md-6 form-group">
+            <label>Remarks <span class="text-danger">*</span></label>
+            <input type="text" formControlName="remarks" class="form-control"
+              [placeholder]="'Enter remarks' | titlecase" appTitleCase />
+            <div class="error-message">
+              <span
+                *ngIf="loanSanctionForm.get('remarks')?.invalid && (loanSanctionForm.get('remarks')?.touched || loanSanctionForm.get('remarks')?.dirty)">
+                <span *ngIf="loanSanctionForm.get('remarks')?.errors?.['required']"> Remarks are required. </span>
+                <span *ngIf="loanSanctionForm.get('remarks')?.errors?.['pattern']"> Only alphabets and spaces are
+                  allowed.</span>
+              </span>
+            </div>
+          </div> -->
+          <div class="col-md-6 form-group">
+            <label>Remarks <span class="text-danger">*</span></label>
+            <input type="text" formControlName="remarks" class="form-control"
+              [placeholder]="'Enter remarks' | titlecase" appTitleCase />
+            <div class="error-message">
+              <span *ngIf="loanSanctionForm.get('remarks')?.invalid &&
+             (loanSanctionForm.get('remarks')?.touched || loanSanctionForm.get('remarks')?.dirty)">
+                <span *ngIf="loanSanctionForm.get('remarks')?.errors?.['required']">
+                  Remarks are required.
+                </span>
+                <span *ngIf="loanSanctionForm.get('remarks')?.errors?.['pattern']">
+                  Only alphabets and spaces are allowed.
+                </span>
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="form-group mt-3 d-flex justify-content-end">
+          <button type="button" class="btn btn-secondary custom-btn me-2" (click)="close()">Cancel</button>
+          <button type="submit" class="btn btn-primary custom-btn">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

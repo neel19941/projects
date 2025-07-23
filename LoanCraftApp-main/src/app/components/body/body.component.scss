@@ -1,0 +1,113 @@
+.navbar {
+    background-color: rgb(6, 17, 170);
+    /* Blue background */
+    // position: fixed;
+    // width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; 
+    padding: 10px 20px; 
+}
+.main-content {
+    margin-top: 60px; 
+    padding: 0px; 
+}
+.navbar-brand,
+.nav-link {
+    color: #ffffff !important;
+}
+// .nav-link.active {
+//   background-color: #fdfdfd;
+//   color: rgb(0, 0, 0) !important;
+//   border-radius: 0.25rem;
+// }
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-toggler-icon {
+    background-color: #ffffff;
+}
+
+// .custom-toggler {
+//   border: none;
+//   background-color: transparent;
+//   padding: 0.4rem 0.6rem;
+//   border-radius: 6px;
+//   transition: background-color 0.3s ease, transform 0.2s ease;
+
+//   i {
+//     font-size: 20px;
+//     color: #ffffff;
+//     transition: color 0.3s ease, text-shadow 0.3s ease;
+//   }
+
+//   &:hover {
+//     background-color: rgba(255, 255, 255, 0.1);
+//     transform: scale(1.1);
+//   }
+
+//   &:hover i {
+//     color: #e0e0e0;
+//     text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+//   }
+
+//   &:focus {
+//     outline: none;
+//     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+//   }
+// }
+
+
+.user-section {
+    white-space: nowrap;
+}
+
+.username {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.user-icon {
+    font-size: 1.25rem;
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    padding: 0.4rem;
+    border: 2px solid #ffffff;
+    box-sizing: content-box;
+}
+
+.user-icon:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.fas.fa-user {
+    font-size: 15px;
+    color: #ffffff;
+}
+
+.nav-item.dropdown .dropdown-menu {
+    min-width: 10rem;
+    text-align: left;
+}
+
+.nav-item .dropdown-item {
+    color: #000;
+}
+
+.nav-item .dropdown-item:hover {
+    background-color: rgb(6, 17, 170);
+    color: #fff;
+}
+
+@media (max-width: 991px) {
+    .user-section {
+        order: 1;
+    }
+}
